@@ -11,13 +11,17 @@ export default function GameClient() {
   const [candidatesRemaining, setCandidatesRemaining] = useState(0);
   const [guess, setGuess] = useState(null);
   const [topCandidates, setTopCandidates] = useState([]);
+  const [confidence, setConfidence] = useState(0);
+  const [adaptiveQuestionLimit, setAdaptiveQuestionLimit] = useState(12);
+  const [debugReasoningPanel, setDebugReasoningPanel] = useState(null);
   const [phase, setPhase] = useState("idle");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [correctPlayer, setCorrectPlayer] = useState("");
   const [finishedMessage, setFinishedMessage] = useState("");
 
-  const progress = useMemo(() => Math.min((questionNumber / 8) * 100, 100), [
+  const progress = useMemo(() => Math.min(Math.max(confidence, questionNumber * 6), 100), [
+    confidence,
     questionNumber,
   ]);
 
@@ -37,6 +41,9 @@ export default function GameClient() {
       setQuestion(data.question);
       setQuestionNumber(data.questionNumber);
       setCandidatesRemaining(data.candidatesRemaining);
+      setAdaptiveQuestionLimit(data.adaptiveQuestionLimit || 12);
+      setConfidence(0);
+      setDebugReasoningPanel(null);
       setTopCandidates([]);
       setPhase("playing");
     } catch (err) {
@@ -63,6 +70,9 @@ export default function GameClient() {
 
       setQuestionNumber(data.questionNumber);
       setCandidatesRemaining(data.candidatesRemaining);
+      setConfidence(data.confidence || data.guess?.confidence || 0);
+      setAdaptiveQuestionLimit(data.adaptiveQuestionLimit || adaptiveQuestionLimit);
+      setDebugReasoningPanel(data.debugReasoningPanel || null);
 
       if (data.status === "guessing") {
         setGuess(data.guess);
@@ -129,8 +139,8 @@ export default function GameClient() {
                 Think of an IPL player.
               </h1>
               <p className="mt-5 max-w-xl text-lg leading-8 text-[#34433f]">
-                I will ask up to eight yes/no questions, narrow the field, and
-                take my shot.
+                I will keep asking high-signal yes/no questions until the read is
+                strong enough.
               </p>
             </div>
             <button
@@ -149,7 +159,7 @@ export default function GameClient() {
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <p className="text-sm font-bold uppercase text-[#eb6334]">
-                      Question {questionNumber} of 8
+                      Question {questionNumber}
                     </p>
                     <p className="text-sm text-[#63706d]">
                       {candidatesRemaining} candidates still alive
@@ -190,10 +200,10 @@ export default function GameClient() {
                     <div className="mt-3 grid gap-2">
                       {topCandidates.map((candidate) => (
                         <div
-                          key={candidate.name}
+                          key={candidate.id || candidate.name}
                           className="flex items-center justify-between rounded-md bg-white px-3 py-2 text-sm"
                         >
-                          <span>{candidate.name}</span>
+                          <span>{displayName(candidate)}</span>
                           <span className="font-bold text-[#00735e]">
                             {(candidate.probability * 100).toFixed(1)}%
                           </span>
@@ -213,11 +223,9 @@ export default function GameClient() {
                 <div className="rounded-md bg-[#15211f] p-6 text-white">
                   <p className="text-4xl font-black">{guess.player.name}</p>
                   <p className="mt-2 text-white/75">
-                    {guess.player.country} | {guess.player.role} |{" "}
-                    {guess.player.currentTeam || guess.player.teams.at(-1)} |{" "}
-                    {Math.round(guess.confidence)}% confidence
+                    {guessFacts(guess).join(" | ")}
                   </p>
-                  <p className="mt-5 text-lg leading-7">{guess.explanation}</p>
+                  <p className="mt-5 text-lg leading-7">{cleanText(guess.explanation)}</p>
                 </div>
                 <div className="grid gap-3 sm:grid-cols-2">
                   <button
@@ -268,11 +276,70 @@ export default function GameClient() {
                 {error}
               </p>
             )}
+
+            {debugReasoningPanel && (
+              <DebugReasoningPanel debugReasoningPanel={debugReasoningPanel} />
+            )}
           </div>
         </div>
       </section>
     </main>
   );
+}
+
+function DebugReasoningPanel({ debugReasoningPanel }) {
+  const topCandidate = debugReasoningPanel.canonicalCandidates?.[0];
+
+  return (
+    <details className="mt-4 rounded-md border border-[#15211f]/12 bg-white/75 p-4 text-sm">
+      <summary className="cursor-pointer font-bold text-[#34433f]">
+        Debug reasoning panel
+      </summary>
+      <div className="mt-3 grid gap-2 text-[#53615d]">
+        <p>Canonical player id: {cleanText(topCandidate?.canonicalPlayerId) || "n/a"}</p>
+        <p>Original raw source: {cleanText(topCandidate?.originalRawSource?.name) || "n/a"}</p>
+        <p>Normalization result: {cleanText(topCandidate?.normalizationResult?.name) || "n/a"}</p>
+        <p>Question category: {cleanText(debugReasoningPanel.questionCategory) || "n/a"}</p>
+        <p>Entropy score: {Number(debugReasoningPanel.entropyScore || 0).toFixed(3)}</p>
+        <p>Entropy delta: {Number(debugReasoningPanel.entropyDelta || 0).toFixed(3)}</p>
+        <p>
+          Confidence:{" "}
+          {Number(debugReasoningPanel.eliminationReasoning?.confidence || 0).toFixed(1)}%
+        </p>
+        <p>
+          Confidence evolution:{" "}
+          {(debugReasoningPanel.confidenceEvolution || [])
+            .map((value) => Number(value || 0).toFixed(1))
+            .join(" -> ") || "n/a"}
+        </p>
+      </div>
+    </details>
+  );
+}
+
+function displayName(candidate) {
+  return cleanText(candidate?.player?.name || candidate?.name);
+}
+
+function guessFacts(guess) {
+  const player = guess.player || {};
+  return [
+    player.country,
+    player.role,
+    player.latestSeasonTeam || player.currentTeam || player.teams?.at?.(-1),
+    `${Math.round(guess.confidence)}% confidence`,
+  ]
+    .map(cleanText)
+    .filter(Boolean);
+}
+
+function cleanText(value) {
+  const cleaned = String(value || "")
+    .replace(/\bunknown\b/gi, "")
+    .replace(/\s+\|\s+\|/g, " | ")
+    .replace(/\s+/g, " ")
+    .trim();
+  return /^(unknown|null|undefined|n\/a|na|-|none)$/i.test(cleaned) ? "" : cleaned;
 }
 
 function IdlePanel() {

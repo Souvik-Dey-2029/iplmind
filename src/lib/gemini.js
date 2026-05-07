@@ -1,5 +1,6 @@
 // Gemini AI client - handles all AI-powered question generation
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { sanitizePlayerForRender } from "./playerNormalizer";
 
 // Initialize Gemini with server-side API key
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
@@ -13,10 +14,10 @@ export async function generateQuestion(candidates, previousQA, questionNumber) {
   const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
   // Build a summary of top candidate attributes for the AI
-  const topCandidates = candidates.slice(0, 30);
+  const topCandidates = candidates.slice(0, 30).map(sanitizePlayerForRender);
   const candidateSummary = topCandidates.map((p) => {
-    const team = p.currentTeam || p.teams.at(-1);
-    return `${p.name} (${p.country}, ${p.role}, current team: ${team}, ${p.active ? "active" : "retired"})`;
+    const facts = [p.country, p.role, p.latestSeasonTeam ? `latest team: ${p.latestSeasonTeam}` : ""].filter(Boolean);
+    return `${p.name} (${facts.join(", ")}, ${p.active ? "active" : "retired"})`;
   }).join("\n");
 
   // Build previous Q&A context
@@ -32,7 +33,7 @@ ${candidateSummary}
 PREVIOUS QUESTIONS AND ANSWERS:
 ${qaContext}
 
-QUESTION NUMBER: ${questionNumber} of 8
+QUESTION NUMBER: ${questionNumber}
 
 RULES:
 - Ask ONE perfectly natural, simple yes/no question that splits the remaining candidates roughly 50/50.
@@ -73,7 +74,6 @@ Return ONLY the question text, nothing else. No numbering, no prefix.`;
       "Has this player captained an IPL team?",
       "Is this player a fast bowler?",
       "Has this player won the Orange Cap?",
-      "Did this player play for Mumbai Indians?",
       "Is this player an opener?",
     ];
     return fallbacks[questionNumber - 1] || "Is this player well-known for their batting?";
@@ -92,9 +92,9 @@ export async function evaluateCandidates(candidates, question, answer) {
   const allScores = {};
 
   for (let i = 0; i < candidates.length; i += batchSize) {
-    const batch = candidates.slice(i, i + batchSize);
+    const batch = candidates.slice(i, i + batchSize).map(sanitizePlayerForRender);
     const playerList = batch.map((p) => {
-      return `${p.name}: ${p.country}, ${p.role}, ${p.battingStyle} bat, ${p.bowlingStyle} bowl, current_team=${p.currentTeam}, teams=[${p.teams.join(",")}], captain=${p.captain}, active=${p.active}, overseas=${p.overseas}, wicket_keeper=${p.wicketKeeper}, opener=${p.opener}, finisher=${p.finisher}, death_bowler=${p.deathBowler}, orange_cap=${p.orangeCap}, purple_cap=${p.purpleCap}, titles=${p.titlesWon}, power_hitter=${p.powerHitter}, anchor=${p.anchorBatter}, playoffs_hero=${p.playoffsHero}, iconic=${p.iconic}`;
+      return `${p.name}: ${p.country}, ${p.role}, ${p.battingStyle} bat, ${p.bowlingStyle} bowl, current_team=${p.latestSeasonTeam || p.currentTeam}, teams=[${p.teams.join(",")}], captain=${p.captain}, active=${p.active}, overseas=${p.overseas}, wicket_keeper=${p.wicketKeeper}, opener=${p.opener}, finisher=${p.finisher}, death_bowler=${p.deathBowler}, orange_cap=${p.orangeCap}, purple_cap=${p.purpleCap}, titles=${p.titlesWon}, power_hitter=${p.powerHitter}, anchor=${p.anchorBatter}, playoffs_hero=${p.playoffsHero}, iconic=${p.iconic}`;
     }).join("\n");
 
     const prompt = `You are evaluating IPL cricket players against a question and answer.
@@ -143,6 +143,7 @@ Important: Use exact player names as given. Return valid JSON only.`;
  */
 export async function generateGuessExplanation(player, previousQA) {
   const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
+  const cleanPlayer = sanitizePlayerForRender(player);
 
   const qaContext = previousQA
     .map((qa, i) => `Q${i + 1}: ${qa.question} → ${qa.answer}`)
@@ -152,15 +153,16 @@ export async function generateGuessExplanation(player, previousQA) {
 
 ${qaContext}
 
-I'm guessing the player is: ${player.name}
+I'm guessing the player is: ${cleanPlayer.name}
 
-Write a brief, confident 1-2 sentence explanation of why this player matches all the clues. Be enthusiastic and cricket-savvy. Don't start with "Based on".`;
+Write a brief, confident 1-2 sentence explanation of why this player matches all the clues. Do not mention unknown, missing, null, or unavailable metadata. Don't start with "Based on".`;
 
   try {
     const result = await model.generateContent(prompt);
     return result.response.text().trim();
   } catch (error) {
-    const team = player.currentTeam || player.teams[player.teams.length - 1];
-    return `${player.name} - ${player.role} from ${player.country}, currently with ${team}.`;
+    const team = cleanPlayer.latestSeasonTeam || cleanPlayer.currentTeam || cleanPlayer.teams.at(-1);
+    const parts = [cleanPlayer.role, cleanPlayer.country ? `from ${cleanPlayer.country}` : "", team ? `who played for ${team}` : ""];
+    return `${cleanPlayer.name} - ${parts.filter(Boolean).join(" ")}.`;
   }
 }

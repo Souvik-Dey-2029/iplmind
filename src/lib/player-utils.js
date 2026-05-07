@@ -1,4 +1,5 @@
-import players from "@/data/players.json";
+import players from "@/data/players";
+import { getCanonicalPlayerName, sanitizeDisplayValue } from "./playerNormalizer";
 
 export const traitFields = [
   "active",
@@ -38,11 +39,11 @@ export function searchPlayers(query) {
   return players.filter((player) => {
     const haystack = [
       player.id,
-      player.name,
-      player.country,
-      player.role,
-      player.battingStyle,
-      player.bowlingStyle,
+      getCanonicalPlayerName(player.name),
+      sanitizeDisplayValue(player.country),
+      sanitizeDisplayValue(player.role),
+      sanitizeDisplayValue(player.battingStyle),
+      sanitizeDisplayValue(player.bowlingStyle),
       player.battingPosition,
       ...player.teams,
     ]
@@ -127,7 +128,7 @@ function resolvePlayer(playerOrId) {
   if (!playerOrId) return null;
   if (typeof playerOrId === "object") return playerOrId;
   const query = normalize(playerOrId);
-  return players.find((player) => normalize(player.id) === query || normalize(player.name) === query) || null;
+  return players.find((player) => normalize(player.id) === query || normalize(getCanonicalPlayerName(player.name)) === query) || null;
 }
 
 function intersectionRatio(left = [], right = []) {

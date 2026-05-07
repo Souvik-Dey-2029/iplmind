@@ -17,9 +17,14 @@ import {
 import { evaluateDeterministicAnswer } from "./answerEvaluator";
 import { evaluateCandidates, generateGuessExplanation } from "./gemini";
 import { evaluateQuestionAnswer, selectBestQuestion } from "./questionEngine";
+import { sanitizePlayerForRender } from "./playerNormalizer";
 
-// In-memory session store (maps sessionId -> session data)
-const sessions = new Map();
+// In-memory session store shared across route module instances in the same server process.
+const sessions = globalThis.__IPLMIND_SESSIONS__ || new Map();
+globalThis.__IPLMIND_SESSIONS__ = sessions;
+const CONFIDENCE_THRESHOLD = 65;
+const MIN_CANDIDATES_TO_GUESS = 2;
+const INITIAL_ADAPTIVE_LIMIT = 12;
 
 /**
  * Create a new game session with all players equally weighted.
@@ -34,9 +39,10 @@ export function createSession() {
     candidates: [...players],
     questionHistory: [], // Array of { question, answer }
     entropyHistory: [calculateEntropy(probabilities)],
+    confidenceHistory: [],
     questionNumber: 0,
-    maxQuestions: 8,
-    minQuestionsBeforeGuess: 5,
+    adaptiveQuestionLimit: INITIAL_ADAPTIVE_LIMIT,
+    minQuestionsBeforeGuess: 3,
     status: "playing", // playing | guessing | finished
     guess: null,
     createdAt: Date.now(),
@@ -86,18 +92,17 @@ export async function processAnswer(sessionId, answer) {
   // Filter out very unlikely candidates
   session.candidates = getViableCandidates(players, session.probabilities);
   session.entropyHistory.push(calculateEntropy(session.probabilities));
+  session.confidenceHistory.push(getTopCandidate(session.probabilities)?.confidence || 0);
 
   session.questionNumber++;
 
   // Check if we should make a guess
-  const confidentEnough =
-    session.questionNumber >= session.minQuestionsBeforeGuess &&
-    shouldGuess(session.probabilities, 75, 3);
+  const confidentEnough = shouldMakeFinalGuess(session);
 
-  if (confidentEnough || session.questionNumber >= session.maxQuestions) {
+  if (confidentEnough) {
     session.status = "guessing";
     const topCandidate = getTopCandidate(session.probabilities);
-    const playerData = players.find((p) => p.name === topCandidate.name);
+    const playerData = sanitizePlayerForRender(players.find((p) => p.name === topCandidate.name));
 
     // Get AI explanation for the guess
     const explanation = await generateGuessExplanation(playerData, session.questionHistory);
@@ -113,6 +118,7 @@ export async function processAnswer(sessionId, answer) {
       guess: session.guess,
       questionNumber: session.questionNumber,
       candidatesRemaining: session.candidates.length,
+      debugReasoningPanel: buildDebugReasoningPanel(session),
     };
   }
 
@@ -128,15 +134,18 @@ export async function processAnswer(sessionId, answer) {
   session.currentQuestionMeta = stripQuestionPredicate(nextQuestionMeta);
 
   // Get top 3 candidates for display
-  const ranked = getRankedPlayers(session.probabilities).slice(0, 3);
+  const ranked = getDisplayCandidates(session).slice(0, 3);
 
   return {
     status: "playing",
     question: nextQuestion,
-    questionNumber: session.questionNumber,
+    questionNumber: session.questionNumber + 1,
     candidatesRemaining: session.candidates.length,
     topCandidates: ranked,
     entropy: session.entropyHistory.at(-1),
+    confidence: session.confidenceHistory.at(-1) || 0,
+    adaptiveQuestionLimit: session.adaptiveQuestionLimit,
+    debugReasoningPanel: buildDebugReasoningPanel(session),
   };
 }
 
@@ -168,7 +177,7 @@ export function recordFeedback(sessionId, correctPlayerName) {
   if (!session) return null;
 
   session.status = "finished";
-  session.correctPlayer = correctPlayerName;
+  session.correctPlayer = correctPlayerName || "";
   session.wasCorrect = false;
 
   // Return data for Firebase storage
@@ -176,7 +185,7 @@ export function recordFeedback(sessionId, correctPlayerName) {
     sessionId,
     questions: session.questionHistory,
     guessedPlayer: session.guess?.player?.name,
-    correctPlayer: correctPlayerName,
+    correctPlayer: correctPlayerName || "",
     wasCorrect: false,
     timestamp: Date.now(),
   };
@@ -211,4 +220,65 @@ export function cleanupSessions() {
       sessions.delete(id);
     }
   }
+}
+
+function shouldMakeFinalGuess(session) {
+  if (session.questionNumber < session.minQuestionsBeforeGuess) return false;
+
+  if (shouldGuess(session.probabilities, CONFIDENCE_THRESHOLD, MIN_CANDIDATES_TO_GUESS)) {
+    return true;
+  }
+
+  const top = getTopCandidate(session.probabilities);
+  if (session.candidates.length <= MIN_CANDIDATES_TO_GUESS && (top?.confidence || 0) >= 45) {
+    return true;
+  }
+
+  if (session.questionNumber >= session.adaptiveQuestionLimit) {
+    session.adaptiveQuestionLimit += 4;
+  }
+
+  return false;
+}
+
+function getDisplayCandidates(session) {
+  const viableNames = new Set(session.candidates.map((player) => player.name));
+  return getRankedPlayers(session.probabilities)
+    .filter((candidate) => viableNames.has(candidate.name))
+    .map((candidate) => {
+      const player = sanitizePlayerForRender(players.find((p) => p.name === candidate.name));
+      return {
+        ...candidate,
+        id: player?.canonicalPlayerId || player?.id || candidate.name,
+        name: player?.name || candidate.name,
+        player,
+      };
+    });
+}
+
+function buildDebugReasoningPanel(session) {
+  const topCandidates = getDisplayCandidates(session).slice(0, 5);
+  const currentMeta = session.currentQuestionMeta || null;
+  const latestEntropy = session.entropyHistory.at(-1) || 0;
+  const previousEntropy = session.entropyHistory.at(-2) || latestEntropy;
+
+  return {
+    canonicalCandidates: topCandidates.map(({ player, probability }) => ({
+      canonicalPlayerId: player?.canonicalPlayerId || player?.id || "",
+      name: player?.name || "",
+      originalRawSource: player?.originalRawSource || null,
+      normalizationResult: player?.normalizationResult || null,
+      probability,
+    })),
+    questionCategory: currentMeta?.category || "",
+    entropyScore: latestEntropy,
+    entropyDelta: previousEntropy - latestEntropy,
+    eliminationReasoning: {
+      candidatesRemaining: session.candidates.length,
+      confidence: session.confidenceHistory.at(-1) || 0,
+      threshold: CONFIDENCE_THRESHOLD,
+      adaptiveQuestionLimit: session.adaptiveQuestionLimit,
+    },
+    confidenceEvolution: session.confidenceHistory,
+  };
 }

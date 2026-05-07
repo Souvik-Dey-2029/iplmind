@@ -1,4 +1,5 @@
 import playerProfiles from "./players.json";
+import { normalizePlayerProfiles } from "@/lib/playerNormalizer";
 
-export const players = playerProfiles;
-export default playerProfiles;
+export const players = normalizePlayerProfiles(playerProfiles);
+export default players;

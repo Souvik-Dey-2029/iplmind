@@ -1,4 +1,4 @@
-import players from "@/data/players.json";
+import players from "@/data/players";
 import { traitFields } from "./player-utils";
 
 export const allowedRoles = new Set(["batsman", "bowler", "all-rounder", "wicket-keeper", "unknown"]);

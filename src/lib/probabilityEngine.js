@@ -32,11 +32,11 @@ export function updateProbabilities(currentProbabilities, matchScores) {
     const likelihood = matchScores[playerName] ?? 0.5;
     // For strict Bayesian updating, punish mismatches harder.
     let adjustedLikelihood = likelihood;
-    if (likelihood <= 0.1) adjustedLikelihood = 0.01;
-    if (likelihood >= 0.9) adjustedLikelihood = 1.0;
+    if (likelihood <= 0.2) adjustedLikelihood = 0.0001;
+    if (likelihood >= 0.8) adjustedLikelihood = 1.0;
     
     // Keep a tiny floor so contradictions do not crash
-    adjustedLikelihood = Math.max(adjustedLikelihood, 0.0001);
+    adjustedLikelihood = Math.max(adjustedLikelihood, 0.0000001);
     updated[playerName] = prior * adjustedLikelihood;
     totalScore += updated[playerName];
   }
@@ -92,7 +92,7 @@ export function getTopCandidate(probabilities) {
  * Check if confidence threshold is met for making a guess.
  * Returns true if the top candidate has >= threshold% confidence.
  */
-export function shouldGuess(probabilities, threshold = 75, minimumViableCandidates = 1) {
+export function shouldGuess(probabilities, threshold = 65, minimumViableCandidates = 1) {
   const top = getTopCandidate(probabilities);
   if (!top) return false;
 
@@ -103,21 +103,21 @@ export function shouldGuess(probabilities, threshold = 75, minimumViableCandidat
   const relativeConfidence = ranked[0].probability / ranked[1].probability;
 
   // Guess only when absolute probability and separation both look credible.
-  return top.confidence >= threshold && relativeConfidence >= 2.2;
+  return top.confidence >= threshold && relativeConfidence >= 2.0;
 }
 
 /**
  * Filter out players with very low probabilities (< 0.1% of top).
  * Returns the remaining viable candidates.
  */
-export function getViableCandidates(players, probabilities, minRatio = 0.005) {
+export function getViableCandidates(players, probabilities, minRatio = 0.04) {
   const top = getTopCandidate(probabilities);
   if (!top) return players;
 
   return players.filter((player) => {
     const prob = probabilities[player.name] || 0;
     // Aggressive fallback to kill low-probability candidates
-    if (prob < 0.001) return false;
+    if (prob < 0.002) return false;
     return prob >= top.probability * minRatio;
   });
 }

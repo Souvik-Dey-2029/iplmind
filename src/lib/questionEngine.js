@@ -1,7 +1,7 @@
 import { calculateEntropy, normalizeProbabilities } from "./probabilityEngine.js";
 
 const MIN_SPLIT = 0.12;
-const TEAM_CATEGORY_LIMIT = 2;
+const FRANCHISE_HISTORY_COOLDOWN = 3;
 
 const staticQuestions = [
   question("overseas", "origin", "Is this player an overseas player?", (p) => p.overseas),
@@ -39,6 +39,7 @@ export function selectBestQuestion(candidates, probabilities, history = []) {
 
   const ranked = options
     .filter((option) => !askedIds.has(option.id) && !askedTexts.has(normalize(option.text)))
+    .filter((option) => !isHardSuppressed(option, history, candidates.length))
     .map((option) => scoreQuestion(option, candidates, scopedProbabilities, baseEntropy, categoryCounts))
     .filter((option) => option.yesProbability >= MIN_SPLIT && option.noProbability >= MIN_SPLIT)
     .sort((a, b) => b.score - a.score);
@@ -85,7 +86,7 @@ export function buildQuestionOptions(candidates) {
     options.push(
       question(
         `played-team:${team}`,
-        "historical-team",
+        "franchise-history",
         `Has this player played for ${team}?`,
         (player) => player.teams.includes(team),
         { value: team }
@@ -132,17 +133,18 @@ function scoreQuestion(option, candidates, probabilities, baseEntropy, categoryC
   const informationGain = baseEntropy - expectedEntropy;
   const balance = 1 - Math.abs(0.5 - yesProbability) * 2;
   const categoryPenalty = Math.pow(0.78, categoryCounts[option.category] || 0);
-  const teamPenalty = option.category.includes("team")
-    ? Math.pow(0.62, categoryCounts.currentTeamAndHistorical || 0)
+  const teamPenalty = isTeamCategory(option.category)
+    ? Math.pow(0.12, (categoryCounts.currentTeamAndHistorical || 0) + 1)
     : 1;
-  const lowInfoPenalty = yesProbability < 0.18 || noProbability < 0.18 ? 0.55 : 1;
+  const historicTeamPenalty = option.category === "franchise-history" ? 0.08 : 1;
+  const lowInfoPenalty = yesProbability < 0.18 || noProbability < 0.18 ? 0.1 : 1;
 
   return {
     ...option,
     yesProbability,
     noProbability,
     informationGain,
-    score: informationGain * (0.72 + balance * 0.28) * categoryPenalty * teamPenalty * lowInfoPenalty,
+    score: informationGain * (0.8 + balance * 0.2) * categoryPenalty * teamPenalty * historicTeamPenalty * lowInfoPenalty,
   };
 }
 
@@ -164,7 +166,7 @@ function hydrateDynamicQuestion(meta) {
     });
   }
 
-  if (meta.category === "historical-team") {
+  if (meta.category === "historical-team" || meta.category === "franchise-history") {
     return question(meta.id, meta.category, meta.text, (player) => player.teams.includes(meta.value), {
       value: meta.value,
     });
@@ -188,11 +190,30 @@ function countCategories(history) {
   history.forEach((entry) => {
     if (!entry.category) return;
     counts[entry.category] = (counts[entry.category] || 0) + 1;
-    if (entry.category.includes("team")) {
+    if (isTeamCategory(entry.category)) {
       counts.currentTeamAndHistorical = (counts.currentTeamAndHistorical || 0) + 1;
     }
   });
   return counts;
+}
+
+function isHardSuppressed(option, history, candidateCount) {
+  if (option.category === "franchise-history" && candidateCount > 5) return true;
+
+  const recentCategories = history.slice(-FRANCHISE_HISTORY_COOLDOWN).map((entry) => entry.category);
+  if (option.category === "franchise-history" && recentCategories.includes("franchise-history")) {
+    return true;
+  }
+
+  if (isTeamCategory(option.category) && recentCategories.some(isTeamCategory)) {
+    return true;
+  }
+
+  return false;
+}
+
+function isTeamCategory(category = "") {
+  return category === "current-team" || category === "historical-team" || category === "franchise-history";
 }
 
 function neutralScores(candidates, score) {

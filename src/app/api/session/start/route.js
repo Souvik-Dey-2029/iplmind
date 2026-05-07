@@ -11,7 +11,7 @@ export async function POST() {
       sessionId: session.id,
       question,
       questionNumber: 1,
-      maxQuestions: session.maxQuestions,
+      adaptiveQuestionLimit: session.adaptiveQuestionLimit,
       candidatesRemaining: session.candidates.length,
     });
   } catch (error) {

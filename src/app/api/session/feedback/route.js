@@ -12,7 +12,7 @@ export async function POST(request) {
 
     const feedback = wasCorrect
       ? confirmGuess(sessionId)
-      : recordFeedback(sessionId, correctPlayerName || "Unknown");
+      : recordFeedback(sessionId, correctPlayerName || "");
 
     if (!feedback) {
       return Response.json({ error: "Session not found" }, { status: 404 });
