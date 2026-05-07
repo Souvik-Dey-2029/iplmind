@@ -89,7 +89,7 @@ export async function evaluateCandidates(candidates, question, answer) {
   for (let i = 0; i < candidates.length; i += batchSize) {
     const batch = candidates.slice(i, i + batchSize);
     const playerList = batch.map((p) => {
-      return `${p.name}: ${p.country}, ${p.role}, ${p.batting_style} bat, ${p.bowling_style} bowl, teams=[${p.teams.join(",")}], captain=${p.captain}, active=${p.active}, overseas=${p.overseas}, opener=${p.opener}, finisher=${p.finisher}, death_bowler=${p.death_bowler}, orange_cap=${p.orange_cap}, purple_cap=${p.purple_cap}, titles=${p.titles_won}`;
+      return `${p.name}: ${p.country}, ${p.role}, ${p.battingStyle} bat, ${p.bowlingStyle} bowl, teams=[${p.teams.join(",")}], captain=${p.captain}, active=${p.active}, overseas=${p.overseas}, opener=${p.opener}, finisher=${p.finisher}, death_bowler=${p.deathBowler}, orange_cap=${p.orangeCap}, purple_cap=${p.purpleCap}, titles=${p.titlesWon}, power_hitter=${p.powerHitter}, anchor=${p.anchorBatter}, playoffs_hero=${p.playoffsHero}, iconic=${p.iconic}`;
     }).join("\n");
 
     const prompt = `You are evaluating IPL cricket players against a question and answer.
