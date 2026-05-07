@@ -30,8 +30,9 @@ export function updateProbabilities(currentProbabilities, matchScores) {
     const prior = currentProbabilities[playerName];
     // Default to 0.5 (neutral) if no score provided
     const likelihood = matchScores[playerName] ?? 0.5;
-    // Avoid zero probabilities - use small floor value
-    const adjustedLikelihood = Math.max(likelihood, 0.01);
+    // Keep a tiny floor so contradictions are effectively eliminated without
+    // risking an all-zero distribution if the user misclicks once.
+    const adjustedLikelihood = Math.max(likelihood, 0.000001);
     updated[playerName] = prior * adjustedLikelihood;
     totalScore += updated[playerName];
   }
@@ -78,13 +79,13 @@ export function getTopCandidate(probabilities) {
  * Check if confidence threshold is met for making a guess.
  * Returns true if the top candidate has >= threshold% confidence.
  */
-export function shouldGuess(probabilities, threshold = 80) {
+export function shouldGuess(probabilities, threshold = 80, minimumViableCandidates = 1) {
   const top = getTopCandidate(probabilities);
   if (!top) return false;
 
   // Also check relative confidence: top should be significantly ahead
   const ranked = getRankedPlayers(probabilities);
-  if (ranked.length < 2) return true;
+  if (ranked.length <= minimumViableCandidates) return true;
 
   const relativeConfidence = ranked[0].probability / ranked[1].probability;
 

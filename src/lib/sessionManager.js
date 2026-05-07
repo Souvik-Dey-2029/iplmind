@@ -13,6 +13,7 @@ import {
   getViableCandidates,
   getRankedPlayers,
 } from "./probabilityEngine";
+import { evaluateDeterministicAnswer } from "./answerEvaluator";
 import { generateQuestion, evaluateCandidates, generateGuessExplanation } from "./gemini";
 
 // In-memory session store (maps sessionId -> session data)
@@ -32,6 +33,7 @@ export function createSession() {
     questionHistory: [], // Array of { question, answer }
     questionNumber: 0,
     maxQuestions: 8,
+    minQuestionsBeforeGuess: 5,
     status: "playing", // playing | guessing | finished
     guess: null,
     createdAt: Date.now(),
@@ -66,12 +68,11 @@ export async function processAnswer(sessionId, answer) {
     answer: answer,
   });
 
-  // Use Gemini to evaluate how each candidate matches this Q&A
-  const matchScores = await evaluateCandidates(
-    session.candidates,
-    currentQuestion,
-    answer
-  );
+  // Use hard-coded cricket facts for deterministic questions, then fall back
+  // to Gemini for fuzzy language that needs interpretation.
+  const matchScores =
+    evaluateDeterministicAnswer(session.candidates, currentQuestion, answer) ||
+    (await evaluateCandidates(session.candidates, currentQuestion, answer));
 
   // Update probabilities using Bayesian updating
   session.probabilities = updateProbabilities(session.probabilities, matchScores);
@@ -82,7 +83,11 @@ export async function processAnswer(sessionId, answer) {
   session.questionNumber++;
 
   // Check if we should make a guess
-  if (shouldGuess(session.probabilities) || session.questionNumber >= session.maxQuestions) {
+  const confidentEnough =
+    session.questionNumber >= session.minQuestionsBeforeGuess &&
+    shouldGuess(session.probabilities, 80, 3);
+
+  if (confidentEnough || session.questionNumber >= session.maxQuestions) {
     session.status = "guessing";
     const topCandidate = getTopCandidate(session.probabilities);
     const playerData = players.find((p) => p.name === topCandidate.name);

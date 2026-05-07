@@ -102,7 +102,7 @@ export default function GameClient() {
       setFinishedMessage(
         wasCorrect
           ? "Called it. The cricket brain is warm."
-          : "Noted. That miss becomes useful training data for the next round."
+          : "Noted. I logged the correction for this round."
       );
     } catch (err) {
       setError(err.message);
