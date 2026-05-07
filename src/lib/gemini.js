@@ -35,13 +35,16 @@ ${qaContext}
 QUESTION NUMBER: ${questionNumber} of 8
 
 RULES:
-- Ask ONE yes/no question that best splits the remaining candidates into roughly equal groups (50/50 split).
-- The question should strictly maximize information gain and reduce ambiguity fast.
+- Ask ONE perfectly natural, simple yes/no question that splits the remaining candidates roughly 50/50.
+- QUESTION STYLE: Must be short, direct, and conversational. Easy for a casual fan to answer instantly.
+- DO NOT use multi-part questions, comparative reasoning, or overly long academic wording.
+- BAD EXAMPLE: "Would you associate this player more with explosive batting than leadership?"
+- GOOD EXAMPLE: "Is this player known for aggressive batting?"
 - DO NOT repeat or rephrase any previously asked question (e.g. if you asked about Mumbai Indians, DO NOT ask about them again).
 - IMPORTANT: Penalize repeated question categories heavily. If you have already asked about a team, ask about role, country, or traits.
-- Focus on distinguishing features: nationality (overseas?), role (wicket-keeper?), batting/bowling style (left-arm?), era, achievements.
-- Avoid hyper-specific franchise questions unless there is absolutely no other trait to split the remaining players on.
-- Be specific and strategic. Keep the question conversational and natural.
+- Focus on distinguishing features: nationality (overseas?), role (wicket-keeper?), handedness (left-handed?), era, achievements.
+- Avoid obscure franchise history unless there is no other trait to split the remaining players on.
+- Be specific and strategic. Maximum one idea or trait per question.
 - DO NOT mention specific player names in the question.
 
 QUESTION CATEGORIES TO CONSIDER (pick the most discriminating one):
