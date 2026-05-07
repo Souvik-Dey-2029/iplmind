@@ -12,9 +12,11 @@ import {
   shouldGuess,
   getViableCandidates,
   getRankedPlayers,
+  calculateEntropy,
 } from "./probabilityEngine";
 import { evaluateDeterministicAnswer } from "./answerEvaluator";
-import { generateQuestion, evaluateCandidates, generateGuessExplanation } from "./gemini";
+import { evaluateCandidates, generateGuessExplanation } from "./gemini";
+import { evaluateQuestionAnswer, selectBestQuestion } from "./questionEngine";
 
 // In-memory session store (maps sessionId -> session data)
 const sessions = new Map();
@@ -31,6 +33,7 @@ export function createSession() {
     probabilities,
     candidates: [...players],
     questionHistory: [], // Array of { question, answer }
+    entropyHistory: [calculateEntropy(probabilities)],
     questionNumber: 0,
     maxQuestions: 8,
     minQuestionsBeforeGuess: 5,
@@ -66,11 +69,14 @@ export async function processAnswer(sessionId, answer) {
   session.questionHistory.push({
     question: currentQuestion,
     answer: answer,
+    questionId: session.currentQuestionMeta?.id,
+    category: session.currentQuestionMeta?.category,
   });
 
-  // Use hard-coded cricket facts for deterministic questions, then fall back
-  // to Gemini for fuzzy language that needs interpretation.
+  // Prefer the structured question predicate. Legacy/Gemini parsing remains a
+  // fallback for older sessions or manually injected question text.
   const matchScores =
+    evaluateQuestionAnswer(session.candidates, session.currentQuestionMeta, answer) ||
     evaluateDeterministicAnswer(session.candidates, currentQuestion, answer) ||
     (await evaluateCandidates(session.candidates, currentQuestion, answer));
 
@@ -79,13 +85,14 @@ export async function processAnswer(sessionId, answer) {
 
   // Filter out very unlikely candidates
   session.candidates = getViableCandidates(players, session.probabilities);
+  session.entropyHistory.push(calculateEntropy(session.probabilities));
 
   session.questionNumber++;
 
   // Check if we should make a guess
   const confidentEnough =
     session.questionNumber >= session.minQuestionsBeforeGuess &&
-    shouldGuess(session.probabilities, 80, 3);
+    shouldGuess(session.probabilities, 75, 3);
 
   if (confidentEnough || session.questionNumber >= session.maxQuestions) {
     session.status = "guessing";
@@ -110,13 +117,15 @@ export async function processAnswer(sessionId, answer) {
   }
 
   // Generate the next question
-  const nextQuestion = await generateQuestion(
+  const nextQuestionMeta = selectBestQuestion(
     session.candidates,
-    session.questionHistory,
-    session.questionNumber + 1
+    session.probabilities,
+    session.questionHistory
   );
+  const nextQuestion = nextQuestionMeta.text;
 
   session.currentQuestion = nextQuestion;
+  session.currentQuestionMeta = stripQuestionPredicate(nextQuestionMeta);
 
   // Get top 3 candidates for display
   const ranked = getRankedPlayers(session.probabilities).slice(0, 3);
@@ -127,6 +136,7 @@ export async function processAnswer(sessionId, answer) {
     questionNumber: session.questionNumber,
     candidatesRemaining: session.candidates.length,
     topCandidates: ranked,
+    entropy: session.entropyHistory.at(-1),
   };
 }
 
@@ -137,14 +147,17 @@ export async function getFirstQuestion(sessionId) {
   const session = sessions.get(sessionId);
   if (!session) throw new Error("Session not found");
 
-  const question = await generateQuestion(
-    session.candidates,
-    [],
-    1
-  );
+  const questionMeta = selectBestQuestion(session.candidates, session.probabilities, []);
+  const question = questionMeta.text;
 
   session.currentQuestion = question;
+  session.currentQuestionMeta = stripQuestionPredicate(questionMeta);
   return question;
+}
+
+function stripQuestionPredicate(questionMeta) {
+  const { predicate, yesProbability, noProbability, informationGain, score, ...serializable } = questionMeta;
+  return serializable;
 }
 
 /**

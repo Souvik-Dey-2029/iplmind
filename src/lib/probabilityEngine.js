@@ -30,9 +30,13 @@ export function updateProbabilities(currentProbabilities, matchScores) {
     const prior = currentProbabilities[playerName];
     // Default to 0.5 (neutral) if no score provided
     const likelihood = matchScores[playerName] ?? 0.5;
-    // Keep a tiny floor so contradictions are effectively eliminated without
-    // risking an all-zero distribution if the user misclicks once.
-    const adjustedLikelihood = Math.max(likelihood, 0.000001);
+    // For strict Bayesian updating, punish mismatches harder.
+    let adjustedLikelihood = likelihood;
+    if (likelihood <= 0.1) adjustedLikelihood = 0.01;
+    if (likelihood >= 0.9) adjustedLikelihood = 1.0;
+    
+    // Keep a tiny floor so contradictions do not crash
+    adjustedLikelihood = Math.max(adjustedLikelihood, 0.0001);
     updated[playerName] = prior * adjustedLikelihood;
     totalScore += updated[playerName];
   }
@@ -45,6 +49,15 @@ export function updateProbabilities(currentProbabilities, matchScores) {
   }
 
   return updated;
+}
+
+export function normalizeProbabilities(probabilities) {
+  const total = Object.values(probabilities).reduce((sum, value) => sum + value, 0);
+  if (!total) return probabilities;
+
+  return Object.fromEntries(
+    Object.entries(probabilities).map(([name, probability]) => [name, probability / total])
+  );
 }
 
 /**
@@ -79,7 +92,7 @@ export function getTopCandidate(probabilities) {
  * Check if confidence threshold is met for making a guess.
  * Returns true if the top candidate has >= threshold% confidence.
  */
-export function shouldGuess(probabilities, threshold = 80, minimumViableCandidates = 1) {
+export function shouldGuess(probabilities, threshold = 75, minimumViableCandidates = 1) {
   const top = getTopCandidate(probabilities);
   if (!top) return false;
 
@@ -89,20 +102,22 @@ export function shouldGuess(probabilities, threshold = 80, minimumViableCandidat
 
   const relativeConfidence = ranked[0].probability / ranked[1].probability;
 
-  // Guess if absolute confidence is high OR top is 5x more likely than #2
-  return top.confidence >= threshold || relativeConfidence >= 5;
+  // Guess only when absolute probability and separation both look credible.
+  return top.confidence >= threshold && relativeConfidence >= 2.2;
 }
 
 /**
  * Filter out players with very low probabilities (< 0.1% of top).
  * Returns the remaining viable candidates.
  */
-export function getViableCandidates(players, probabilities, minRatio = 0.001) {
+export function getViableCandidates(players, probabilities, minRatio = 0.005) {
   const top = getTopCandidate(probabilities);
   if (!top) return players;
 
   return players.filter((player) => {
     const prob = probabilities[player.name] || 0;
+    // Aggressive fallback to kill low-probability candidates
+    if (prob < 0.001) return false;
     return prob >= top.probability * minRatio;
   });
 }

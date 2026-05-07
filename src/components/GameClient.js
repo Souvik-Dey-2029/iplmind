@@ -214,6 +214,7 @@ export default function GameClient() {
                   <p className="text-4xl font-black">{guess.player.name}</p>
                   <p className="mt-2 text-white/75">
                     {guess.player.country} | {guess.player.role} |{" "}
+                    {guess.player.currentTeam || guess.player.teams.at(-1)} |{" "}
                     {Math.round(guess.confidence)}% confidence
                   </p>
                   <p className="mt-5 text-lg leading-7">{guess.explanation}</p>

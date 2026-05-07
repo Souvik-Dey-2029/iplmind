@@ -36,6 +36,8 @@ export interface Player {
   battingStyle: string;
   bowlingStyle: string;
   teams: string[];
+  currentTeam: string;
+  historicalTeams: string[];
   active: boolean;
   retired: boolean;
   overseas: boolean;

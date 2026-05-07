@@ -29,6 +29,8 @@ const requiredFields = [
   "battingStyle",
   "bowlingStyle",
   "teams",
+  "currentTeam",
+  "historicalTeams",
   "active",
   "retired",
   "overseas",
@@ -88,6 +90,20 @@ export function validatePlayers(candidatePlayers = players) {
       for (const team of player.teams) {
         if (!allowedTeams.has(team)) {
           errors.push(`${label}: invalid team "${team}"`);
+        }
+      }
+    }
+
+    if (!player.currentTeam || !allowedTeams.has(player.currentTeam)) {
+      errors.push(`${label}: invalid currentTeam "${player.currentTeam}"`);
+    }
+
+    if (!Array.isArray(player.historicalTeams)) {
+      errors.push(`${label}: historicalTeams must be an array`);
+    } else {
+      for (const team of player.historicalTeams) {
+        if (!allowedTeams.has(team)) {
+          errors.push(`${label}: invalid historical team "${team}"`);
         }
       }
     }

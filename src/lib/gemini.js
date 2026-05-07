@@ -15,7 +15,8 @@ export async function generateQuestion(candidates, previousQA, questionNumber) {
   // Build a summary of top candidate attributes for the AI
   const topCandidates = candidates.slice(0, 30);
   const candidateSummary = topCandidates.map((p) => {
-    return `${p.name} (${p.country}, ${p.role}, teams: ${p.teams.join("/")}, ${p.active ? "active" : "retired"})`;
+    const team = p.currentTeam || p.teams.at(-1);
+    return `${p.name} (${p.country}, ${p.role}, current team: ${team}, ${p.active ? "active" : "retired"})`;
   }).join("\n");
 
   // Build previous Q&A context
@@ -34,13 +35,14 @@ ${qaContext}
 QUESTION NUMBER: ${questionNumber} of 8
 
 RULES:
-- Ask ONE yes/no question that best splits the remaining candidates into roughly equal groups
-- The question should maximize information gain
-- DO NOT repeat or rephrase any previously asked question
-- Focus on distinguishing features: nationality, role, batting/bowling style, teams, captaincy, era, achievements
-- Be specific and strategic
-- Keep the question conversational and natural
-- DO NOT mention specific player names in the question
+- Ask ONE yes/no question that best splits the remaining candidates into roughly equal groups (50/50 split).
+- The question should strictly maximize information gain and reduce ambiguity fast.
+- DO NOT repeat or rephrase any previously asked question (e.g. if you asked about Mumbai Indians, DO NOT ask about them again).
+- IMPORTANT: Penalize repeated question categories heavily. If you have already asked about a team, ask about role, country, or traits.
+- Focus on distinguishing features: nationality (overseas?), role (wicket-keeper?), batting/bowling style (left-arm?), era, achievements.
+- Avoid hyper-specific franchise questions unless there is absolutely no other trait to split the remaining players on.
+- Be specific and strategic. Keep the question conversational and natural.
+- DO NOT mention specific player names in the question.
 
 QUESTION CATEGORIES TO CONSIDER (pick the most discriminating one):
 - Nationality (Indian vs overseas, specific country)
@@ -89,7 +91,7 @@ export async function evaluateCandidates(candidates, question, answer) {
   for (let i = 0; i < candidates.length; i += batchSize) {
     const batch = candidates.slice(i, i + batchSize);
     const playerList = batch.map((p) => {
-      return `${p.name}: ${p.country}, ${p.role}, ${p.battingStyle} bat, ${p.bowlingStyle} bowl, teams=[${p.teams.join(",")}], captain=${p.captain}, active=${p.active}, overseas=${p.overseas}, opener=${p.opener}, finisher=${p.finisher}, death_bowler=${p.deathBowler}, orange_cap=${p.orangeCap}, purple_cap=${p.purpleCap}, titles=${p.titlesWon}, power_hitter=${p.powerHitter}, anchor=${p.anchorBatter}, playoffs_hero=${p.playoffsHero}, iconic=${p.iconic}`;
+      return `${p.name}: ${p.country}, ${p.role}, ${p.battingStyle} bat, ${p.bowlingStyle} bowl, current_team=${p.currentTeam}, teams=[${p.teams.join(",")}], captain=${p.captain}, active=${p.active}, overseas=${p.overseas}, wicket_keeper=${p.wicketKeeper}, opener=${p.opener}, finisher=${p.finisher}, death_bowler=${p.deathBowler}, orange_cap=${p.orangeCap}, purple_cap=${p.purpleCap}, titles=${p.titlesWon}, power_hitter=${p.powerHitter}, anchor=${p.anchorBatter}, playoffs_hero=${p.playoffsHero}, iconic=${p.iconic}`;
     }).join("\n");
 
     const prompt = `You are evaluating IPL cricket players against a question and answer.
@@ -155,6 +157,7 @@ Write a brief, confident 1-2 sentence explanation of why this player matches all
     const result = await model.generateContent(prompt);
     return result.response.text().trim();
   } catch (error) {
-    return `${player.name} - ${player.role} from ${player.country} who plays for ${player.teams[player.teams.length - 1]}.`;
+    const team = player.currentTeam || player.teams[player.teams.length - 1];
+    return `${player.name} - ${player.role} from ${player.country}, currently with ${team}.`;
   }
 }

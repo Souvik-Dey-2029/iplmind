@@ -1,0 +1,1290 @@
+{
+  "ruturaj-gaikwad": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shivam-dube": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "ambati-rayudu": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "devon-conway": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "moeen-ali": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "ms-dhoni": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "ravindra-jadeja": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "dwaine-pretorius": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "jagadeesan-narayan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "dwayne-bravo": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mitchell-santner": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "chris-jordan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "maheesh-theekshana": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "simarjeet-singh": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mukesh-choudhary": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "prashant-solanki": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "matheesha-pathirana": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "tushar-deshpande": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "david-warner": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rishabh-pant": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "prithvi-shaw": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mitchell-marsh": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rovman-powell": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "axar-patel": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "lalit-yadav": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shardul-thakur": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sarfaraz-khan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "kuldeep-yadav": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mandeep-singh": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "srikar-bharat": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "ripal-patel": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mustafizur-rahman": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "anrich-nortje": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "khaleel-ahmed": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "chetan-sakariya": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "hardik-pandya": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shubman-gill": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "david-miller": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "wriddhiman-saha": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rahul-tewatia": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "matthew-wade": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sai-sudharsan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "abhinav-manohar": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rashid-khan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "vijay-shankar": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "lockie-ferguson": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "alzarri-joseph": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "pradeep-sangwan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mohammad-shami": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "yash-dayal": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sai-kishore": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "varun-aaron": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "darshan-nalkande": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shreyas-iyer": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "nitish-rana": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "andre-russell": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "venkatesh-iyer": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rinku-singh": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sam-billings": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "ajinkya-rahane": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sunil-narine": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "pat-cummins": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "umesh-yadav": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "tim-seifert": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sheldon-jackson": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "b-indrajith": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "varun-chakaravarthy": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rasikh-salam": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "abhijeet-tomar": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shivam-mavi": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "harshit-rana": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "tim-southee": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "anukul-roy": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "k-l-rahul": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "quinton-de-kock": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "deepak-hooda": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "krunal-pandya": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "ayush-badoni": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "marcus-stoinis": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "manish-pandey": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "evin-lewis": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "jason-holder": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "dushmantha-chameera": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mohsin-khan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "avesh-khan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "manan-vohra": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "karan-sharma": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "ravi-bishnoi": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "krishnappa-gowtham": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "andrew-tye": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "ishan-kishan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "tilak-varma": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "suryakumar-yadav": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rohit-sharma": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "tim-david": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "dewald-brevis": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "jaydev-unadkat": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "ramandeep-singh": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "hrithik-shokeen": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "daniel-sams": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sherfane-rutherford": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "anmolpreet-singh": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "murugan-ashwin": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "fabian-allen": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "kumar-kartikeya-singh": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "tristan-stubbs": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "jasprit-bumrah": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "riley-meredith": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "tymal-mills": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "basil-thampi": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mayank-markande": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shikhar-dhawan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "liam-livingstone": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "jonny-bairstow": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "jitesh-sharma": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "bhanuka-rajapaksa": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mayank-agarwal": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shahrukh-khan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rahul-chahar": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "odean-smith": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "kagiso-rabada": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rishi-dhawan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "harpreet-brar": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "arshdeep-singh": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "prabhsimran-singh": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rajangad-bawa": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "vaibhav-arora": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "prerak-mankad": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "nathan-ellis": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sandeep-sharma": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "faf-du-plessis": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "virat-kohli": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rajat-patidar": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "dinesh-karthik": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "glenn-maxwell": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shahbaz-ahmed": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "anuj-rawat": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mahipal-lomror": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "suyash-s-prabhudessai": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "harshal-patel": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "wanindu-hasaranga": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "mohammed-siraj": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "josh-hazlewood": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "david-willey": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "akash-deep": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "jos-buttler": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sanju-samson": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "devdutt-padikkal": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shimron-hetmyer": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "yashasvi-jaiswal": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "ravichandran-ashwin": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "riyan-parag": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "trent-boult": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "daryl-mitchell": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "james-neesham": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rassie-van-der-dussen": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "karun-nair": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "obed-mccoy": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "prasidh-krishna": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "yuzvendra-chahal": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "navdeep-saini": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "nathan-coulter-nile": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "kuldeep-sen": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "abhishek-sharma": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "rahul-tripathi": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "aiden-markram": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "nicholas-pooran": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "kane-williamson": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "washington-sundar": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shashank-singh": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "romario-shepherd": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "priyam-garg": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "bhuvneshwar-kumar": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "shreyas-gopal": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "marco-jansen": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sean-abbott": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "kartik-tyagi": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "abdul-samad": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "umran-malik": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "fazalhaq-farooqi": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "jagadeesha-suchith": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "t-natarajan": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "sam-curran": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  },
+  "jacob-bethell": {
+    "country": 1,
+    "battingStyle": 1,
+    "bowlingStyle": 1,
+    "role": 1,
+    "name": 1
+  }
+}
