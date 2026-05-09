@@ -11,7 +11,6 @@ import {
   getTopCandidate,
   shouldGuess,
   getViableCandidates,
-  getRankedPlayers,
   calculateEntropy,
 } from "./probabilityEngine";
 import { evaluateDeterministicAnswer } from "./answerEvaluator";
@@ -29,11 +28,35 @@ const INITIAL_ADAPTIVE_LIMIT = 12;
 // Lightweight atomic update mechanism to prevent concurrent corruption
 const sessionLocks = new Map();
 
+// Automatic session cleanup timer (runs every 30 minutes)
+let cleanupTimer = null;
+
+/**
+ * Initialize background cleanup task.
+ * Removes sessions older than 1 hour from memory.
+ * Called once at module load to set up periodic cleanup.
+ */
+function initializeSessionCleanup() {
+  if (cleanupTimer) return; // Already initialized
+
+  cleanupTimer = setInterval(() => {
+    cleanupSessions();
+  }, 30 * 60 * 1000); // Run every 30 minutes
+
+  // Unref timer so it doesn't prevent process exit
+  if (cleanupTimer.unref) cleanupTimer.unref();
+}
+
+// Initialize cleanup on module load
+if (typeof globalThis !== "undefined") {
+  initializeSessionCleanup();
+}
+
 function atomicSessionUpdate(sessionId, updateFn) {
   // Retrieve session - synchronous check
   const session = sessions.get(sessionId);
   if (!session) return null;
-  
+
   // Mark session as being updated (lightweight flag, not a true mutex)
   sessionLocks.set(sessionId, true);
   try {
@@ -269,17 +292,24 @@ function shouldMakeFinalGuess(session) {
 
 function getDisplayCandidates(session) {
   const viableNames = new Set(session.candidates.map((player) => player.name));
-  return getRankedPlayers(session.probabilities)
-    .filter((candidate) => viableNames.has(candidate.name))
-    .map((candidate) => {
-      const player = sanitizePlayerForRender(players.find((p) => p.name === candidate.name));
-      return {
-        ...candidate,
-        id: player?.canonicalPlayerId || player?.id || candidate.name,
-        name: player?.name || candidate.name,
-        player,
-      };
-    });
+  // Compute top candidates by probability directly (no external dependency)
+  const topByProbability = [];
+  for (const [name, prob] of Object.entries(session.probabilities)) {
+    if (viableNames.has(name)) {
+      topByProbability.push({ name, confidence: prob * 100 });
+    }
+  }
+  topByProbability.sort((a, b) => b.confidence - a.confidence);
+
+  return topByProbability.map((candidate) => {
+    const player = sanitizePlayerForRender(players.find((p) => p.name === candidate.name));
+    return {
+      ...candidate,
+      id: player?.canonicalPlayerId || player?.id || candidate.name,
+      name: player?.name || candidate.name,
+      player,
+    };
+  });
 }
 
 function buildDebugReasoningPanel(session) {

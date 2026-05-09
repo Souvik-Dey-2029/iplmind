@@ -31,6 +31,7 @@ const staticQuestions = [
 ];
 
 export function selectBestQuestion(candidates, probabilities, history = []) {
+  // Build questions dynamically based on actual candidate pool
   const options = buildQuestionOptions(candidates);
   const scopedProbabilities = normalizeProbabilities(
     Object.fromEntries(candidates.map((player) => [player.name, probabilities[player.name] || 0]))
@@ -53,7 +54,7 @@ export function selectBestQuestion(candidates, probabilities, history = []) {
 export function evaluateQuestionAnswer(candidates, questionMeta, answer) {
   const answerKind = normalizeAnswer(answer);
   if (answerKind === "neutral") return null;
-  
+
   if (!questionMeta) {
     console.warn("[questionEngine] Missing questionMeta in evaluateQuestionAnswer - cannot evaluate answer");
     return neutralScores(candidates, 0.55);
@@ -171,7 +172,7 @@ function hydrateQuestion(meta) {
   if (!staticQuestionCache) {
     staticQuestionCache = new Map(staticQuestions.map(q => [q.id, q]));
   }
-  
+
   const staticQuestion = staticQuestionCache.get(meta.id);
   return staticQuestion || hydrateDynamicQuestion(meta);
 }

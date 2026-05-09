@@ -9,7 +9,8 @@ import {
   getViableCandidates,
   shouldGuess
 } from "../lib/probabilityEngine.js";
-import { generateQuestion, evaluateCandidates } from "../lib/gemini.js";
+import { generateQuestion } from "./questionGeneration.js";
+import { evaluateCandidates } from "../lib/gemini.js";
 
 const TEST_CATEGORIES = {
   "EASY": ["Virat Kohli", "MS Dhoni", "Rohit Sharma"],
@@ -60,7 +61,7 @@ export async function runSimulation(targetPlayerName) {
     entropyLog.push(entropy);
 
     console.log(`[Step ${step}] Candidates: ${candidates.length} | Entropy: ${entropy.toFixed(3)}`);
-    
+
     // Generate Question
     const question = await generateQuestion(candidates, previousQA, step);
     console.log(`  Q: ${question}`);
@@ -82,16 +83,16 @@ export async function runSimulation(targetPlayerName) {
     if (maxProb < 0.05 && step > 3) {
       console.log(`  [!] WARNING: Pool collapsed (contradiction detected). Softening penalties...`);
       // Contradiction recovery: apply a softer update or partially reset
-      for(let p of Object.keys(probabilities)) {
-          probabilities[p] = Math.sqrt(probabilities[p]); // Soften the curve
+      for (let p of Object.keys(probabilities)) {
+        probabilities[p] = Math.sqrt(probabilities[p]); // Soften the curve
       }
     }
 
     candidates = getViableCandidates(players, probabilities);
-    
+
     // Log Top 3
     const ranked = getRankedPlayers(probabilities);
-    console.log(`  Top: 1. ${ranked[0].name} (${(ranked[0].probability*100).toFixed(1)}%) | 2. ${ranked[1]?.name} (${(ranked[1]?.probability*100).toFixed(1)}%) | 3. ${ranked[2]?.name} (${(ranked[2]?.probability*100).toFixed(1)}%)`);
+    console.log(`  Top: 1. ${ranked[0].name} (${(ranked[0].probability * 100).toFixed(1)}%) | 2. ${ranked[1]?.name} (${(ranked[1]?.probability * 100).toFixed(1)}%) | 3. ${ranked[2]?.name} (${(ranked[2]?.probability * 100).toFixed(1)}%)`);
 
     // Check Win Condition
     if (shouldGuess(probabilities, 75, 3)) {
@@ -113,7 +114,7 @@ export async function runSimulation(targetPlayerName) {
  */
 async function runBenchmark() {
   const results = [];
-  
+
   console.log("🚀 INITIALIZING REASONING BENCHMARK SUITE");
 
   for (const category of ["EASY", "MEDIUM", "HARD"]) {
@@ -136,5 +137,5 @@ async function runBenchmark() {
 
 // Run if executed directly
 if (process.argv[1] && process.argv[1].endsWith('reasoningBenchmark.js')) {
-    runBenchmark();
+  runBenchmark();
 }

@@ -1,7 +1,36 @@
 /**
  * Probability Engine - Bayesian updating system for narrowing down IPL players.
  * Each player starts with equal probability, and scores are updated after every answer.
+ * 
+ * SCORING STRATEGY:
+ * Likelihood adjustment uses bounded smooth scaling to prevent dead zones:
+ * - Values < 0.2 (poor match) → scaled down to 0.0001
+ * - Values 0.2-0.8 (moderate/uncertain) → linear interpolation
+ * - Values > 0.8 (strong match) → scaled up to 1.0
+ * This prevents confidence cliffs while maintaining intuitive Bayesian behavior.
  */
+
+/**
+ * Scale likelihood smoothly to prevent confidence jumps.
+ * Uses bounded transformation: extreme scores get pushed harder, moderate scores interpolate.
+ */
+function adjustLikelihood(likelihood) {
+  // For extremely poor matches (< 0.2), confidence in elimination
+  if (likelihood < 0.2) {
+    // Map [0, 0.2) → [0.0001, 0.0001] (floor elimination)
+    return 0.0001;
+  }
+
+  // For very strong matches (> 0.8), boost confidence
+  if (likelihood > 0.8) {
+    // Map (0.8, 1.0] → [0.5, 1.0] (smooth increase)
+    return 0.5 + (likelihood - 0.8) * 2.5;
+  }
+
+  // For moderate/uncertain scores (0.2-0.8), linear interpolation
+  // This prevents dead zones and enables smooth updates
+  return likelihood;
+}
 
 /**
  * Initialize equal probabilities for all players.
@@ -30,14 +59,12 @@ export function updateProbabilities(currentProbabilities, matchScores) {
     const prior = currentProbabilities[playerName];
     // Default to 0.5 (neutral) if no score provided
     const likelihood = matchScores[playerName] ?? 0.5;
-    // For strict Bayesian updating, punish mismatches harder.
-    let adjustedLikelihood = likelihood;
-    if (likelihood <= 0.2) adjustedLikelihood = 0.0001;
-    if (likelihood >= 0.8) adjustedLikelihood = 1.0;
-    
+    // Apply smooth likelihood adjustment for stable confidence scaling
+    const adjustedLikelihood = adjustLikelihood(likelihood);
+
     // Keep a tiny floor so contradictions do not crash
-    adjustedLikelihood = Math.max(adjustedLikelihood, 0.0000001);
-    updated[playerName] = prior * adjustedLikelihood;
+    const finalLikelihood = Math.max(adjustedLikelihood, 0.0000001);
+    updated[playerName] = prior * finalLikelihood;
     totalScore += updated[playerName];
   }
 

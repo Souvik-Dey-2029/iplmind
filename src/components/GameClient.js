@@ -70,9 +70,10 @@ export default function GameClient() {
 
       setQuestionNumber(data.questionNumber);
       setCandidatesRemaining(data.candidatesRemaining);
-      setConfidence(data.confidence || data.guess?.confidence || 0);
+      // Use nullish coalescing (??) to avoid treating valid 0 values as falsy
+      setConfidence(data.confidence ?? data.guess?.confidence ?? 0);
       setAdaptiveQuestionLimit(data.adaptiveQuestionLimit || adaptiveQuestionLimit);
-      setDebugReasoningPanel(data.debugReasoningPanel || null);
+      setDebugReasoningPanel(data.debugReasoningPanel ?? null);
 
       if (data.status === "guessing") {
         setGuess(data.guess);
@@ -81,7 +82,8 @@ export default function GameClient() {
       }
 
       setQuestion(data.question);
-      setTopCandidates(data.topCandidates || []);
+      // Normalize response: ensure topCandidates is always an array
+      setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
     } catch (err) {
       setError(err.message);
     } finally {
