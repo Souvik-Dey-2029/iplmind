@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>IPL Genius - Guessing Game</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-variant": "#e1e3de",
+                      "on-tertiary-fixed": "#002020",
+                      "secondary": "#954a00",
+                      "inverse-surface": "#2e312e",
+                      "tertiary-container": "#004c4c",
+                      "surface-dim": "#d9dbd6",
+                      "primary": "#00361a",
+                      "on-tertiary-fixed-variant": "#004f4f",
+                      "primary-fixed-dim": "#9dd3aa",
+                      "outline-variant": "#c1c9bf",
+                      "inverse-on-surface": "#f0f1ec",
+                      "on-secondary-fixed-variant": "#723700",
+                      "on-surface": "#191c19",
+                      "error-container": "#ffdad6",
+                      "surface": "#f8faf5",
+                      "surface-container-high": "#e7e9e4",
+                      "tertiary-fixed": "#93f2f2",
+                      "on-primary": "#ffffff",
+                      "primary-container": "#1a4d2e",
+                      "tertiary": "#003434",
+                      "outline": "#717971",
+                      "secondary-fixed-dim": "#ffb785",
+                      "secondary-fixed": "#ffdcc6",
+                      "surface-container": "#edeee9",
+                      "on-primary-fixed": "#00210e",
+                      "on-secondary": "#ffffff",
+                      "on-primary-fixed-variant": "#1d5031",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#301400",
+                      "on-error-container": "#93000a",
+                      "tertiary-fixed-dim": "#76d6d5",
+                      "on-background": "#191c19",
+                      "primary-fixed": "#b8f0c5",
+                      "surface-container-highest": "#e1e3de",
+                      "on-primary-container": "#88bd95",
+                      "on-tertiary-container": "#5fc0bf",
+                      "background": "#f8faf5",
+                      "surface-container-low": "#f3f4ef",
+                      "on-error": "#ffffff",
+                      "secondary-container": "#fd8100",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#5d2c00",
+                      "surface-tint": "#366847",
+                      "error": "#ba1a1a",
+                      "on-surface-variant": "#414942",
+                      "inverse-primary": "#9dd3aa",
+                      "surface-bright": "#f8faf5"
+              },
+              "borderRadius": {
+                      "DEFAULT": "1rem",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "stack-gap-sm": "12px",
+                      "stack-gap-lg": "48px",
+                      "gutter": "24px",
+                      "margin-desktop": "64px",
+                      "container-max-width": "1280px",
+                      "margin-mobile": "20px",
+                      "stack-gap-md": "24px",
+                      "unit": "8px"
+              },
+              "fontFamily": {
+                      "headline-lg-mobile": ["Syne"],
+                      "caption": ["Plus Jakarta Sans"],
+                      "body-lg": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Syne"],
+                      "headline-md": ["Syne"],
+                      "display-lg": ["Syne"],
+                      "body-md": ["Plus Jakarta Sans"],
+                      "label-bold": ["Plus Jakarta Sans"]
+              },
+              "fontSize": {
+                      "headline-lg-mobile": ["32px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "caption": ["12px", {"lineHeight": "1.4", "fontWeight": "500"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "headline-lg": ["40px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "display-lg": ["64px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "800"}],
+                      "body-md": ["16px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-bold": ["14px", {"lineHeight": "1.2", "fontWeight": "700"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .stadium-gradient {
+            background: radial-gradient(circle at top right, rgba(29, 80, 49, 0.15) 0%, transparent 70%),
+                        radial-gradient(circle at bottom left, rgba(253, 129, 0, 0.1) 0%, transparent 60%),
+                        #f8faf5;
+        }
+        .shimmer-effect {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            background-size: 200% 100%;
+        }
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="stadium-gradient min-h-screen text-on-surface selection:bg-secondary-container selection:text-on-secondary-container overflow-x-hidden">
+<!-- Top Navigation Shell -->
+<header class="bg-surface/60 dark:bg-surface-container-lowest/40 backdrop-blur-xl border-b border-white/20 shadow-sm docked full-width top-0 sticky z-50">
+<nav class="flex justify-between items-center w-full px-gutter max-w-container-max-width mx-auto py-4">
+<div class="font-headline-lg text-headline-lg font-extrabold text-primary dark:text-primary-fixed tracking-tight">
+                IPL Genius
+            </div>
+<div class="hidden md:flex gap-stack-gap-md items-center">
+<a class="text-secondary dark:text-secondary-fixed font-bold hover:text-secondary-container transition-colors duration-300" href="#">Predict</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-secondary-container transition-colors duration-300" href="#">Leaderboard</a>
+<a class="text-on-surface-variant dark:text-outline-variant hover:text-secondary-container transition-colors duration-300" href="#">History</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-primary">leaderboard</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-primary">help</span>
+</button>
+<button class="p-2 rounded-full hover:bg-surface-variant transition-colors">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+</button>
+</div>
+</nav>
+</header>
+<main class="max-w-container-max-width mx-auto px-gutter py-stack-gap-lg">
+<!-- Hero Section -->
+<div class="relative flex items-center justify-center min-h-[70vh] text-center">
+<!-- Background Abstract Elements & Floating Objects -->
+<div class="absolute inset-0 -z-10 pointer-events-none overflow-visible">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] aspect-square border border-primary/5 rounded-full scale-150"></div>
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] aspect-square border border-secondary-container/10 rounded-full scale-125"></div>
+<!-- Floating Cricket Ball -->
+<div class="absolute top-0 right-[15%] floating hidden md:block">
+<div class="w-20 h-20 rounded-full bg-gradient-to-br from-error to-secondary-container shadow-2xl flex items-center justify-center rotate-12">
+<div class="w-full h-[2px] bg-white/40 shadow-sm"></div>
+</div>
+</div>
+<!-- Floating Stumps -->
+<div class="absolute bottom-10 left-[10%] floating hidden md:block" style="animation-delay: -2s;">
+<div class="flex gap-1 items-end">
+<div class="w-3 h-32 bg-primary-container/40 rounded-full rotate-[-5deg]"></div>
+<div class="w-3 h-36 bg-primary-container/40 rounded-full"></div>
+<div class="w-3 h-32 bg-primary-container/40 rounded-full rotate-[5deg]"></div>
+</div>
+</div>
+<!-- Decorative Blur -->
+<div class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-fixed-dim/10 rounded-full blur-[100px] -z-10"></div>
+</div>
+<div class="max-w-3xl space-y-stack-gap-md relative">
+<h1 class="font-headline-lg text-headline-lg md:text-display-lg text-primary leading-tight">
+                    Think of any <br/>
+<span class="text-secondary-container">IPL player.</span>
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mx-auto max-w-xl">
+                    Pick a legendary veteran or a rising star. Answer a few questions and let the AI cook. Can you beat the machine?
+                </p>
+<div class="pt-unit">
+<button class="group relative inline-flex items-center gap-3 px-12 py-6 bg-gradient-to-r from-secondary-container to-secondary text-on-secondary font-headline-md text-headline-md rounded-xl shadow-lg hover:scale-105 transition-all duration-300 active:scale-95 overflow-hidden">
+<span class="relative z-10">Start Game</span>
+<span class="material-symbols-outlined relative z-10" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+<div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500"></div>
+<!-- Glow effect -->
+<div class="absolute -inset-1 bg-tertiary-fixed opacity-0 group-hover:opacity-30 blur-xl transition-opacity duration-300"></div>
+</button>
+</div>
+<div class="flex flex-col items-center gap-4 pt-stack-gap-md">
+<div class="flex -space-x-4">
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-primary-container flex items-center justify-center text-on-primary font-bold text-caption overflow-hidden">
+<img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcmeG1iNkzzgvUpT9ezgagOEcBkofx1WEIS7hs6bo18Z-XkqiY682vbZYDqca7Sk72JfZDs1bj5UzqbenA1c4w4Kt5BYWJLisnd9PDABZRyVtsN-TvOisAMKOgEWitMKN6yjMYaA4HsoMe8cP09gxR_FAojtuwymEy1_js7D59K7HpCdnIiFR0Hy3wAyTEKhfqigg-TiDhYqzqHBMrsFznebwlgq2_edXuR9EVJsiufaiaxZdiP-OLnu2fZ6U7jN808mbz720OSmI"/>
+</div>
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-secondary-container flex items-center justify-center text-on-secondary font-bold text-caption overflow-hidden">
+<img alt="User" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqENsD9rn_gBJJLU4nlhGkUAzsIAFWtRrdR9_662-zU-thn91Vsf9JbfoJn0g3Gb1ZStYWMsLv8TZcYiOxiLD4aoE6e9xntvJ-rpsbE4wbyMwN4PRvrC5KftQbDNu5i0sTqQ8zX8PkEg-Nf776MLjizPIyVCPL8NZl4w-MJ1ISPMgUx2jbyLjZosrp-LkyRmzfeEe0ZDCSWWvkGZBipxsL1Zl6DakezdwRWLYwYsMbv_8UYF97ndsV3mDrH4-Fsf0rQ_iEMHERMIM"/>
+</div>
+<div class="w-12 h-12 rounded-full border-2 border-surface bg-surface-container-high flex items-center justify-center text-primary font-bold text-caption">+2k</div>
+</div>
+<p class="text-caption text-outline font-label-bold">Players guessing right now</p>
+</div>
+</div>
+</div>
+<!-- Features Bento Grid -->
+<section class="mt-stack-gap-lg">
+<div class="grid md:grid-cols-12 gap-6">
+<!-- Large Bento Card -->
+<div class="md:col-span-8 bg-surface-container-low rounded-lg p-stack-gap-md flex flex-col md:flex-row items-center gap-8 border border-outline-variant/20 shadow-sm overflow-hidden group">
+<div class="flex-1 space-y-4">
+<div class="inline-flex items-center gap-2 px-3 py-1 bg-tertiary-fixed/30 text-on-tertiary-fixed-variant rounded-full text-caption font-bold">
+<span class="material-symbols-outlined text-[16px]">bolt</span> LIVE DATA
+                        </div>
+<h3 class="font-headline-md text-headline-md text-primary">Powered by 15 Years of IPL Stats</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                            Our neural network digests every ball bowled, every run scored, and every boundary hit since 2008. It's almost impossible to win.
+                        </p>
+</div>
+<div class="w-full md:w-64 h-48 bg-primary-container rounded-xl flex items-center justify-center p-4 relative overflow-hidden group-hover:scale-105 transition-transform duration-500">
+<div class="grid grid-cols-4 gap-2 opacity-40">
+<div class="h-24 w-4 bg-tertiary-fixed rounded-full animate-pulse"></div>
+<div class="h-32 w-4 bg-tertiary-fixed rounded-full delay-75 animate-pulse"></div>
+<div class="h-20 w-4 bg-tertiary-fixed rounded-full delay-150 animate-pulse"></div>
+<div class="h-28 w-4 bg-tertiary-fixed rounded-full delay-300 animate-pulse"></div>
+</div>
+<span class="absolute material-symbols-outlined text-white text-[64px]" style="font-variation-settings: 'FILL' 1;">insights</span>
+</div>
+</div>
+<!-- Small Bento Card -->
+<div class="md:col-span-4 glass-panel rounded-lg p-stack-gap-md border border-secondary-container/20 shadow-sm group">
+<div class="w-12 h-12 bg-secondary-container/10 rounded-xl flex items-center justify-center mb-4 text-secondary-container group-hover:rotate-12 transition-transform">
+<span class="material-symbols-outlined text-[32px]">emoji_events</span>
+</div>
+<h3 class="font-headline-md text-headline-md text-primary mb-2">Global Leaderboard</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                        Compete with cricket fans worldwide. Can you trick the AI more times than anyone else?
+                    </p>
+</div>
+<!-- Social Bento Card -->
+<div class="md:col-span-4 bg-primary text-on-primary rounded-lg p-stack-gap-md shadow-lg flex flex-col justify-between group overflow-hidden relative">
+<div class="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent"></div>
+<div>
+<h3 class="font-headline-md text-headline-md mb-2">Social Play</h3>
+<p class="text-on-primary/70">Challenge your friends and share your winning streaks on social media.</p>
+</div>
+<div class="mt-8 flex justify-end">
+<span class="material-symbols-outlined text-[80px] text-white/10 group-hover:scale-125 group-hover:text-white/20 transition-all duration-500">share</span>
+</div>
+</div>
+<!-- Stats Bento Card -->
+<div class="md:col-span-8 bg-surface-container-highest rounded-lg p-stack-gap-md border border-outline-variant/30 flex flex-col justify-center">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+<div>
+<div class="text-display-lg text-primary font-bold">500+</div>
+<div class="text-caption font-bold text-outline">PLAYERS</div>
+</div>
+<div>
+<div class="text-display-lg text-secondary-container font-bold">1M+</div>
+<div class="text-caption font-bold text-outline">GUESSES</div>
+</div>
+<div>
+<div class="text-display-lg text-primary font-bold">98%</div>
+<div class="text-caption font-bold text-outline">ACCURACY</div>
+</div>
+<div>
+<div class="text-display-lg text-secondary-container font-bold">24/7</div>
+<div class="text-caption font-bold text-outline">LIVE OPS</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+<footer class="bg-surface-container/80 dark:bg-surface-container-highest/80 backdrop-blur-xl fixed bottom-0 w-full z-50 rounded-t-lg shadow-[0_-8px_40px_-10px_rgba(0,54,26,0.15)] md:hidden">
+<div class="flex justify-around items-center px-4 py-3 pb-safe">
+<button class="flex flex-col items-center justify-center bg-secondary-container text-on-secondary-container rounded-xl px-6 py-2 shadow-[0_0_15px_rgba(253,129,0,0.4)] -translate-y-1 transition-transform duration-300">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-bold text-[10px]">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-6 py-2 hover:bg-surface-variant/50 transition-all duration-300">
+<span class="material-symbols-outlined">psychology</span>
+<span class="font-label-bold text-[10px]">Predict</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-6 py-2 hover:bg-surface-variant/50 transition-all duration-300">
+<span class="material-symbols-outlined">trophy</span>
+<span class="font-label-bold text-[10px]">Leaderboard</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant px-6 py-2 hover:bg-surface-variant/50 transition-all duration-300">
+<span class="material-symbols-outlined">history</span>
+<span class="font-label-bold text-[10px]">History</span>
+</button>
+</div>
+</footer>
+<!-- Web Footer Spacer -->
+<div class="h-24 md:h-12"></div>
+</body></html>

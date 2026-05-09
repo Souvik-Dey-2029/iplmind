@@ -1,31 +1,22 @@
 /**
- * AI Provider - Two-Layer Fallback System
- * Layer 1: Gemini (Primary - Fast & Cost-effective)
- * Layer 2: OpenRouter (Fallback - Reliable backup)
- * 
- * Transparently handles provider selection and failure recovery.
+ * AI Provider
+ * Uses OpenRouter API.
  */
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { sanitizePlayerForRender } from "./playerNormalizer";
 import { logError, logWarn } from "./logger";
 
 // Initialize providers
-const geminiKey = process.env.GEMINI_API_KEY || "";
 const openRouterKey = process.env.OPENROUTER_API_KEY || "";
-
-const genAI = geminiKey ? new GoogleGenerativeAI(geminiKey) : null;
 
 // OpenRouter configuration
 const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1";
-const OPENROUTER_MODEL = "google/gemini-2.0-flash-001"; // OpenRouter's Gemini endpoint
+const OPENROUTER_MODEL = "google/gemini-2.0-flash-001"; // OpenRouter's endpoint
 
 /**
  * AI Provider Status and Metrics
  */
 export const aiProviderMetrics = {
-    geminiSuccesses: 0,
-    geminiFailures: 0,
     openRouterSuccesses: 0,
     openRouterFailures: 0,
     fallbackCount: 0,
@@ -38,13 +29,7 @@ function logProviderUsage(provider, success, operation) {
     const timestamp = new Date().toISOString();
     const status = success ? "✅" : "❌";
 
-    if (provider === "gemini") {
-        if (success) {
-            aiProviderMetrics.geminiSuccesses++;
-        } else {
-            aiProviderMetrics.geminiFailures++;
-        }
-    } else if (provider === "openrouter") {
+    if (provider === "openrouter") {
         if (success) {
             aiProviderMetrics.openRouterSuccesses++;
         } else {
@@ -59,26 +44,6 @@ function logProviderUsage(provider, success, operation) {
     console.log(
         `[${timestamp}] ${status} ${provider.toUpperCase()} - ${operation}`
     );
-}
-
-/**
- * Call Gemini API with error handling
- */
-async function callGemini(prompt, batchInfo = "") {
-    if (!genAI) {
-        throw new Error("Gemini API key not configured");
-    }
-
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
-    try {
-        const result = await model.generateContent(prompt);
-        logProviderUsage("gemini", true, `generateContent ${batchInfo}`);
-        return result.response.text().trim();
-    } catch (error) {
-        logProviderUsage("gemini", false, `generateContent ${batchInfo}`);
-        throw error;
-    }
 }
 
 /**
@@ -135,7 +100,7 @@ async function callOpenRouter(prompt, batchInfo = "") {
 }
 
 /**
- * Try Gemini first, fallback to OpenRouter
+ * Try AI provider
  */
 async function withFallback(
     operation,
@@ -143,28 +108,19 @@ async function withFallback(
     batchInfo = ""
 ) {
     try {
-        return await callGemini(prompt, batchInfo);
-    } catch (geminiError) {
-        console.warn(`Gemini failed, trying OpenRouter: ${geminiError.message}`);
-        aiProviderMetrics.fallbackCount++;
-
-        try {
-            return await callOpenRouter(prompt, batchInfo);
-        } catch (openRouterError) {
-            const errorMsg = `Both AI providers failed - Gemini: ${geminiError.message}, OpenRouter: ${openRouterError.message}`;
-            logError("aiProvider", errorMsg, new Error(errorMsg), {
-                operation,
-                geminiError: geminiError.message,
-                openRouterError: openRouterError.message,
-            });
-            throw new Error(errorMsg);
-        }
+        return await callOpenRouter(prompt, batchInfo);
+    } catch (error) {
+        const errorMsg = `AI provider failed - OpenRouter: ${error.message}`;
+        logError("aiProvider", errorMsg, new Error(errorMsg), {
+            operation,
+            error: error.message,
+        });
+        throw new Error(errorMsg);
     }
 }
 
 /**
- * Evaluate candidates with two-layer fallback.
- * Uses Gemini by default, falls back to OpenRouter on failure.
+ * Evaluate candidates.
  */
 export async function evaluateCandidates(candidates, question, answer) {
     const batchSize = 50;
@@ -230,8 +186,7 @@ Important: Use exact player names as given. Return valid JSON only.`;
 }
 
 /**
- * Generate guess explanation with two-layer fallback.
- * Uses Gemini by default, falls back to OpenRouter on failure.
+ * Generate guess explanation.
  */
 export async function generateGuessExplanation(player, previousQA) {
     const cleanPlayer = sanitizePlayerForRender(player);
@@ -275,18 +230,10 @@ Write a brief, confident 1-2 sentence explanation of why this player matches all
  * Get provider status and metrics for monitoring
  */
 export function getProviderStatus() {
-    const totalGemini = aiProviderMetrics.geminiSuccesses + aiProviderMetrics.geminiFailures;
     const totalOpenRouter =
         aiProviderMetrics.openRouterSuccesses + aiProviderMetrics.openRouterFailures;
 
     return {
-        gemini: {
-            available: !!genAI,
-            successes: aiProviderMetrics.geminiSuccesses,
-            failures: aiProviderMetrics.geminiFailures,
-            successRate: totalGemini > 0 ? (aiProviderMetrics.geminiSuccesses / totalGemini) * 100 : 0,
-            total: totalGemini,
-        },
         openRouter: {
             available: !!openRouterKey,
             successes: aiProviderMetrics.openRouterSuccesses,
@@ -305,8 +252,6 @@ export function getProviderStatus() {
  * Reset metrics (useful for testing/monitoring)
  */
 export function resetProviderMetrics() {
-    aiProviderMetrics.geminiSuccesses = 0;
-    aiProviderMetrics.geminiFailures = 0;
     aiProviderMetrics.openRouterSuccesses = 0;
     aiProviderMetrics.openRouterFailures = 0;
     aiProviderMetrics.fallbackCount = 0;
