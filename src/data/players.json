@@ -2,21 +2,20 @@
   {
     "id": "ruturaj-gaikwad",
     "name": "Ruturaj Gaikwad",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
-      "Chennai Super Kings",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
-    "opener": false,
+    "opener": true,
     "middleOrder": true,
     "finisher": false,
     "powerHitter": false,
@@ -24,7 +23,7 @@
     "spinner": false,
     "pacer": true,
     "deathBowler": false,
-    "captain": false,
+    "captain": true,
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
@@ -48,17 +47,16 @@
   {
     "id": "shivam-dube",
     "name": "Shivam Dube",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm medium",
     "teams": [
-      "Chennai Super Kings",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -94,16 +92,16 @@
   {
     "id": "ambati-rayudu",
     "name": "Ambati Rayudu",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Chennai Super Kings",
       "Mumbai Indians",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
       "Chennai Super Kings",
       "Mumbai Indians"
@@ -144,15 +142,15 @@
   {
     "id": "devon-conway",
     "name": "Devon Conway",
-    "country": "NZ",
+    "country": "New Zealand",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Chennai Super Kings",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
       "Chennai Super Kings"
     ],
@@ -192,7 +190,7 @@
   {
     "id": "moeen-ali",
     "name": "Moeen Ali",
-    "country": "ENG",
+    "country": "England",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm off-break",
@@ -200,9 +198,9 @@
       "Chennai Super Kings",
       "Kolkata Knight Riders",
       "Royal Challengers Bengaluru",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
       "Chennai Super Kings",
       "Kolkata Knight Riders",
@@ -244,18 +242,16 @@
   {
     "id": "ms-dhoni",
     "name": "MS Dhoni",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
     "teams": [
       "Chennai Super Kings",
-      "Rising Pune Supergiant",
-      "CSK"
+      "Rising Pune Supergiant"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
-      "Chennai Super Kings",
       "Rising Pune Supergiant"
     ],
     "active": true,
@@ -294,7 +290,7 @@
   {
     "id": "ravindra-jadeja",
     "name": "Ravindra Jadeja",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
@@ -302,15 +298,13 @@
       "Chennai Super Kings",
       "Gujarat Lions",
       "Kochi Tuskers Kerala",
-      "Rajasthan Royals",
-      "CSK"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [
       "Chennai Super Kings",
       "Gujarat Lions",
-      "Kochi Tuskers Kerala",
-      "Rajasthan Royals"
+      "Kochi Tuskers Kerala"
     ],
     "active": true,
     "retired": false,
@@ -324,7 +318,7 @@
     "spinner": true,
     "pacer": false,
     "deathBowler": false,
-    "captain": true,
+    "captain": false,
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
@@ -348,15 +342,15 @@
   {
     "id": "dwaine-pretorius",
     "name": "Dwaine Pretorius",
-    "country": "SA",
+    "country": "South Africa",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Chennai Super Kings",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
       "Chennai Super Kings"
     ],
@@ -396,16 +390,16 @@
   {
     "id": "jagadeesan-narayan",
     "name": "Jagadeesan Narayan",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
     "teams": [
       "Chennai Super Kings",
       "Kolkata Knight Riders",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
       "Chennai Super Kings",
       "Kolkata Knight Riders"
@@ -446,7 +440,7 @@
   {
     "id": "dwayne-bravo",
     "name": "Dwayne Bravo",
-    "country": "WI",
+    "country": "West Indies",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
@@ -454,9 +448,9 @@
       "Chennai Super Kings",
       "Gujarat Lions",
       "Mumbai Indians",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
       "Chennai Super Kings",
       "Gujarat Lions",
@@ -498,19 +492,17 @@
   {
     "id": "mitchell-santner",
     "name": "Mitchell Santner",
-    "country": "NZ",
+    "country": "New Zealand",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
       "Chennai Super Kings",
-      "Mumbai Indians",
-      "CSK"
-    ],
-    "currentTeam": "CSK",
-    "historicalTeams": [
-      "Chennai Super Kings",
       "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [
+      "Chennai Super Kings"
     ],
     "active": true,
     "retired": false,
@@ -548,7 +540,7 @@
   {
     "id": "chris-jordan",
     "name": "Chris Jordan",
-    "country": "ENG",
+    "country": "England",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -558,9 +550,9 @@
       "Punjab Kings",
       "Royal Challengers Bengaluru",
       "Sunrisers Hyderabad",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
       "Chennai Super Kings",
       "Mumbai Indians",
@@ -604,16 +596,16 @@
   {
     "id": "maheesh-theekshana",
     "name": "Maheesh Theekshana",
-    "country": "SL",
+    "country": "Sri Lanka",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Chennai Super Kings",
       "Rajasthan Royals",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
       "Chennai Super Kings",
       "Rajasthan Royals"
@@ -654,16 +646,16 @@
   {
     "id": "simarjeet-singh",
     "name": "Simarjeet Singh",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Chennai Super Kings",
       "Sunrisers Hyderabad",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
       "Chennai Super Kings",
       "Sunrisers Hyderabad"
@@ -704,18 +696,15 @@
   {
     "id": "mukesh-choudhary",
     "name": "Mukesh Choudhary",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
-      "Chennai Super Kings",
-      "CSK"
-    ],
-    "currentTeam": "CSK",
-    "historicalTeams": [
       "Chennai Super Kings"
     ],
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -752,15 +741,15 @@
   {
     "id": "prashant-solanki",
     "name": "Prashant Solanki",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Chennai Super Kings",
-      "CSK"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -798,15 +787,15 @@
   {
     "id": "matheesha-pathirana",
     "name": "Matheesha Pathirana",
-    "country": "SL",
-    "role": "batsman",
+    "country": "Sri Lanka",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Chennai Super Kings",
-      "CSK"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "CSK",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Chennai Super Kings"
     ],
@@ -846,17 +835,19 @@
   {
     "id": "tushar-deshpande",
     "name": "Tushar Deshpande",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Chennai Super Kings",
-      "CSK"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "CSK",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Rajasthan Royals",
+    "historicalTeams": [
+      "Chennai Super Kings"
+    ],
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -892,16 +883,16 @@
   {
     "id": "david-warner",
     "name": "David Warner",
-    "country": "AUS",
+    "country": "Australia",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Delhi Capitals",
       "Sunrisers Hyderabad",
-      "DC"
+      "Delhi Capitals"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
       "Delhi Capitals",
       "Sunrisers Hyderabad"
@@ -942,19 +933,17 @@
   {
     "id": "rishabh-pant",
     "name": "Rishabh Pant",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "none",
     "teams": [
       "Delhi Capitals",
-      "Lucknow Super Giants",
-      "DC"
-    ],
-    "currentTeam": "DC",
-    "historicalTeams": [
-      "Delhi Capitals",
       "Lucknow Super Giants"
+    ],
+    "currentTeam": "Lucknow Super Giants",
+    "historicalTeams": [
+      "Delhi Capitals"
     ],
     "active": true,
     "retired": false,
@@ -992,18 +981,15 @@
   {
     "id": "prithvi-shaw",
     "name": "Prithvi Shaw",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
-      "Delhi Capitals",
-      "DC"
-    ],
-    "currentTeam": "DC",
-    "historicalTeams": [
       "Delhi Capitals"
     ],
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -1040,7 +1026,7 @@
   {
     "id": "mitchell-marsh",
     "name": "Mitchell Marsh",
-    "country": "AUS",
+    "country": "Australia",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -1050,14 +1036,12 @@
       "Lucknow Super Giants",
       "Pune Warriors India",
       "Rising Pune Supergiant",
-      "Sunrisers Hyderabad",
-      "DC"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
       "Deccan Chargers",
       "Delhi Capitals",
-      "Lucknow Super Giants",
       "Pune Warriors India",
       "Rising Pune Supergiant",
       "Sunrisers Hyderabad"
@@ -1098,20 +1082,18 @@
   {
     "id": "rovman-powell",
     "name": "Rovman Powell",
-    "country": "WI",
+    "country": "West Indies",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Delhi Capitals",
       "Kolkata Knight Riders",
-      "Rajasthan Royals",
-      "DC"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Delhi Capitals",
-      "Kolkata Knight Riders",
       "Rajasthan Royals"
     ],
     "active": true,
@@ -1150,18 +1132,16 @@
   {
     "id": "axar-patel",
     "name": "Axar Patel",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
       "Delhi Capitals",
-      "Punjab Kings",
-      "DC"
+      "Punjab Kings"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
-      "Delhi Capitals",
       "Punjab Kings"
     ],
     "active": true,
@@ -1176,7 +1156,7 @@
     "spinner": true,
     "pacer": false,
     "deathBowler": false,
-    "captain": false,
+    "captain": true,
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
@@ -1200,15 +1180,15 @@
   {
     "id": "lalit-yadav",
     "name": "Lalit Yadav",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Delhi Capitals",
-      "DC"
+      "Delhi Capitals"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -1246,7 +1226,7 @@
   {
     "id": "shardul-thakur",
     "name": "Shardul Thakur",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -1257,16 +1237,14 @@
       "Lucknow Super Giants",
       "Mumbai Indians",
       "Punjab Kings",
-      "Rising Pune Supergiant",
-      "DC"
+      "Rising Pune Supergiant"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [
       "Chennai Super Kings",
       "Delhi Capitals",
       "Kolkata Knight Riders",
       "Lucknow Super Giants",
-      "Mumbai Indians",
       "Punjab Kings",
       "Rising Pune Supergiant"
     ],
@@ -1306,15 +1284,15 @@
   {
     "id": "sarfaraz-khan",
     "name": "Sarfaraz Khan",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Delhi Capitals",
-      "DC"
+      "Delhi Capitals"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -1352,18 +1330,16 @@
   {
     "id": "kuldeep-yadav",
     "name": "Kuldeep Yadav",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm chinaman",
     "teams": [
       "Delhi Capitals",
-      "Kolkata Knight Riders",
-      "DC"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
-      "Delhi Capitals",
       "Kolkata Knight Riders"
     ],
     "active": true,
@@ -1402,7 +1378,7 @@
   {
     "id": "mandeep-singh",
     "name": "Mandeep Singh",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
@@ -1411,9 +1387,9 @@
       "Kolkata Knight Riders",
       "Punjab Kings",
       "Royal Challengers Bengaluru",
-      "DC"
+      "Delhi Capitals"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
       "Delhi Capitals",
       "Kolkata Knight Riders",
@@ -1456,16 +1432,16 @@
   {
     "id": "srikar-bharat",
     "name": "Srikar Bharat",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
     "teams": [
       "Delhi Capitals",
       "Royal Challengers Bengaluru",
-      "DC"
+      "Delhi Capitals"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
       "Delhi Capitals",
       "Royal Challengers Bengaluru"
@@ -1506,15 +1482,15 @@
   {
     "id": "ripal-patel",
     "name": "Ripal Patel",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Delhi Capitals",
-      "DC"
+      "Delhi Capitals"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -1552,7 +1528,7 @@
   {
     "id": "mustafizur-rahman",
     "name": "Mustafizur Rahman",
-    "country": "BAN",
+    "country": "Bangladesh",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast-medium",
@@ -1562,9 +1538,9 @@
       "Mumbai Indians",
       "Rajasthan Royals",
       "Sunrisers Hyderabad",
-      "DC"
+      "Delhi Capitals"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
       "Chennai Super Kings",
       "Delhi Capitals",
@@ -1608,7 +1584,7 @@
   {
     "id": "anrich-nortje",
     "name": "Anrich Nortje",
-    "country": "SA",
+    "country": "South Africa",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
@@ -1616,9 +1592,9 @@
       "Delhi Capitals",
       "Kolkata Knight Riders",
       "Lucknow Super Giants",
-      "DC"
+      "Delhi Capitals"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
       "Delhi Capitals",
       "Kolkata Knight Riders",
@@ -1660,17 +1636,19 @@
   {
     "id": "khaleel-ahmed",
     "name": "Khaleel Ahmed",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
       "Delhi Capitals",
-      "DC"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "DC",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [
+      "Delhi Capitals"
+    ],
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -1706,15 +1684,15 @@
   {
     "id": "chetan-sakariya",
     "name": "Chetan Sakariya",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
       "Delhi Capitals",
-      "DC"
+      "Delhi Capitals"
     ],
-    "currentTeam": "DC",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -1752,19 +1730,17 @@
   {
     "id": "hardik-pandya",
     "name": "Hardik Pandya",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Gujarat Titans",
-      "Mumbai Indians",
-      "GT"
-    ],
-    "currentTeam": "GT",
-    "historicalTeams": [
-      "Gujarat Titans",
       "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [
+      "Gujarat Titans"
     ],
     "active": true,
     "retired": false,
@@ -1802,18 +1778,16 @@
   {
     "id": "shubman-gill",
     "name": "Shubman Gill",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Gujarat Titans",
-      "Kolkata Knight Riders",
-      "GT"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
-      "Gujarat Titans",
       "Kolkata Knight Riders"
     ],
     "active": true,
@@ -1828,7 +1802,7 @@
     "spinner": true,
     "pacer": false,
     "deathBowler": false,
-    "captain": false,
+    "captain": true,
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
@@ -1852,7 +1826,7 @@
   {
     "id": "david-miller",
     "name": "David Miller",
-    "country": "SA",
+    "country": "South Africa",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm off-break",
@@ -1861,12 +1835,10 @@
       "Gujarat Titans",
       "Lucknow Super Giants",
       "Punjab Kings",
-      "Rajasthan Royals",
-      "GT"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
-      "Delhi Capitals",
       "Gujarat Titans",
       "Lucknow Super Giants",
       "Punjab Kings",
@@ -1908,7 +1880,7 @@
   {
     "id": "wriddhiman-saha",
     "name": "Wriddhiman Saha",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
@@ -1918,9 +1890,9 @@
       "Kolkata Knight Riders",
       "Punjab Kings",
       "Sunrisers Hyderabad",
-      "GT"
+      "Gujarat Titans"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
       "Chennai Super Kings",
       "Gujarat Titans",
@@ -1964,7 +1936,7 @@
   {
     "id": "rahul-tewatia",
     "name": "Rahul Tewatia",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm leg-break",
@@ -1972,13 +1944,11 @@
       "Delhi Capitals",
       "Gujarat Titans",
       "Punjab Kings",
-      "Rajasthan Royals",
-      "GT"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
       "Delhi Capitals",
-      "Gujarat Titans",
       "Punjab Kings",
       "Rajasthan Royals"
     ],
@@ -2018,16 +1988,16 @@
   {
     "id": "matthew-wade",
     "name": "Matthew Wade",
-    "country": "AUS",
+    "country": "Australia",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "none",
     "teams": [
       "Delhi Capitals",
       "Gujarat Titans",
-      "GT"
+      "Gujarat Titans"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
       "Delhi Capitals",
       "Gujarat Titans"
@@ -2068,18 +2038,15 @@
   {
     "id": "sai-sudharsan",
     "name": "Sai Sudharsan",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
-      "Gujarat Titans",
-      "GT"
-    ],
-    "currentTeam": "GT",
-    "historicalTeams": [
       "Gujarat Titans"
     ],
+    "currentTeam": "Gujarat Titans",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -2116,15 +2083,15 @@
   {
     "id": "abhinav-manohar",
     "name": "Abhinav Manohar",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Gujarat Titans",
-      "GT"
+      "Gujarat Titans"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -2162,18 +2129,16 @@
   {
     "id": "rashid-khan",
     "name": "Rashid Khan",
-    "country": "AFG",
-    "role": "all-rounder",
+    "country": "Afghanistan",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Gujarat Titans",
-      "Sunrisers Hyderabad",
-      "GT"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
-      "Gujarat Titans",
       "Sunrisers Hyderabad"
     ],
     "active": true,
@@ -2212,15 +2177,15 @@
   {
     "id": "vijay-shankar",
     "name": "Vijay Shankar",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Gujarat Titans",
-      "GT"
+      "Gujarat Titans"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -2258,8 +2223,8 @@
   {
     "id": "lockie-ferguson",
     "name": "Lockie Ferguson",
-    "country": "NZ",
-    "role": "batsman",
+    "country": "New Zealand",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
@@ -2267,14 +2232,12 @@
       "Kolkata Knight Riders",
       "Punjab Kings",
       "Rising Pune Supergiant",
-      "Royal Challengers Bengaluru",
-      "GT"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [
       "Gujarat Titans",
       "Kolkata Knight Riders",
-      "Punjab Kings",
       "Rising Pune Supergiant",
       "Royal Challengers Bengaluru"
     ],
@@ -2314,7 +2277,7 @@
   {
     "id": "alzarri-joseph",
     "name": "Alzarri Joseph",
-    "country": "WI",
+    "country": "West Indies",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
@@ -2322,9 +2285,9 @@
       "Gujarat Titans",
       "Mumbai Indians",
       "Royal Challengers Bengaluru",
-      "GT"
+      "Gujarat Titans"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
       "Gujarat Titans",
       "Mumbai Indians",
@@ -2366,15 +2329,15 @@
   {
     "id": "pradeep-sangwan",
     "name": "Pradeep Sangwan",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
       "Gujarat Titans",
-      "GT"
+      "Gujarat Titans"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -2412,17 +2375,19 @@
   {
     "id": "mohammad-shami",
     "name": "Mohammad Shami",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Gujarat Titans",
-      "GT"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "GT",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Lucknow Super Giants",
+    "historicalTeams": [
+      "Gujarat Titans"
+    ],
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -2458,16 +2423,16 @@
   {
     "id": "yash-dayal",
     "name": "Yash Dayal",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
       "Gujarat Titans",
       "Royal Challengers Bengaluru",
-      "GT"
+      "Gujarat Titans"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
       "Gujarat Titans",
       "Royal Challengers Bengaluru"
@@ -2508,18 +2473,15 @@
   {
     "id": "sai-kishore",
     "name": "Sai Kishore",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
-      "Gujarat Titans",
-      "GT"
-    ],
-    "currentTeam": "GT",
-    "historicalTeams": [
       "Gujarat Titans"
     ],
+    "currentTeam": "Gujarat Titans",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -2556,7 +2518,7 @@
   {
     "id": "varun-aaron",
     "name": "Varun Aaron",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
@@ -2566,9 +2528,9 @@
       "Punjab Kings",
       "Rajasthan Royals",
       "Royal Challengers Bengaluru",
-      "GT"
+      "Gujarat Titans"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
       "Delhi Capitals",
       "Gujarat Titans",
@@ -2612,15 +2574,15 @@
   {
     "id": "darshan-nalkande",
     "name": "Darshan Nalkande",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Gujarat Titans",
-      "GT"
+      "Gujarat Titans"
     ],
-    "currentTeam": "GT",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -2658,21 +2620,19 @@
   {
     "id": "shreyas-iyer",
     "name": "Shreyas Iyer",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Delhi Capitals",
       "Kolkata Knight Riders",
-      "Punjab Kings",
-      "KKR"
+      "Punjab Kings"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [
       "Delhi Capitals",
-      "Kolkata Knight Riders",
-      "Punjab Kings"
+      "Kolkata Knight Riders"
     ],
     "active": true,
     "retired": false,
@@ -2710,7 +2670,7 @@
   {
     "id": "nitish-rana",
     "name": "Nitish Rana",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm off-break",
@@ -2718,12 +2678,10 @@
       "Delhi Capitals",
       "Kolkata Knight Riders",
       "Mumbai Indians",
-      "Rajasthan Royals",
-      "KKR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
-      "Delhi Capitals",
       "Kolkata Knight Riders",
       "Mumbai Indians",
       "Rajasthan Royals"
@@ -2764,16 +2722,16 @@
   {
     "id": "andre-russell",
     "name": "Andre Russell",
-    "country": "WI",
+    "country": "West Indies",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Delhi Capitals",
       "Kolkata Knight Riders",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Delhi Capitals",
       "Kolkata Knight Riders"
@@ -2814,21 +2772,20 @@
   {
     "id": "venkatesh-iyer",
     "name": "Venkatesh Iyer",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm medium",
     "teams": [
-      "Kolkata Knight Riders",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
-    "opener": false,
+    "opener": true,
     "middleOrder": true,
     "finisher": false,
     "powerHitter": false,
@@ -2860,17 +2817,16 @@
   {
     "id": "rinku-singh",
     "name": "Rinku Singh",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "none",
     "teams": [
-      "Kolkata Knight Riders",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -2906,15 +2862,15 @@
   {
     "id": "sam-billings",
     "name": "Sam Billings",
-    "country": "ENG",
+    "country": "England",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
     "teams": [
       "Kolkata Knight Riders",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -2952,7 +2908,7 @@
   {
     "id": "ajinkya-rahane",
     "name": "Ajinkya Rahane",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
@@ -2962,14 +2918,12 @@
       "Kolkata Knight Riders",
       "Mumbai Indians",
       "Rajasthan Royals",
-      "Rising Pune Supergiant",
-      "KKR"
+      "Rising Pune Supergiant"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Chennai Super Kings",
       "Delhi Capitals",
-      "Kolkata Knight Riders",
       "Mumbai Indians",
       "Rajasthan Royals",
       "Rising Pune Supergiant"
@@ -3010,18 +2964,15 @@
   {
     "id": "sunil-narine",
     "name": "Sunil Narine",
-    "country": "WI",
+    "country": "West Indies",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
-      "Kolkata Knight Riders",
-      "KKR"
-    ],
-    "currentTeam": "KKR",
-    "historicalTeams": [
       "Kolkata Knight Riders"
     ],
+    "currentTeam": "Kolkata Knight Riders",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": true,
@@ -3058,17 +3009,19 @@
   {
     "id": "pat-cummins",
     "name": "Pat Cummins",
-    "country": "AUS",
+    "country": "Australia",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Kolkata Knight Riders",
-      "KKR"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "KKR",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Sunrisers Hyderabad",
+    "historicalTeams": [
+      "Kolkata Knight Riders"
+    ],
+    "active": true,
     "retired": false,
     "overseas": true,
     "wicketKeeper": false,
@@ -3080,7 +3033,7 @@
     "spinner": false,
     "pacer": true,
     "deathBowler": false,
-    "captain": false,
+    "captain": true,
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
@@ -3104,7 +3057,7 @@
   {
     "id": "umesh-yadav",
     "name": "Umesh Yadav",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
@@ -3113,9 +3066,9 @@
       "Gujarat Titans",
       "Kolkata Knight Riders",
       "Royal Challengers Bengaluru",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Delhi Capitals",
       "Gujarat Titans",
@@ -3158,16 +3111,16 @@
   {
     "id": "tim-seifert",
     "name": "Tim Seifert",
-    "country": "NZ",
+    "country": "New Zealand",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
     "teams": [
       "Delhi Capitals",
       "Kolkata Knight Riders",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Delhi Capitals",
       "Kolkata Knight Riders"
@@ -3208,15 +3161,15 @@
   {
     "id": "sheldon-jackson",
     "name": "Sheldon Jackson",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
     "teams": [
       "Kolkata Knight Riders",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -3254,15 +3207,15 @@
   {
     "id": "b-indrajith",
     "name": "B Indrajith",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Kolkata Knight Riders",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Kolkata Knight Riders"
     ],
@@ -3302,18 +3255,16 @@
   {
     "id": "varun-chakaravarthy",
     "name": "Varun Chakaravarthy",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm mystery",
     "teams": [
       "Kolkata Knight Riders",
-      "Punjab Kings",
-      "KKR"
+      "Punjab Kings"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
-      "Kolkata Knight Riders",
       "Punjab Kings"
     ],
     "active": true,
@@ -3352,7 +3303,7 @@
   {
     "id": "rasikh-salam",
     "name": "Rasikh Salam",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -3361,9 +3312,9 @@
       "Kolkata Knight Riders",
       "Mumbai Indians",
       "Royal Challengers Bengaluru",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Delhi Capitals",
       "Kolkata Knight Riders",
@@ -3406,15 +3357,15 @@
   {
     "id": "abhijeet-tomar",
     "name": "Abhijeet Tomar",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "none",
     "teams": [
       "Kolkata Knight Riders",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -3452,15 +3403,15 @@
   {
     "id": "shivam-mavi",
     "name": "Shivam Mavi",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Kolkata Knight Riders",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Kolkata Knight Riders"
     ],
@@ -3500,18 +3451,15 @@
   {
     "id": "harshit-rana",
     "name": "Harshit Rana",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
-      "Kolkata Knight Riders",
-      "KKR"
-    ],
-    "currentTeam": "KKR",
-    "historicalTeams": [
       "Kolkata Knight Riders"
     ],
+    "currentTeam": "Kolkata Knight Riders",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -3548,7 +3496,7 @@
   {
     "id": "tim-southee",
     "name": "Tim Southee",
-    "country": "NZ",
+    "country": "New Zealand",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -3558,9 +3506,9 @@
       "Mumbai Indians",
       "Rajasthan Royals",
       "Royal Challengers Bengaluru",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Chennai Super Kings",
       "Kolkata Knight Riders",
@@ -3604,17 +3552,16 @@
   {
     "id": "anukul-roy",
     "name": "Anukul Roy",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
-      "Kolkata Knight Riders",
-      "KKR"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "KKR",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -3650,7 +3597,7 @@
   {
     "id": "k-l-rahul",
     "name": "K L Rahul",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
@@ -3659,12 +3606,10 @@
       "Lucknow Super Giants",
       "Punjab Kings",
       "Royal Challengers Bengaluru",
-      "Sunrisers Hyderabad",
-      "LSG"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
-      "Delhi Capitals",
       "Lucknow Super Giants",
       "Punjab Kings",
       "Royal Challengers Bengaluru",
@@ -3706,21 +3651,23 @@
   {
     "id": "quinton-de-kock",
     "name": "Quinton De Kock",
-    "country": "SA",
+    "country": "South Africa",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "none",
     "teams": [
       "Lucknow Super Giants",
-      "LSG"
+      "Mumbai Indians"
     ],
-    "currentTeam": "LSG",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [
+      "Lucknow Super Giants"
+    ],
+    "active": true,
     "retired": false,
     "overseas": true,
     "wicketKeeper": true,
-    "opener": false,
+    "opener": true,
     "middleOrder": false,
     "finisher": false,
     "powerHitter": false,
@@ -3752,7 +3699,7 @@
   {
     "id": "deepak-hooda",
     "name": "Deepak Hooda",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
@@ -3762,9 +3709,9 @@
       "Punjab Kings",
       "Rajasthan Royals",
       "Sunrisers Hyderabad",
-      "LSG"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
       "Chennai Super Kings",
       "Lucknow Super Giants",
@@ -3808,21 +3755,19 @@
   {
     "id": "krunal-pandya",
     "name": "Krunal Pandya",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
       "Lucknow Super Giants",
       "Mumbai Indians",
-      "Royal Challengers Bengaluru",
-      "LSG"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [
       "Lucknow Super Giants",
-      "Mumbai Indians",
-      "Royal Challengers Bengaluru"
+      "Mumbai Indians"
     ],
     "active": true,
     "retired": false,
@@ -3860,17 +3805,16 @@
   {
     "id": "ayush-badoni",
     "name": "Ayush Badoni",
-    "country": "IND",
-    "role": "all-rounder",
+    "country": "India",
+    "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
-      "Lucknow Super Giants",
-      "LSG"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -3906,7 +3850,7 @@
   {
     "id": "marcus-stoinis",
     "name": "Marcus Stoinis",
-    "country": "AUS",
+    "country": "Australia",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -3914,14 +3858,12 @@
       "Delhi Capitals",
       "Lucknow Super Giants",
       "Punjab Kings",
-      "Royal Challengers Bengaluru",
-      "LSG"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [
       "Delhi Capitals",
       "Lucknow Super Giants",
-      "Punjab Kings",
       "Royal Challengers Bengaluru"
     ],
     "active": true,
@@ -3960,17 +3902,19 @@
   {
     "id": "manish-pandey",
     "name": "Manish Pandey",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Lucknow Super Giants",
-      "LSG"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "LSG",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Kolkata Knight Riders",
+    "historicalTeams": [
+      "Lucknow Super Giants"
+    ],
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -4006,7 +3950,7 @@
   {
     "id": "evin-lewis",
     "name": "Evin Lewis",
-    "country": "WI",
+    "country": "West Indies",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm medium",
@@ -4014,9 +3958,9 @@
       "Lucknow Super Giants",
       "Mumbai Indians",
       "Rajasthan Royals",
-      "LSG"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
       "Lucknow Super Giants",
       "Mumbai Indians",
@@ -4058,7 +4002,7 @@
   {
     "id": "jason-holder",
     "name": "Jason Holder",
-    "country": "WI",
+    "country": "West Indies",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -4068,9 +4012,9 @@
       "Lucknow Super Giants",
       "Rajasthan Royals",
       "Sunrisers Hyderabad",
-      "LSG"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
       "Chennai Super Kings",
       "Kolkata Knight Riders",
@@ -4114,19 +4058,17 @@
   {
     "id": "dushmantha-chameera",
     "name": "Dushmantha Chameera",
-    "country": "SL",
-    "role": "batsman",
+    "country": "Sri Lanka",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Delhi Capitals",
       "Kolkata Knight Riders",
-      "Lucknow Super Giants",
-      "LSG"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
-      "Delhi Capitals",
       "Kolkata Knight Riders",
       "Lucknow Super Giants"
     ],
@@ -4166,15 +4108,15 @@
   {
     "id": "mohsin-khan",
     "name": "Mohsin Khan",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
       "Lucknow Super Giants",
-      "LSG"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
       "Lucknow Super Giants"
     ],
@@ -4214,21 +4156,19 @@
   {
     "id": "avesh-khan",
     "name": "Avesh Khan",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Delhi Capitals",
       "Lucknow Super Giants",
       "Rajasthan Royals",
-      "Royal Challengers Bengaluru",
-      "LSG"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
       "Delhi Capitals",
-      "Lucknow Super Giants",
       "Rajasthan Royals",
       "Royal Challengers Bengaluru"
     ],
@@ -4268,15 +4208,15 @@
   {
     "id": "manan-vohra",
     "name": "Manan Vohra",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Lucknow Super Giants",
-      "LSG"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -4314,15 +4254,15 @@
   {
     "id": "karan-sharma",
     "name": "Karan Sharma",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Lucknow Super Giants",
-      "LSG"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -4360,21 +4300,19 @@
   {
     "id": "ravi-bishnoi",
     "name": "Ravi Bishnoi",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Lucknow Super Giants",
       "Punjab Kings",
-      "Rajasthan Royals",
-      "LSG"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [
       "Lucknow Super Giants",
-      "Punjab Kings",
-      "Rajasthan Royals"
+      "Punjab Kings"
     ],
     "active": true,
     "retired": false,
@@ -4412,7 +4350,7 @@
   {
     "id": "krishnappa-gowtham",
     "name": "Krishnappa Gowtham",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
@@ -4420,9 +4358,9 @@
       "Lucknow Super Giants",
       "Punjab Kings",
       "Rajasthan Royals",
-      "LSG"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
       "Lucknow Super Giants",
       "Punjab Kings",
@@ -4464,7 +4402,7 @@
   {
     "id": "andrew-tye",
     "name": "Andrew Tye",
-    "country": "AUS",
+    "country": "Australia",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -4473,9 +4411,9 @@
       "Lucknow Super Giants",
       "Punjab Kings",
       "Rajasthan Royals",
-      "LSG"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "LSG",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
       "Gujarat Lions",
       "Lucknow Super Giants",
@@ -4518,21 +4456,23 @@
   {
     "id": "ishan-kishan",
     "name": "Ishan Kishan",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "none",
     "teams": [
       "Mumbai Indians",
-      "MI"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "MI",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Sunrisers Hyderabad",
+    "historicalTeams": [
+      "Mumbai Indians"
+    ],
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": true,
-    "opener": false,
+    "opener": true,
     "middleOrder": true,
     "finisher": false,
     "powerHitter": false,
@@ -4564,18 +4504,15 @@
   {
     "id": "tilak-varma",
     "name": "Tilak Varma",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
-      "Mumbai Indians",
-      "MI"
-    ],
-    "currentTeam": "MI",
-    "historicalTeams": [
       "Mumbai Indians"
     ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -4612,19 +4549,17 @@
   {
     "id": "suryakumar-yadav",
     "name": "Suryakumar Yadav",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Kolkata Knight Riders",
-      "Mumbai Indians",
-      "MI"
-    ],
-    "currentTeam": "MI",
-    "historicalTeams": [
-      "Kolkata Knight Riders",
       "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [
+      "Kolkata Knight Riders"
     ],
     "active": true,
     "retired": false,
@@ -4662,19 +4597,17 @@
   {
     "id": "rohit-sharma",
     "name": "Rohit Sharma",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Deccan Chargers",
-      "Mumbai Indians",
-      "MI"
-    ],
-    "currentTeam": "MI",
-    "historicalTeams": [
-      "Deccan Chargers",
       "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [
+      "Deccan Chargers"
     ],
     "active": true,
     "retired": false,
@@ -4688,7 +4621,7 @@
     "spinner": true,
     "pacer": false,
     "deathBowler": false,
-    "captain": true,
+    "captain": false,
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
@@ -4712,17 +4645,19 @@
   {
     "id": "tim-david",
     "name": "Tim David",
-    "country": "AUS",
-    "role": "all-rounder",
+    "country": "Australia",
+    "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Mumbai Indians",
-      "MI"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "MI",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Royal Challengers Bengaluru",
+    "historicalTeams": [
+      "Mumbai Indians"
+    ],
+    "active": true,
     "retired": false,
     "overseas": true,
     "wicketKeeper": false,
@@ -4758,18 +4693,16 @@
   {
     "id": "dewald-brevis",
     "name": "Dewald Brevis",
-    "country": "SA",
-    "role": "all-rounder",
+    "country": "South Africa",
+    "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Chennai Super Kings",
-      "Mumbai Indians",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
-      "Chennai Super Kings",
       "Mumbai Indians"
     ],
     "active": true,
@@ -4808,8 +4741,8 @@
   {
     "id": "jaydev-unadkat",
     "name": "Jaydev Unadkat",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
@@ -4820,10 +4753,9 @@
       "Rajasthan Royals",
       "Rising Pune Supergiant",
       "Royal Challengers Bengaluru",
-      "Sunrisers Hyderabad",
-      "MI"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Sunrisers Hyderabad",
     "historicalTeams": [
       "Delhi Capitals",
       "Kolkata Knight Riders",
@@ -4831,8 +4763,7 @@
       "Mumbai Indians",
       "Rajasthan Royals",
       "Rising Pune Supergiant",
-      "Royal Challengers Bengaluru",
-      "Sunrisers Hyderabad"
+      "Royal Challengers Bengaluru"
     ],
     "active": true,
     "retired": false,
@@ -4870,18 +4801,16 @@
   {
     "id": "ramandeep-singh",
     "name": "Ramandeep Singh",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Kolkata Knight Riders",
-      "Mumbai Indians",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
-      "Kolkata Knight Riders",
       "Mumbai Indians"
     ],
     "active": true,
@@ -4920,15 +4849,15 @@
   {
     "id": "hrithik-shokeen",
     "name": "Hrithik Shokeen",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
       "Mumbai Indians",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -4966,15 +4895,15 @@
   {
     "id": "daniel-sams",
     "name": "Daniel Sams",
-    "country": "AUS",
+    "country": "Australia",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
       "Mumbai Indians",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -5012,17 +4941,16 @@
   {
     "id": "sherfane-rutherford",
     "name": "Sherfane Rutherford",
-    "country": "WI",
-    "role": "all-rounder",
+    "country": "West Indies",
+    "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm medium",
     "teams": [
-      "Mumbai Indians",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": true,
     "wicketKeeper": false,
@@ -5058,16 +4986,16 @@
   {
     "id": "anmolpreet-singh",
     "name": "Anmolpreet Singh",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Mumbai Indians",
       "Sunrisers Hyderabad",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [
       "Mumbai Indians",
       "Sunrisers Hyderabad"
@@ -5108,7 +5036,7 @@
   {
     "id": "murugan-ashwin",
     "name": "Murugan Ashwin",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
@@ -5118,9 +5046,9 @@
       "Rajasthan Royals",
       "Rising Pune Supergiant",
       "Royal Challengers Bengaluru",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [
       "Mumbai Indians",
       "Punjab Kings",
@@ -5164,15 +5092,15 @@
   {
     "id": "fabian-allen",
     "name": "Fabian Allen",
-    "country": "WI",
+    "country": "West Indies",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
       "Mumbai Indians",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -5210,15 +5138,15 @@
   {
     "id": "kumar-kartikeya-singh",
     "name": "Kumar Kartikeya Singh",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Left-arm chinaman",
     "teams": [
       "Mumbai Indians",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -5256,18 +5184,16 @@
   {
     "id": "tristan-stubbs",
     "name": "Tristan Stubbs",
-    "country": "SA",
+    "country": "South Africa",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Delhi Capitals",
-      "Mumbai Indians",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
-      "Delhi Capitals",
       "Mumbai Indians"
     ],
     "active": true,
@@ -5306,18 +5232,15 @@
   {
     "id": "jasprit-bumrah",
     "name": "Jasprit Bumrah",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
-      "Mumbai Indians",
-      "MI"
-    ],
-    "currentTeam": "MI",
-    "historicalTeams": [
       "Mumbai Indians"
     ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -5354,15 +5277,15 @@
   {
     "id": "riley-meredith",
     "name": "Riley Meredith",
-    "country": "AUS",
+    "country": "Australia",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Mumbai Indians",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -5400,16 +5323,16 @@
   {
     "id": "tymal-mills",
     "name": "Tymal Mills",
-    "country": "ENG",
+    "country": "England",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Left-arm fast",
     "teams": [
       "Mumbai Indians",
       "Royal Challengers Bengaluru",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [
       "Mumbai Indians",
       "Royal Challengers Bengaluru"
@@ -5450,7 +5373,7 @@
   {
     "id": "basil-thampi",
     "name": "Basil Thampi",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -5458,9 +5381,9 @@
       "Gujarat Lions",
       "Mumbai Indians",
       "Sunrisers Hyderabad",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [
       "Gujarat Lions",
       "Mumbai Indians",
@@ -5502,17 +5425,16 @@
   {
     "id": "mayank-markande",
     "name": "Mayank Markande",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
-      "Mumbai Indians",
-      "MI"
+      "Mumbai Indians"
     ],
-    "currentTeam": "MI",
+    "currentTeam": "Mumbai Indians",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -5548,7 +5470,7 @@
   {
     "id": "shikhar-dhawan",
     "name": "Shikhar Dhawan",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm off-break",
@@ -5558,9 +5480,9 @@
       "Mumbai Indians",
       "Punjab Kings",
       "Sunrisers Hyderabad",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [
       "Deccan Chargers",
       "Delhi Capitals",
@@ -5604,7 +5526,7 @@
   {
     "id": "liam-livingstone",
     "name": "Liam Livingstone",
-    "country": "ENG",
+    "country": "England",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
@@ -5612,14 +5534,12 @@
       "Punjab Kings",
       "Rajasthan Royals",
       "Royal Challengers Bengaluru",
-      "Sunrisers Hyderabad",
-      "PK"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [
       "Punjab Kings",
       "Rajasthan Royals",
-      "Royal Challengers Bengaluru",
       "Sunrisers Hyderabad"
     ],
     "active": true,
@@ -5658,7 +5578,7 @@
   {
     "id": "jonny-bairstow",
     "name": "Jonny Bairstow",
-    "country": "ENG",
+    "country": "England",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
@@ -5666,9 +5586,9 @@
       "Mumbai Indians",
       "Punjab Kings",
       "Sunrisers Hyderabad",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [
       "Mumbai Indians",
       "Punjab Kings",
@@ -5710,17 +5630,19 @@
   {
     "id": "jitesh-sharma",
     "name": "Jitesh Sharma",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
     "teams": [
       "Punjab Kings",
-      "PK"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "PK",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Royal Challengers Bengaluru",
+    "historicalTeams": [
+      "Punjab Kings"
+    ],
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": true,
@@ -5756,16 +5678,16 @@
   {
     "id": "bhanuka-rajapaksa",
     "name": "Bhanuka Rajapaksa",
-    "country": "SL",
+    "country": "Sri Lanka",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Gujarat Titans",
       "Punjab Kings",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [
       "Gujarat Titans"
     ],
@@ -5805,7 +5727,7 @@
   {
     "id": "mayank-agarwal",
     "name": "Mayank Agarwal",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
@@ -5815,9 +5737,9 @@
       "Rising Pune Supergiant",
       "Royal Challengers Bengaluru",
       "Sunrisers Hyderabad",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [
       "Delhi Capitals",
       "Punjab Kings",
@@ -5861,17 +5783,19 @@
   {
     "id": "shahrukh-khan",
     "name": "Shahrukh Khan",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Punjab Kings",
-      "PK"
+      "Gujarat Titans"
     ],
-    "currentTeam": "PK",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Gujarat Titans",
+    "historicalTeams": [
+      "Punjab Kings"
+    ],
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -5907,15 +5831,15 @@
   {
     "id": "rahul-chahar",
     "name": "Rahul Chahar",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Punjab Kings",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -5953,15 +5877,15 @@
   {
     "id": "odean-smith",
     "name": "Odean Smith",
-    "country": "WI",
+    "country": "West Indies",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Punjab Kings",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -5999,20 +5923,18 @@
   {
     "id": "kagiso-rabada",
     "name": "Kagiso Rabada",
-    "country": "SA",
-    "role": "batsman",
+    "country": "South Africa",
+    "role": "bowler",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Delhi Capitals",
       "Gujarat Titans",
-      "Punjab Kings",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
       "Delhi Capitals",
-      "Gujarat Titans",
       "Punjab Kings"
     ],
     "active": true,
@@ -6051,15 +5973,15 @@
   {
     "id": "rishi-dhawan",
     "name": "Rishi Dhawan",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Punjab Kings",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -6097,18 +6019,15 @@
   {
     "id": "harpreet-brar",
     "name": "Harpreet Brar",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
-      "Punjab Kings",
-      "PK"
-    ],
-    "currentTeam": "PK",
-    "historicalTeams": [
       "Punjab Kings"
     ],
+    "currentTeam": "Punjab Kings",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -6145,18 +6064,15 @@
   {
     "id": "arshdeep-singh",
     "name": "Arshdeep Singh",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
-      "Punjab Kings",
-      "PK"
-    ],
-    "currentTeam": "PK",
-    "historicalTeams": [
       "Punjab Kings"
     ],
+    "currentTeam": "Punjab Kings",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -6193,21 +6109,20 @@
   {
     "id": "prabhsimran-singh",
     "name": "Prabhsimran Singh",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
     "teams": [
-      "Punjab Kings",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": true,
-    "opener": false,
+    "opener": true,
     "middleOrder": false,
     "finisher": false,
     "powerHitter": false,
@@ -6239,15 +6154,15 @@
   {
     "id": "rajangad-bawa",
     "name": "Rajangad Bawa",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Punjab Kings",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -6285,17 +6200,19 @@
   {
     "id": "vaibhav-arora",
     "name": "Vaibhav Arora",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Punjab Kings",
-      "PK"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "PK",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Kolkata Knight Riders",
+    "historicalTeams": [
+      "Punjab Kings"
+    ],
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -6331,15 +6248,15 @@
   {
     "id": "prerak-mankad",
     "name": "Prerak Mankad",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
       "Punjab Kings",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -6377,15 +6294,15 @@
   {
     "id": "nathan-ellis",
     "name": "Nathan Ellis",
-    "country": "AUS",
+    "country": "Australia",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Punjab Kings",
-      "PK"
+      "Punjab Kings"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -6423,20 +6340,18 @@
   {
     "id": "sandeep-sharma",
     "name": "Sandeep Sharma",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium-fast",
     "teams": [
       "Punjab Kings",
       "Rajasthan Royals",
-      "Sunrisers Hyderabad",
-      "PK"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "PK",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [
       "Punjab Kings",
-      "Rajasthan Royals",
       "Sunrisers Hyderabad"
     ],
     "active": true,
@@ -6475,7 +6390,7 @@
   {
     "id": "faf-du-plessis",
     "name": "Faf Du Plessis",
-    "country": "SA",
+    "country": "South Africa",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
@@ -6483,15 +6398,13 @@
       "Chennai Super Kings",
       "Delhi Capitals",
       "Rising Pune Supergiant",
-      "Royal Challengers Bengaluru",
-      "RCB"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [
       "Chennai Super Kings",
       "Delhi Capitals",
-      "Rising Pune Supergiant",
-      "Royal Challengers Bengaluru"
+      "Rising Pune Supergiant"
     ],
     "active": true,
     "retired": false,
@@ -6505,7 +6418,7 @@
     "spinner": false,
     "pacer": true,
     "deathBowler": false,
-    "captain": true,
+    "captain": false,
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
@@ -6529,18 +6442,15 @@
   {
     "id": "virat-kohli",
     "name": "Virat Kohli",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
-      "Royal Challengers Bengaluru",
-      "RCB"
-    ],
-    "currentTeam": "RCB",
-    "historicalTeams": [
       "Royal Challengers Bengaluru"
     ],
+    "currentTeam": "Royal Challengers Bengaluru",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -6553,7 +6463,7 @@
     "spinner": false,
     "pacer": true,
     "deathBowler": false,
-    "captain": true,
+    "captain": false,
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
@@ -6577,17 +6487,16 @@
   {
     "id": "rajat-patidar",
     "name": "Rajat Patidar",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
-      "Royal Challengers Bengaluru",
-      "RCB"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -6599,7 +6508,7 @@
     "spinner": true,
     "pacer": false,
     "deathBowler": false,
-    "captain": false,
+    "captain": true,
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
@@ -6623,7 +6532,7 @@
   {
     "id": "dinesh-karthik",
     "name": "Dinesh Karthik",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
@@ -6634,9 +6543,9 @@
       "Mumbai Indians",
       "Punjab Kings",
       "Royal Challengers Bengaluru",
-      "RCB"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [
       "Delhi Capitals",
       "Gujarat Lions",
@@ -6681,7 +6590,7 @@
   {
     "id": "glenn-maxwell",
     "name": "Glenn Maxwell",
-    "country": "AUS",
+    "country": "Australia",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
@@ -6689,15 +6598,13 @@
       "Delhi Capitals",
       "Mumbai Indians",
       "Punjab Kings",
-      "Royal Challengers Bengaluru",
-      "RCB"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [
       "Delhi Capitals",
       "Mumbai Indians",
-      "Punjab Kings",
-      "Royal Challengers Bengaluru"
+      "Punjab Kings"
     ],
     "active": true,
     "retired": false,
@@ -6735,7 +6642,7 @@
   {
     "id": "shahbaz-ahmed",
     "name": "Shahbaz Ahmed",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
@@ -6743,9 +6650,9 @@
       "Lucknow Super Giants",
       "Royal Challengers Bengaluru",
       "Sunrisers Hyderabad",
-      "RCB"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [
       "Lucknow Super Giants",
       "Royal Challengers Bengaluru",
@@ -6787,16 +6694,16 @@
   {
     "id": "anuj-rawat",
     "name": "Anuj Rawat",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "none",
     "teams": [
       "Rajasthan Royals",
       "Royal Challengers Bengaluru",
-      "RCB"
+      "Gujarat Titans"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
       "Rajasthan Royals",
       "Royal Challengers Bengaluru"
@@ -6837,15 +6744,15 @@
   {
     "id": "mahipal-lomror",
     "name": "Mahipal Lomror",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
       "Royal Challengers Bengaluru",
-      "RCB"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -6883,18 +6790,15 @@
   {
     "id": "suyash-s-prabhudessai",
     "name": "Suyash S Prabhudessai",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
-      "Royal Challengers Bengaluru",
-      "RCB"
-    ],
-    "currentTeam": "RCB",
-    "historicalTeams": [
       "Royal Challengers Bengaluru"
     ],
+    "currentTeam": "Royal Challengers Bengaluru",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -6931,23 +6835,21 @@
   {
     "id": "harshal-patel",
     "name": "Harshal Patel",
-    "country": "IND",
-    "role": "all-rounder",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Delhi Capitals",
       "Punjab Kings",
       "Royal Challengers Bengaluru",
-      "Sunrisers Hyderabad",
-      "RCB"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Sunrisers Hyderabad",
     "historicalTeams": [
       "Delhi Capitals",
       "Punjab Kings",
-      "Royal Challengers Bengaluru",
-      "Sunrisers Hyderabad"
+      "Royal Challengers Bengaluru"
     ],
     "active": true,
     "retired": false,
@@ -6985,16 +6887,16 @@
   {
     "id": "wanindu-hasaranga",
     "name": "Wanindu Hasaranga",
-    "country": "SL",
+    "country": "Sri Lanka",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Rajasthan Royals",
       "Royal Challengers Bengaluru",
-      "RCB"
+      "Lucknow Super Giants"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
       "Rajasthan Royals",
       "Royal Challengers Bengaluru"
@@ -7035,19 +6937,17 @@
   {
     "id": "mohammed-siraj",
     "name": "Mohammed Siraj",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Gujarat Titans",
       "Royal Challengers Bengaluru",
-      "Sunrisers Hyderabad",
-      "RCB"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
-      "Gujarat Titans",
       "Royal Challengers Bengaluru",
       "Sunrisers Hyderabad"
     ],
@@ -7087,19 +6987,17 @@
   {
     "id": "josh-hazlewood",
     "name": "Josh Hazlewood",
-    "country": "AUS",
-    "role": "batsman",
+    "country": "Australia",
+    "role": "bowler",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Chennai Super Kings",
-      "Royal Challengers Bengaluru",
-      "RCB"
-    ],
-    "currentTeam": "RCB",
-    "historicalTeams": [
-      "Chennai Super Kings",
       "Royal Challengers Bengaluru"
+    ],
+    "currentTeam": "Royal Challengers Bengaluru",
+    "historicalTeams": [
+      "Chennai Super Kings"
     ],
     "active": true,
     "retired": false,
@@ -7137,16 +7035,16 @@
   {
     "id": "david-willey",
     "name": "David Willey",
-    "country": "ENG",
+    "country": "England",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
       "Chennai Super Kings",
       "Royal Challengers Bengaluru",
-      "RCB"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [
       "Chennai Super Kings",
       "Royal Challengers Bengaluru"
@@ -7187,16 +7085,16 @@
   {
     "id": "akash-deep",
     "name": "Akash Deep",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Lucknow Super Giants",
       "Royal Challengers Bengaluru",
-      "RCB"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RCB",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [
       "Lucknow Super Giants",
       "Royal Challengers Bengaluru"
@@ -7237,19 +7135,17 @@
   {
     "id": "jos-buttler",
     "name": "Jos Buttler",
-    "country": "ENG",
+    "country": "England",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
     "teams": [
       "Gujarat Titans",
       "Mumbai Indians",
-      "Rajasthan Royals",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
-      "Gujarat Titans",
       "Mumbai Indians",
       "Rajasthan Royals"
     ],
@@ -7289,19 +7185,17 @@
   {
     "id": "sanju-samson",
     "name": "Sanju Samson",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "none",
     "teams": [
       "Chennai Super Kings",
       "Delhi Capitals",
-      "Rajasthan Royals",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Chennai Super Kings",
     "historicalTeams": [
-      "Chennai Super Kings",
       "Delhi Capitals",
       "Rajasthan Royals"
     ],
@@ -7309,7 +7203,7 @@
     "retired": false,
     "overseas": false,
     "wicketKeeper": true,
-    "opener": false,
+    "opener": true,
     "middleOrder": true,
     "finisher": false,
     "powerHitter": false,
@@ -7341,19 +7235,17 @@
   {
     "id": "devdutt-padikkal",
     "name": "Devdutt Padikkal",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "none",
     "teams": [
       "Lucknow Super Giants",
       "Rajasthan Royals",
-      "Royal Challengers Bengaluru",
-      "RR"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
-      "Lucknow Super Giants",
       "Rajasthan Royals",
       "Royal Challengers Bengaluru"
     ],
@@ -7393,20 +7285,18 @@
   {
     "id": "shimron-hetmyer",
     "name": "Shimron Hetmyer",
-    "country": "WI",
+    "country": "West Indies",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Delhi Capitals",
       "Rajasthan Royals",
-      "Royal Challengers Bengaluru",
-      "RR"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [
       "Delhi Capitals",
-      "Rajasthan Royals",
       "Royal Challengers Bengaluru"
     ],
     "active": true,
@@ -7445,18 +7335,15 @@
   {
     "id": "yashasvi-jaiswal",
     "name": "Yashasvi Jaiswal",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
-      "Rajasthan Royals",
-      "RR"
-    ],
-    "currentTeam": "RR",
-    "historicalTeams": [
       "Rajasthan Royals"
     ],
+    "currentTeam": "Rajasthan Royals",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -7493,7 +7380,7 @@
   {
     "id": "ravichandran-ashwin",
     "name": "Ravichandran Ashwin",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
@@ -7503,9 +7390,9 @@
       "Punjab Kings",
       "Rajasthan Royals",
       "Rising Pune Supergiant",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [
       "Chennai Super Kings",
       "Delhi Capitals",
@@ -7549,18 +7436,15 @@
   {
     "id": "riyan-parag",
     "name": "Riyan Parag",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
-      "Rajasthan Royals",
-      "RR"
-    ],
-    "currentTeam": "RR",
-    "historicalTeams": [
       "Rajasthan Royals"
     ],
+    "currentTeam": "Rajasthan Royals",
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": false,
@@ -7573,7 +7457,7 @@
     "spinner": true,
     "pacer": false,
     "deathBowler": false,
-    "captain": false,
+    "captain": true,
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
@@ -7597,17 +7481,19 @@
   {
     "id": "trent-boult",
     "name": "Trent Boult",
-    "country": "NZ",
-    "role": "batsman",
+    "country": "New Zealand",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Left-arm fast",
     "teams": [
       "Rajasthan Royals",
-      "RR"
+      "Mumbai Indians"
     ],
-    "currentTeam": "RR",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [
+      "Rajasthan Royals"
+    ],
+    "active": true,
     "retired": false,
     "overseas": true,
     "wicketKeeper": false,
@@ -7623,7 +7509,7 @@
     "titleWinningCaptain": false,
     "orangeCap": false,
     "purpleCap": false,
-    "leftHanded": false,
+    "leftHanded": true,
     "aggressive": false,
     "defensive": false,
     "mysterySpinner": false,
@@ -7643,15 +7529,15 @@
   {
     "id": "daryl-mitchell",
     "name": "Daryl Mitchell",
-    "country": "NZ",
+    "country": "New Zealand",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Rajasthan Royals",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -7689,7 +7575,7 @@
   {
     "id": "james-neesham",
     "name": "James Neesham",
-    "country": "NZ",
+    "country": "New Zealand",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm medium",
@@ -7698,9 +7584,9 @@
       "Mumbai Indians",
       "Punjab Kings",
       "Rajasthan Royals",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [
       "Delhi Capitals",
       "Mumbai Indians",
@@ -7743,15 +7629,15 @@
   {
     "id": "rassie-van-der-dussen",
     "name": "Rassie van der Dussen",
-    "country": "SA",
+    "country": "South Africa",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Rajasthan Royals",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -7789,17 +7675,19 @@
   {
     "id": "karun-nair",
     "name": "Karun Nair",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Rajasthan Royals",
-      "RR"
+      "Delhi Capitals"
     ],
-    "currentTeam": "RR",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [
+      "Rajasthan Royals"
+    ],
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -7835,15 +7723,15 @@
   {
     "id": "obed-mccoy",
     "name": "Obed McCoy",
-    "country": "WI",
+    "country": "West Indies",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
       "Rajasthan Royals",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -7881,19 +7769,17 @@
   {
     "id": "prasidh-krishna",
     "name": "Prasidh Krishna",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Gujarat Titans",
       "Kolkata Knight Riders",
-      "Rajasthan Royals",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
-      "Gujarat Titans",
       "Kolkata Knight Riders",
       "Rajasthan Royals"
     ],
@@ -7933,21 +7819,19 @@
   {
     "id": "yuzvendra-chahal",
     "name": "Yuzvendra Chahal",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Mumbai Indians",
       "Punjab Kings",
       "Rajasthan Royals",
-      "Royal Challengers Bengaluru",
-      "RR"
+      "Royal Challengers Bengaluru"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [
       "Mumbai Indians",
-      "Punjab Kings",
       "Rajasthan Royals",
       "Royal Challengers Bengaluru"
     ],
@@ -7987,7 +7871,7 @@
   {
     "id": "navdeep-saini",
     "name": "Navdeep Saini",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
@@ -7995,9 +7879,9 @@
       "Kolkata Knight Riders",
       "Rajasthan Royals",
       "Royal Challengers Bengaluru",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [
       "Kolkata Knight Riders",
       "Rajasthan Royals",
@@ -8039,7 +7923,7 @@
   {
     "id": "nathan-coulter-nile",
     "name": "Nathan Coulter-Nile",
-    "country": "AUS",
+    "country": "Australia",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -8048,9 +7932,9 @@
       "Kolkata Knight Riders",
       "Mumbai Indians",
       "Rajasthan Royals",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [
       "Delhi Capitals",
       "Kolkata Knight Riders",
@@ -8093,17 +7977,16 @@
   {
     "id": "kuldeep-sen",
     "name": "Kuldeep Sen",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
-      "Rajasthan Royals",
-      "RR"
+      "Rajasthan Royals"
     ],
-    "currentTeam": "RR",
+    "currentTeam": "Rajasthan Royals",
     "historicalTeams": [],
-    "active": false,
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -8139,19 +8022,17 @@
   {
     "id": "abhishek-sharma",
     "name": "Abhishek Sharma",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
     "teams": [
       "Delhi Capitals",
-      "Sunrisers Hyderabad",
-      "SRH"
-    ],
-    "currentTeam": "SRH",
-    "historicalTeams": [
-      "Delhi Capitals",
       "Sunrisers Hyderabad"
+    ],
+    "currentTeam": "Sunrisers Hyderabad",
+    "historicalTeams": [
+      "Delhi Capitals"
     ],
     "active": true,
     "retired": false,
@@ -8189,15 +8070,15 @@
   {
     "id": "rahul-tripathi",
     "name": "Rahul Tripathi",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Sunrisers Hyderabad",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -8235,19 +8116,17 @@
   {
     "id": "aiden-markram",
     "name": "Aiden Markram",
-    "country": "SA",
+    "country": "South Africa",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Lucknow Super Giants",
       "Punjab Kings",
-      "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
-      "Lucknow Super Giants",
       "Punjab Kings",
       "Sunrisers Hyderabad"
     ],
@@ -8287,19 +8166,17 @@
   {
     "id": "nicholas-pooran",
     "name": "Nicholas Pooran",
-    "country": "WI",
+    "country": "West Indies",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "none",
     "teams": [
       "Lucknow Super Giants",
       "Punjab Kings",
-      "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
-      "Lucknow Super Giants",
       "Punjab Kings",
       "Sunrisers Hyderabad"
     ],
@@ -8339,16 +8216,16 @@
   {
     "id": "kane-williamson",
     "name": "Kane Williamson",
-    "country": "NZ",
+    "country": "New Zealand",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm off-break",
     "teams": [
       "Gujarat Titans",
       "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Sunrisers Hyderabad",
     "historicalTeams": [
       "Gujarat Titans",
       "Sunrisers Hyderabad"
@@ -8389,7 +8266,7 @@
   {
     "id": "washington-sundar",
     "name": "Washington Sundar",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Right-arm off-break",
@@ -8397,12 +8274,10 @@
       "Gujarat Titans",
       "Rising Pune Supergiant",
       "Royal Challengers Bengaluru",
-      "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Gujarat Titans",
     "historicalTeams": [
-      "Gujarat Titans",
       "Rising Pune Supergiant",
       "Royal Challengers Bengaluru",
       "Sunrisers Hyderabad"
@@ -8443,18 +8318,16 @@
   {
     "id": "shashank-singh",
     "name": "Shashank Singh",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Punjab Kings",
-      "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [
-      "Punjab Kings",
       "Sunrisers Hyderabad"
     ],
     "active": true,
@@ -8493,7 +8366,7 @@
   {
     "id": "romario-shepherd",
     "name": "Romario Shepherd",
-    "country": "WI",
+    "country": "West Indies",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
@@ -8502,9 +8375,9 @@
       "Mumbai Indians",
       "Royal Challengers Bengaluru",
       "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Sunrisers Hyderabad",
     "historicalTeams": [
       "Lucknow Super Giants",
       "Mumbai Indians",
@@ -8547,15 +8420,15 @@
   {
     "id": "priyam-garg",
     "name": "Priyam Garg",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium",
     "teams": [
       "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Sunrisers Hyderabad",
     "historicalTeams": [],
     "active": false,
     "retired": false,
@@ -8593,20 +8466,18 @@
   {
     "id": "bhuvneshwar-kumar",
     "name": "Bhuvneshwar Kumar",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm medium-fast",
     "teams": [
       "Pune Warriors India",
       "Royal Challengers Bengaluru",
-      "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Royal Challengers Bengaluru",
     "historicalTeams": [
       "Pune Warriors India",
-      "Royal Challengers Bengaluru",
       "Sunrisers Hyderabad"
     ],
     "active": true,
@@ -8645,17 +8516,19 @@
   {
     "id": "shreyas-gopal",
     "name": "Shreyas Gopal",
-    "country": "IND",
-    "role": "all-rounder",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Sunrisers Hyderabad",
-      "SRH"
+      "Chennai Super Kings"
     ],
-    "currentTeam": "SRH",
-    "historicalTeams": [],
-    "active": false,
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [
+      "Sunrisers Hyderabad"
+    ],
+    "active": true,
     "retired": false,
     "overseas": false,
     "wicketKeeper": false,
@@ -8691,20 +8564,18 @@
   {
     "id": "marco-jansen",
     "name": "Marco Jansen",
-    "country": "SA",
+    "country": "South Africa",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast",
     "teams": [
       "Mumbai Indians",
       "Punjab Kings",
-      "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Punjab Kings",
     "historicalTeams": [
       "Mumbai Indians",
-      "Punjab Kings",
       "Sunrisers Hyderabad"
     ],
     "active": true,
@@ -8743,16 +8614,16 @@
   {
     "id": "sean-abbott",
     "name": "Sean Abbott",
-    "country": "AUS",
+    "country": "Australia",
     "role": "all-rounder",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast-medium",
     "teams": [
       "Royal Challengers Bengaluru",
       "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Sunrisers Hyderabad",
     "historicalTeams": [
       "Royal Challengers Bengaluru",
       "Sunrisers Hyderabad"
@@ -8793,7 +8664,7 @@
   {
     "id": "kartik-tyagi",
     "name": "Kartik Tyagi",
-    "country": "IND",
+    "country": "India",
     "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
@@ -8802,9 +8673,9 @@
       "Kolkata Knight Riders",
       "Rajasthan Royals",
       "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Sunrisers Hyderabad",
     "historicalTeams": [
       "Gujarat Titans",
       "Kolkata Knight Riders",
@@ -8847,18 +8718,16 @@
   {
     "id": "abdul-samad",
     "name": "Abdul Samad",
-    "country": "IND",
-    "role": "all-rounder",
+    "country": "India",
+    "role": "batsman",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm leg-break",
     "teams": [
       "Lucknow Super Giants",
-      "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Lucknow Super Giants",
     "historicalTeams": [
-      "Lucknow Super Giants",
       "Sunrisers Hyderabad"
     ],
     "active": true,
@@ -8897,15 +8766,15 @@
   {
     "id": "umran-malik",
     "name": "Umran Malik",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Right",
     "bowlingStyle": "Right-arm fast",
     "teams": [
       "Sunrisers Hyderabad",
-      "SRH"
+      "Kolkata Knight Riders"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Kolkata Knight Riders",
     "historicalTeams": [
       "Sunrisers Hyderabad"
     ],
@@ -8945,16 +8814,16 @@
   {
     "id": "fazalhaq-farooqi",
     "name": "Fazalhaq Farooqi",
-    "country": "AFG",
+    "country": "Afghanistan",
     "role": "batsman",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast",
     "teams": [
       "Rajasthan Royals",
       "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Sunrisers Hyderabad",
     "historicalTeams": [
       "Rajasthan Royals",
       "Sunrisers Hyderabad"
@@ -8995,7 +8864,7 @@
   {
     "id": "jagadeesha-suchith",
     "name": "Jagadeesha Suchith",
-    "country": "IND",
+    "country": "India",
     "role": "all-rounder",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm orthodox",
@@ -9003,9 +8872,9 @@
       "Delhi Capitals",
       "Mumbai Indians",
       "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Sunrisers Hyderabad",
     "historicalTeams": [
       "Delhi Capitals",
       "Mumbai Indians",
@@ -9047,19 +8916,17 @@
   {
     "id": "t-natarajan",
     "name": "T Natarajan",
-    "country": "IND",
-    "role": "batsman",
+    "country": "India",
+    "role": "bowler",
     "battingStyle": "Left",
     "bowlingStyle": "Left-arm fast-medium",
     "teams": [
       "Delhi Capitals",
       "Punjab Kings",
-      "Sunrisers Hyderabad",
-      "SRH"
+      "Sunrisers Hyderabad"
     ],
-    "currentTeam": "SRH",
+    "currentTeam": "Delhi Capitals",
     "historicalTeams": [
-      "Delhi Capitals",
       "Punjab Kings",
       "Sunrisers Hyderabad"
     ],
@@ -9111,8 +8978,7 @@
     "currentTeam": "Rajasthan Royals",
     "historicalTeams": [
       "Chennai Super Kings",
-      "Punjab Kings",
-      "Rajasthan Royals"
+      "Punjab Kings"
     ],
     "active": true,
     "retired": false,
@@ -9158,9 +9024,7 @@
       "Royal Challengers Bengaluru"
     ],
     "currentTeam": "Royal Challengers Bengaluru",
-    "historicalTeams": [
-      "Royal Challengers Bengaluru"
-    ],
+    "historicalTeams": [],
     "active": true,
     "retired": false,
     "overseas": true,
@@ -9192,6 +9056,2346 @@
       "country": 0.8,
       "role": 0.8,
       "name": 0.8
+    }
+  },
+  {
+    "id": "deepak-chahar",
+    "name": "Deepak Chahar",
+    "country": "India",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Chennai Super Kings"
+    ],
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "noor-ahmad",
+    "name": "Noor Ahmad",
+    "country": "Afghanistan",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Chennai Super Kings"
+    ],
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": true,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "anshul-kamboj",
+    "name": "Anshul Kamboj",
+    "country": "India",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Chennai Super Kings"
+    ],
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "jamie-overton",
+    "name": "Jamie Overton",
+    "country": "England",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Chennai Super Kings"
+    ],
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "urvil-patel",
+    "name": "Urvil Patel",
+    "country": "India",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Chennai Super Kings"
+    ],
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": true,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": true,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "gurjapneet-singh",
+    "name": "Gurjapneet Singh",
+    "country": "India",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Chennai Super Kings"
+    ],
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "prashant-veer",
+    "name": "Prashant Veer",
+    "country": "India",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Chennai Super Kings"
+    ],
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": true,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "kartik-sharma",
+    "name": "Kartik Sharma",
+    "country": "India",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Chennai Super Kings"
+    ],
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": true,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "ramakrishna-ghosh",
+    "name": "Ramakrishna Ghosh",
+    "country": "India",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Chennai Super Kings"
+    ],
+    "currentTeam": "Chennai Super Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": true,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "will-jacks",
+    "name": "Will Jacks",
+    "country": "England",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": true,
+    "anchorBatter": false,
+    "spinner": true,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": true,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "robin-minz",
+    "name": "Robin Minz",
+    "country": "India",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": true,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "naman-dhir",
+    "name": "Naman Dhir",
+    "country": "India",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": true,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "corbin-bosch",
+    "name": "Corbin Bosch",
+    "country": "South Africa",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "ryan-rickelton",
+    "name": "Ryan Rickelton",
+    "country": "South Africa",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": true,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "allah-ghazanfar",
+    "name": "Allah Ghazanfar",
+    "country": "Afghanistan",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": true,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "raj-bawa",
+    "name": "Raj Bawa",
+    "country": "India",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Mumbai Indians"
+    ],
+    "currentTeam": "Mumbai Indians",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2022,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "phil-salt",
+    "name": "Phil Salt",
+    "country": "England",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Royal Challengers Bengaluru"
+    ],
+    "currentTeam": "Royal Challengers Bengaluru",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": true,
+    "opener": true,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": true,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": true,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "swapnil-singh",
+    "name": "Swapnil Singh",
+    "country": "India",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Royal Challengers Bengaluru"
+    ],
+    "currentTeam": "Royal Challengers Bengaluru",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": true,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "nuwan-thushara",
+    "name": "Nuwan Thushara",
+    "country": "Sri Lanka",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Royal Challengers Bengaluru"
+    ],
+    "currentTeam": "Royal Challengers Bengaluru",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "cameron-green",
+    "name": "Cameron Green",
+    "country": "Australia",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Kolkata Knight Riders"
+    ],
+    "currentTeam": "Kolkata Knight Riders",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "rachin-ravindra",
+    "name": "Rachin Ravindra",
+    "country": "New Zealand",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Kolkata Knight Riders"
+    ],
+    "currentTeam": "Kolkata Knight Riders",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": true,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "angkrish-raghuvanshi",
+    "name": "Angkrish Raghuvanshi",
+    "country": "India",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Kolkata Knight Riders"
+    ],
+    "currentTeam": "Kolkata Knight Riders",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "mayank-yadav",
+    "name": "Mayank Yadav",
+    "country": "India",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Lucknow Super Giants"
+    ],
+    "currentTeam": "Lucknow Super Giants",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "travis-head",
+    "name": "Travis Head",
+    "country": "Australia",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Sunrisers Hyderabad"
+    ],
+    "currentTeam": "Sunrisers Hyderabad",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": true,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": true,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": true,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "heinrich-klaasen",
+    "name": "Heinrich Klaasen",
+    "country": "South Africa",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Sunrisers Hyderabad"
+    ],
+    "currentTeam": "Sunrisers Hyderabad",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": true,
+    "opener": false,
+    "middleOrder": true,
+    "finisher": false,
+    "powerHitter": true,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": true,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "nitish-kumar-reddy",
+    "name": "Nitish Kumar Reddy",
+    "country": "India",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Sunrisers Hyderabad"
+    ],
+    "currentTeam": "Sunrisers Hyderabad",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": true,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "kamindu-mendis",
+    "name": "Kamindu Mendis",
+    "country": "Sri Lanka",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Sunrisers Hyderabad"
+    ],
+    "currentTeam": "Sunrisers Hyderabad",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": true,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "brydon-carse",
+    "name": "Brydon Carse",
+    "country": "England",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Sunrisers Hyderabad"
+    ],
+    "currentTeam": "Sunrisers Hyderabad",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "glenn-phillips",
+    "name": "Glenn Phillips",
+    "country": "New Zealand",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Gujarat Titans"
+    ],
+    "currentTeam": "Gujarat Titans",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": true,
+    "opener": false,
+    "middleOrder": true,
+    "finisher": false,
+    "powerHitter": true,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "manav-suthar",
+    "name": "Manav Suthar",
+    "country": "India",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Gujarat Titans"
+    ],
+    "currentTeam": "Gujarat Titans",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": true,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "ishant-sharma",
+    "name": "Ishant Sharma",
+    "country": "India",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Gujarat Titans"
+    ],
+    "currentTeam": "Gujarat Titans",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "mitchell-starc",
+    "name": "Mitchell Starc",
+    "country": "Australia",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Delhi Capitals"
+    ],
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": true,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": true,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "sameer-rizvi",
+    "name": "Sameer Rizvi",
+    "country": "India",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Delhi Capitals"
+    ],
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": true,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "mukesh-kumar",
+    "name": "Mukesh Kumar",
+    "country": "India",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Delhi Capitals"
+    ],
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2023,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "lungisani-ngidi",
+    "name": "Lungisani Ngidi",
+    "country": "South Africa",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Delhi Capitals"
+    ],
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2023,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "kyle-jamieson",
+    "name": "Kyle Jamieson",
+    "country": "New Zealand",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Delhi Capitals"
+    ],
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "rehan-ahmed",
+    "name": "Rehan Ahmed",
+    "country": "England",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Delhi Capitals"
+    ],
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": true,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "pathum-nissanka",
+    "name": "Pathum Nissanka",
+    "country": "Sri Lanka",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Delhi Capitals"
+    ],
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": true,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "abishek-porel",
+    "name": "Abishek Porel",
+    "country": "India",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Delhi Capitals"
+    ],
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": true,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "vipraj-nigam",
+    "name": "Vipraj Nigam",
+    "country": "India",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Delhi Capitals"
+    ],
+    "currentTeam": "Delhi Capitals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": true,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "azmatullah-omarzai",
+    "name": "Azmatullah Omarzai",
+    "country": "Afghanistan",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Punjab Kings"
+    ],
+    "currentTeam": "Punjab Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "musheer-khan",
+    "name": "Musheer Khan",
+    "country": "India",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Punjab Kings"
+    ],
+    "currentTeam": "Punjab Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "xavier-bartlett",
+    "name": "Xavier Bartlett",
+    "country": "Australia",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Punjab Kings"
+    ],
+    "currentTeam": "Punjab Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "nehal-wadhera",
+    "name": "Nehal Wadhera",
+    "country": "India",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Punjab Kings"
+    ],
+    "currentTeam": "Punjab Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": true,
+    "finisher": false,
+    "powerHitter": true,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "vijaykumar-vyshak",
+    "name": "Vijaykumar Vyshak",
+    "country": "India",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Punjab Kings"
+    ],
+    "currentTeam": "Punjab Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "suryansh-shedge",
+    "name": "Suryansh Shedge",
+    "country": "India",
+    "role": "all-rounder",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Punjab Kings"
+    ],
+    "currentTeam": "Punjab Kings",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "dhruv-jurel",
+    "name": "Dhruv Jurel",
+    "country": "India",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Rajasthan Royals"
+    ],
+    "currentTeam": "Rajasthan Royals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": true,
+    "opener": false,
+    "middleOrder": true,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2024,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "jofra-archer",
+    "name": "Jofra Archer",
+    "country": "England",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Rajasthan Royals"
+    ],
+    "currentTeam": "Rajasthan Royals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": true,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": true,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "kwena-maphaka",
+    "name": "Kwena Maphaka",
+    "country": "South Africa",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Rajasthan Royals"
+    ],
+    "currentTeam": "Rajasthan Royals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "vaibhav-suryavanshi",
+    "name": "Vaibhav Suryavanshi",
+    "country": "India",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Rajasthan Royals"
+    ],
+    "currentTeam": "Rajasthan Royals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": false,
+    "wicketKeeper": false,
+    "opener": true,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": true,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "adam-milne",
+    "name": "Adam Milne",
+    "country": "New Zealand",
+    "role": "bowler",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Rajasthan Royals"
+    ],
+    "currentTeam": "Rajasthan Royals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": false,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": true,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2025,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
+    }
+  },
+  {
+    "id": "donovan-ferreira",
+    "name": "Donovan Ferreira",
+    "country": "South Africa",
+    "role": "batsman",
+    "battingStyle": "Right",
+    "bowlingStyle": "none",
+    "teams": [
+      "Rajasthan Royals"
+    ],
+    "currentTeam": "Rajasthan Royals",
+    "historicalTeams": [],
+    "active": true,
+    "retired": false,
+    "overseas": true,
+    "wicketKeeper": true,
+    "opener": false,
+    "middleOrder": false,
+    "finisher": false,
+    "powerHitter": false,
+    "anchorBatter": false,
+    "spinner": false,
+    "pacer": false,
+    "deathBowler": false,
+    "captain": false,
+    "titleWinningCaptain": false,
+    "orangeCap": false,
+    "purpleCap": false,
+    "leftHanded": false,
+    "aggressive": false,
+    "defensive": false,
+    "mysterySpinner": false,
+    "famousForYorkers": false,
+    "playoffsHero": false,
+    "fanFavorite": false,
+    "iconic": false,
+    "battingPosition": "middle",
+    "debutYear": 2026,
+    "titlesWon": 0,
+    "dataConfidence": {
+      "country": 0.95,
+      "role": 0.9,
+      "name": 1
     }
   }
 ]
