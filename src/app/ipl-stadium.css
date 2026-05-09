@@ -245,45 +245,43 @@
   margin-bottom: 8px;
 }
 
-/* ── Image 2 Landing Page Specific Layout ── */
+/* ═══════════════════════════════════════════════
+   CINEMATIC HERO SECTION
+   ═══════════════════════════════════════════════ */
+
 .ipl-landing-hero {
   display: flex; justify-content: space-between; align-items: center;
   max-width: 1400px; margin: 0 auto; padding: 40px 20px;
-  min-height: 55vh; position: relative; z-index: 2;
+  min-height: 60vh; position: relative; z-index: 2;
 }
+
 .ipl-landing-center {
   text-align: center; max-width: 600px; flex: 1; z-index: 10;
 }
-.ipl-landing-center h1 {
-  font-family: 'Syne', sans-serif; font-size: clamp(40px, 6vw, 80px);
-  font-weight: 800; line-height: 1.1; letter-spacing: -0.02em;
-  color: #fff; margin: 0 0 20px; text-transform: uppercase;
-  text-shadow: 0 0 30px rgba(255,255,255,0.2);
+
+/* Hero headline styling */
+.ipl-hero-headline {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(38px, 6vw, 76px);
+  font-weight: 800; line-height: 1.08; letter-spacing: -0.02em;
+  color: #fff; margin: 16px 0 20px; text-transform: uppercase;
 }
-.ipl-landing-center h1 span {
-  background: linear-gradient(135deg, #ff8c00, #ffc800);
+.ipl-hero-headline span {
+  background: linear-gradient(135deg, #ff8c00, #ffc800, #ffe066);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
   display: block; font-style: italic; padding-right: 10px;
 }
-.ipl-landing-center p {
-  color: rgba(200,200,255,0.6); font-size: clamp(14px,2vw,18px);
-  margin: 0 auto 30px; line-height: 1.6;
-}
-.ipl-landing-batsman, .ipl-landing-trophy {
-  width: 300px; height: 400px; background-size: contain;
-  background-position: center bottom; background-repeat: no-repeat;
-  filter: drop-shadow(0 0 30px rgba(100,80,255,0.3));
-  opacity: 0.8;
-}
-.ipl-landing-batsman {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><path fill="%23c084fc" d="M120 180l-20 40-30-10 10-50 40 20zm-10-80c15 0 25 10 25 25s-10 25-25 25-25-10-25-25 10-25 25-25zm-20 60l-30 40 10 20 40-50-20-10zm-10-20l30-40 20 10-40 40-10-10z" opacity="0.3"/><path fill="%23818cf8" d="M100 200l-20 60-20-10 30-70 10 20zm40-150l-80 60 10 20 80-60-10-20z" opacity="0.4"/></svg>');
-  transform: translateX(-40px);
-}
-.ipl-landing-trophy {
-  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 300"><path fill="%23ffc800" d="M70 100c0 30 20 50 30 50s30-20 30-50h-60zm10-40h40v30h-40v-30zm-10 100l10 80h40l10-80h-60zm-20-120c-15 0-25 15-25 30s10 30 25 30v-10c-10 0-15-10-15-20s5-20 15-20v-10zm100 0c15 0 25 15 25 30s-10 30-25 30v-10c10 0 15-10 15-20s-5-20-15-20v-10z" opacity="0.4"/></svg>');
-  transform: translateX(40px);
+
+/* Hero silhouettes — batsman & trophy wrapper */
+.ipl-hero-silhouette {
+  width: 280px; min-height: 360px;
+  display: flex; align-items: center; justify-content: center;
+  position: relative; z-index: 2;
+  flex-shrink: 0;
 }
 
+/* Stats section */
 .ipl-landing-stats {
   display: flex; justify-content: center; gap: 24px;
   max-width: 1000px; margin: 0 auto 40px; padding: 0 20px;
@@ -293,27 +291,20 @@
   display: flex; align-items: center; gap: 16px; text-align: left;
   background: rgba(15,12,40,0.6); border: 1px solid rgba(100,80,255,0.2);
   padding: 16px 24px; border-radius: 16px; flex: 1;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px); transition: transform 0.25s, box-shadow 0.25s;
 }
 .ipl-stat-icon {
   font-size: 32px; padding: 12px; border-radius: 12px;
   background: rgba(255,255,255,0.05);
 }
-
-.ipl-floodlight {
-  position: absolute; top: -100px; width: 400px; height: 600px;
-  background: conic-gradient(from 180deg at 50% 0%, transparent 0deg, rgba(200,200,255,0.1) 30deg, rgba(200,200,255,0.2) 45deg, rgba(200,200,255,0.1) 60deg, transparent 90deg);
-  pointer-events: none; z-index: 0; filter: blur(20px);
+.ipl-stat-value {
+  font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800;
+  color: #fff;
 }
-.ipl-floodlight.left { left: 10%; transform: rotate(-30deg); }
-.ipl-floodlight.right { right: 10%; transform: scaleX(-1) rotate(-30deg); }
-
-/* ══════════ MOBILE RESPONSIVE ══════════ */
-@media (max-width: 900px) {
-  .ipl-landing-batsman, .ipl-landing-trophy { display: none !important; }
-  .ipl-landing-stats { flex-direction: column; gap: 12px; }
-  .ipl-landing-stats .ipl-stat-card { padding: 12px 16px; }
-  .ipl-floodlight { opacity: 0.5; }
+.ipl-stat-label {
+  color: rgba(200,200,255,0.45); font-size: 12px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
 
 /* ── Back Button ── */
 .ipl-back-btn {
@@ -325,8 +316,20 @@
 }
 .ipl-back-btn:hover { background: rgba(100,80,255,0.15); color: #fff; }
 
-/* ══════════ MOBILE RESPONSIVE ══════════ */
+
+/* ═══════════════════════════════════════════════
+   MOBILE RESPONSIVE
+   ═══════════════════════════════════════════════ */
 @media (max-width: 900px) {
+  /* Hero adjustments */
+  .ipl-hero-silhouette { display: none !important; }
+  .ipl-landing-hero { min-height: 50vh; padding: 30px 16px; }
+  .ipl-hero-headline { font-size: clamp(30px, 8vw, 48px) !important; }
+  .ipl-landing-stats { flex-direction: column; gap: 12px; }
+  .ipl-landing-stats .ipl-stat-card { padding: 12px 16px; }
+  .ipl-floating-object { opacity: 0.4 !important; }
+
+  /* Game layout */
   .ipl-game-layout {
     grid-template-columns: 1fr !important;
     gap: 10px !important; padding: 10px !important;
@@ -341,10 +344,10 @@
   .ipl-confidence-value { font-size: 32px !important; }
   .ipl-stats-row { gap: 12px !important; flex-wrap: wrap; }
   .ipl-stat-card { min-width: 80px !important; padding: 12px 16px !important; }
-  .ipl-hero h1 { font-size: clamp(26px, 7vw, 40px) !important; }
 }
 
 @media (max-width: 480px) {
+  .ipl-hero-headline { font-size: clamp(26px, 9vw, 38px) !important; }
   .ipl-game-layout { padding: 6px !important; gap: 8px !important; }
   .ipl-question-card { padding: 12px !important; }
   .ipl-question-text { font-size: 15px !important; }
@@ -355,7 +358,5 @@
   .ipl-confidence-value { font-size: 28px !important; }
   .ipl-panel-title { font-size: 11px !important; }
   .ipl-candidate-row { font-size: 11px !important; padding: 6px 8px !important; }
-  .ipl-hero { padding: 30px 12px !important; }
   .ipl-btn-primary { padding: 14px 28px !important; font-size: 15px !important; }
-}
 }
