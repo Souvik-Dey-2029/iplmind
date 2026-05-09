@@ -1,5 +1,6 @@
 import { calculateEntropy, normalizeProbabilities } from "./probabilityEngine.js";
 import { getQuestionBoost } from "./learningMemory.js";
+import { determinePhase, getAllowedCategories, applyHierarchicalPenalties } from "./reasoningPhaseManager.js";
 
 const MIN_SPLIT = 0.08;
 const FRANCHISE_HISTORY_COOLDOWN = 3;
@@ -103,18 +104,7 @@ export const CONCEPT_GROUPS = {
   },
 };
 
-// ═══════════════════════════════════════════════
-// QUESTION STAGE SYSTEM
-// Forces intelligent ordering: broad → narrow
-// ═══════════════════════════════════════════════
-const QUESTION_STAGES = [
-  { name: "role", minQuestion: 0, categories: ["role"] },
-  { name: "scope", minQuestion: 2, categories: ["origin", "era"] },
-  { name: "tactics", minQuestion: 4, categories: ["batting-role", "batting-style", "bowling-style", "bowling-role"] },
-  { name: "profile", minQuestion: 6, categories: ["leadership", "achievement", "profile"] },
-  { name: "team", minQuestion: 8, categories: ["current-team"] },
-  { name: "narrowing", minQuestion: 10, categories: ["franchise-history"] },
-];
+// Removed QUESTION_STAGES to use reasoningPhaseManager
 
 const staticQuestions = [
   // Stage 1: Broad classification (role)
@@ -124,8 +114,8 @@ const staticQuestions = [
   question("wicketkeeper", "role", "Is this player a wicketkeeper?", (p) => p.wicketKeeper || p.role === "wicket-keeper"),
 
   // Stage 2: Player scope (origin / era)
-  question("overseas", "origin", "Is this player an overseas (non-Indian) player?", (p) => p.overseas),
-  question("indian", "origin", "Is this player from India?", (p) => p.country === "India"),
+  question("overseas", "origin-class", "Is this player an overseas (non-Indian) player?", (p) => p.overseas),
+  question("indian", "origin-class", "Is this player from India?", (p) => p.country === "India"),
   question("iconic", "profile", "Is this player considered a well-known / iconic IPL name?", (p) => p.iconic),
   question("active", "era", "Is this player currently active in recent IPL seasons?", (p) => p.active),
 
@@ -162,17 +152,16 @@ export function selectBestQuestion(candidates, probabilities, history = []) {
 
   // Determine allowed categories based on question stage
   const questionNumber = history.length;
-  // ONLY allow the specific stages up to the current question number.
-  // This forces Akinator-style progression (Role -> Origin -> Skill -> Team)
-  const allowedCategories = getAllowedCategories(questionNumber);
+  const phase = determinePhase(candidates.length, questionNumber);
+  const allowedCategories = new Set(getAllowedCategories(phase));
 
-  // Score questions using information gain + balance + diversity
+  // Score questions using information gain + balance + diversity + hierarchical penalties
   const scored = options
     .filter((option) => !askedIds.has(option.id) && !askedTexts.has(normalize(option.text)))
     .filter((option) => !suppressedIds.has(option.id))
     .filter((option) => !isHardSuppressed(option, history, candidates.length))
     .filter((option) => allowedCategories.has(option.category))
-    .map((option) => scoreQuestion(option, candidates, scopedProbabilities, baseEntropy, categoryCounts))
+    .map((option) => scoreQuestion(option, candidates, scopedProbabilities, baseEntropy, categoryCounts, phase, history))
     .filter((option) => option.yesProbability >= MIN_SPLIT && option.noProbability >= MIN_SPLIT)
     .map((option) => ({
       ...option,
@@ -185,7 +174,7 @@ export function selectBestQuestion(candidates, probabilities, history = []) {
     const fallbackScored = options
       .filter((option) => !askedIds.has(option.id))
       .filter((option) => !suppressedIds.has(option.id))
-      .map((option) => scoreQuestion(option, candidates, scopedProbabilities, baseEntropy, categoryCounts))
+      .map((option) => scoreQuestion(option, candidates, scopedProbabilities, baseEntropy, categoryCounts, phase, history))
       .filter((option) => option.yesProbability >= 0.05 && option.noProbability >= 0.05)
       .sort((a, b) => b.score - a.score);
     
@@ -227,37 +216,7 @@ function buildSuppressedConceptSet(history) {
   return suppressed;
 }
 
-/**
- * Get allowed question categories based on question number.
- * STRICT PROGRESSION:
- * Early questions focus strictly on broad classification.
- */
-function getAllowedCategories(questionNumber) {
-  const allowed = new Set();
-  
-  // Find highest stage unlocked
-  let maxStageUnlocked = 0;
-  for (let i = 0; i < QUESTION_STAGES.length; i++) {
-    if (questionNumber >= QUESTION_STAGES[i].minQuestion) {
-      maxStageUnlocked = i;
-    }
-  }
-
-  // Allow current stage and all previous stages
-  for (let i = 0; i <= maxStageUnlocked; i++) {
-    QUESTION_STAGES[i].categories.forEach((cat) => allowed.add(cat));
-  }
-
-  // Allow dynamic team questions only if stage unlocked
-  if (questionNumber >= 8) {
-    allowed.add("current-team");
-  }
-  if (questionNumber >= 10) {
-    allowed.add("franchise-history");
-  }
-  
-  return allowed;
-}
+// Removed local getAllowedCategories
 
 /**
  * Calculate adaptive boost for question based on category diversity.
@@ -371,7 +330,7 @@ export function buildQuestionOptions(candidates) {
   return options;
 }
 
-function scoreQuestion(option, candidates, probabilities, baseEntropy, categoryCounts) {
+function scoreQuestion(option, candidates, probabilities, baseEntropy, categoryCounts, phase, history) {
   let yesProbability = 0;
   const yesDistribution = {};
   const noDistribution = {};
@@ -399,13 +358,16 @@ function scoreQuestion(option, candidates, probabilities, baseEntropy, categoryC
   const historicTeamPenalty = option.category === "franchise-history" ? 0.06 : 1;
   const lowInfoPenalty = yesProbability < 0.15 || noProbability < 0.15 ? 0.08 : 1;
   const learningBoost = getQuestionBoost(option.id);
+  
+  // Apply Hierarchical Penalty
+  const hierarchicalPenalty = applyHierarchicalPenalties(option, phase, candidates.length, history);
 
   return {
     ...option,
     yesProbability,
     noProbability,
     informationGain,
-    score: informationGain * (0.7 + balance * 0.3) * categoryPenalty * teamPenalty * historicTeamPenalty * lowInfoPenalty * learningBoost,
+    score: informationGain * (0.7 + balance * 0.3) * categoryPenalty * teamPenalty * historicTeamPenalty * lowInfoPenalty * learningBoost * hierarchicalPenalty,
   };
 }
 

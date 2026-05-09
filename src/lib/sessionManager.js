@@ -26,6 +26,7 @@ import { evaluateQuestionAnswer, selectBestQuestion } from "./questionEngine";
 import { sanitizePlayerForRender } from "./playerNormalizer";
 import { recordSuccess, recordFailure } from "./learningMemory";
 import { validateQuestion } from "./questionValidation";
+import { determinePhase } from "./reasoningPhaseManager";
 
 // In-memory session store shared across route module instances in the same server process.
 const sessions = globalThis.__IPLMIND_SESSIONS__ || new Map();
@@ -686,6 +687,7 @@ function buildDebugReasoningPanel(session) {
       adaptiveQuestionLimit: session.adaptiveQuestionLimit,
       wrongGuessCount: session.wrongGuessCount,
       excludedPlayers: [...session.excludedPlayers],
+      phase: determinePhase(session.candidates.length, session.questionNumber),
     },
     confidenceEvolution: session.confidenceHistory,
   };
