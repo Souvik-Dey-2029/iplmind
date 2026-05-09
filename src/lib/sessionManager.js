@@ -14,7 +14,7 @@ import {
   calculateEntropy,
 } from "./probabilityEngine";
 import { evaluateDeterministicAnswer } from "./answerEvaluator";
-import { evaluateCandidates, generateGuessExplanation } from "./gemini";
+import { evaluateCandidates, generateGuessExplanation } from "./aiProvider";
 import { evaluateQuestionAnswer, selectBestQuestion } from "./questionEngine";
 import { sanitizePlayerForRender } from "./playerNormalizer";
 
