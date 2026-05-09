@@ -4,168 +4,610 @@
 /* Syne (headlines/display) & Plus Jakarta Sans (body/captions) */
 
 /* ===== Tailwind v4 Theme Tokens ===== */
-/* Colors + spacing are mapped here so Tailwind utilities like
-   bg-primary, text-secondary-container, px-gutter, etc. work. */
 @theme inline {
-  /* --- Colors (from Stitch design system) --- */
   --color-surface-variant: #e1e3de;
-  --color-on-tertiary-fixed: #002020;
   --color-secondary: #954a00;
-  --color-inverse-surface: #2e312e;
-  --color-tertiary-container: #004c4c;
-  --color-surface-dim: #d9dbd6;
   --color-primary: #00361a;
-  --color-on-tertiary-fixed-variant: #004f4f;
-  --color-primary-fixed-dim: #9dd3aa;
-  --color-outline-variant: #c1c9bf;
-  --color-inverse-on-surface: #f0f1ec;
-  --color-on-secondary-fixed-variant: #723700;
-  --color-on-surface: #191c19;
-  --color-error-container: #ffdad6;
+  --color-secondary-container: #fd8100;
   --color-surface: #f8faf5;
-  --color-surface-container-high: #e7e9e4;
-  --color-tertiary-fixed: #93f2f2;
+  --color-on-surface: #191c19;
+  --color-error: #ba1a1a;
+  --color-outline: #717971;
+  --color-surface-container-low: #f3f4ef;
   --color-on-primary: #ffffff;
   --color-primary-container: #1a4d2e;
-  --color-tertiary: #003434;
-  --color-outline: #717971;
-  --color-secondary-fixed-dim: #ffb785;
-  --color-secondary-fixed: #ffdcc6;
   --color-surface-container: #edeee9;
-  --color-on-primary-fixed: #00210e;
-  --color-on-secondary: #ffffff;
-  --color-on-primary-fixed-variant: #1d5031;
-  --color-surface-container-lowest: #ffffff;
-  --color-on-secondary-fixed: #301400;
-  --color-on-error-container: #93000a;
-  --color-tertiary-fixed-dim: #76d6d5;
-  --color-on-background: #191c19;
-  --color-primary-fixed: #b8f0c5;
-  --color-surface-container-highest: #e1e3de;
-  --color-on-primary-container: #88bd95;
-  --color-on-tertiary-container: #5fc0bf;
-  --color-background: #f8faf5;
-  --color-surface-container-low: #f3f4ef;
-  --color-on-error: #ffffff;
-  --color-secondary-container: #fd8100;
-  --color-on-tertiary: #ffffff;
-  --color-on-secondary-container: #5d2c00;
-  --color-surface-tint: #366847;
-  --color-error: #ba1a1a;
+  --color-surface-container-high: #e7e9e4;
   --color-on-surface-variant: #414942;
-  --color-inverse-primary: #9dd3aa;
-  --color-surface-bright: #f8faf5;
-
-  /* --- Spacing --- */
-  --spacing-stack-gap-sm: 12px;
-  --spacing-stack-gap-lg: 48px;
-  --spacing-gutter: 24px;
-  --spacing-margin-desktop: 64px;
-  --spacing-container-max-width: 1280px;
-  --spacing-margin-mobile: 20px;
-  --spacing-stack-gap-md: 24px;
-  --spacing-unit: 8px;
+  --color-background: #f8faf5;
 }
 
 /* ===== Base Styles ===== */
 body {
-  background: #f8faf5;
-  color: #191c19;
+  background: #0a0e1a;
+  color: #e8e8e8;
   font-family: 'Plus Jakarta Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-button,
-input {
+button, input {
   font: inherit;
 }
 
-/* ===================================================
-   FONT-FAMILY utility classes (font-headline-lg, etc.)
-   Stitch uses Tailwind v3 fontFamily config which maps
-   to these utility classes. We replicate them manually
-   because Tailwind v4 @theme doesn't support composite
-   fontSize definitions with fontWeight/lineHeight.
-   =================================================== */
+/* ═══════════════════════════════════════
+   GAME UI STYLES — Premium Akinator Theme
+   ═══════════════════════════════════════ */
 
-/* Syne family utilities */
-.font-headline-lg-mobile { font-family: 'Syne', sans-serif; }
-.font-headline-lg { font-family: 'Syne', sans-serif; }
-.font-headline-md { font-family: 'Syne', sans-serif; }
-.font-display-lg { font-family: 'Syne', sans-serif; }
-
-/* Plus Jakarta Sans family utilities */
-.font-caption { font-family: 'Plus Jakarta Sans', sans-serif; }
-.font-body-lg { font-family: 'Plus Jakarta Sans', sans-serif; }
-.font-body-md { font-family: 'Plus Jakarta Sans', sans-serif; }
-.font-label-bold { font-family: 'Plus Jakarta Sans', sans-serif; }
-
-/* ===================================================
-   FONT-SIZE utility classes (text-display-lg, etc.)
-   Each includes line-height, letter-spacing, and
-   font-weight so a single class gives the full style.
-   =================================================== */
-
-.text-headline-lg-mobile {
-  font-size: 32px;
-  line-height: 1.2;
-  font-weight: 700;
+.game-main {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
 }
 
-.text-caption {
-  font-size: 12px;
-  line-height: 1.4;
-  font-weight: 500;
+.game-bg {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 0%, rgba(0, 200, 120, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 100%, rgba(253, 129, 0, 0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(20, 30, 60, 1) 0%, rgba(10, 14, 26, 1) 100%);
+  z-index: 0;
 }
 
-.text-body-lg {
-  font-size: 18px;
-  line-height: 1.6;
-  font-weight: 400;
+.game-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.015) 1px, transparent 1px),
+    radial-gradient(circle at 75% 75%, rgba(255,255,255,0.01) 1px, transparent 1px);
+  background-size: 60px 60px;
 }
 
-.text-headline-lg {
-  font-size: 40px;
-  line-height: 1.2;
-  font-weight: 700;
+.game-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.text-headline-md {
-  font-size: 24px;
-  line-height: 1.3;
-  font-weight: 600;
+/* ═══ Mascot Bar ═══ */
+.mascot-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 20px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
 }
 
-.text-display-lg {
-  font-size: 64px;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  font-weight: 800;
+.mascot-emoji {
+  font-size: 28px;
+  animation: mascotBounce 2s ease-in-out infinite;
 }
 
-.text-body-md {
-  font-size: 16px;
-  line-height: 1.6;
-  font-weight: 400;
+@keyframes mascotBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
 }
 
-.text-label-bold {
+.mascot-text {
+  font-family: 'Syne', sans-serif;
   font-size: 14px;
-  line-height: 1.2;
-  font-weight: 700;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: -0.01em;
 }
 
-/* ===================================================
-   CUSTOM CLASSES (from Stitch <style> block)
-   =================================================== */
+/* ═══ Game Card ═══ */
+.game-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 24px;
+  padding: 28px;
+  backdrop-filter: blur(24px);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.03) inset,
+    0 20px 60px -15px rgba(0, 0, 0, 0.5);
+}
 
-/* Material Icons base settings */
+/* ═══ Idle Panel ═══ */
+.idle-panel {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.idle-icon {
+  font-size: 64px;
+  margin-bottom: 20px;
+  animation: floating 4s ease-in-out infinite;
+}
+
+@keyframes floating {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+.idle-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 32px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+.idle-desc {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.6;
+  margin: 0 0 28px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ═══ Buttons ═══ */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 36px;
+  background: linear-gradient(135deg, #fd8100, #e06b00);
+  color: #ffffff;
+  font-family: 'Syne', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 30px -8px rgba(253, 129, 0, 0.4);
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px -8px rgba(253, 129, 0, 0.5);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 28px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 12px;
+}
+
+.btn-secondary:hover:not(:disabled) { background: rgba(255,255,255,0.1); }
+
+/* ═══ Playing Panel ═══ */
+.playing-panel { display: flex; flex-direction: column; gap: 20px; }
+
+.question-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.question-number {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fd8100;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.candidates-count {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 2px 0 0;
+}
+
+.progress-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-bar {
+  width: 120px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #00c878, #fd8100);
+  transition: width 0.6s ease;
+}
+
+.progress-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #00c878;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ═══ Question Box ═══ */
+.question-box {
+  background: linear-gradient(135deg, rgba(0, 200, 120, 0.08), rgba(253, 129, 0, 0.05));
+  border: 1px solid rgba(0, 200, 120, 0.12);
+  border-radius: 16px;
+  padding: 24px;
+}
+
+.question-text {
+  font-family: 'Syne', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.3;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.loading-text {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 15px;
+  margin: 0;
+}
+
+/* ═══ Answer Buttons ═══ */
+.answer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.btn-answer {
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-answer:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(0, 200, 120, 0.3);
+}
+
+.btn-answer:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.answer-emoji { font-size: 16px; }
+
+.wrong-guess-badge {
+  text-align: center;
+  font-size: 12px;
+  color: rgba(255, 160, 60, 0.7);
+  margin: 0;
+  padding: 6px 0;
+}
+
+/* ═══ Candidates Panel ═══ */
+.candidates-panel {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  padding: 14px;
+}
+
+.candidates-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px;
+}
+
+.candidate-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.candidate-row:nth-child(2) {
+  background: rgba(0, 200, 120, 0.06);
+  color: #ffffff;
+}
+
+.candidate-prob {
+  font-weight: 700;
+  color: #00c878;
+}
+
+/* ═══ Guess Panel ═══ */
+.guess-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.guess-label {
+  font-family: 'Syne', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #fd8100;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.guess-reveal {
+  background: linear-gradient(135deg, rgba(0, 200, 120, 0.1), rgba(253, 129, 0, 0.06));
+  border: 1px solid rgba(0, 200, 120, 0.15);
+  border-radius: 20px;
+  padding: 28px;
+  text-align: center;
+}
+
+.guess-name {
+  font-family: 'Syne', sans-serif;
+  font-size: 36px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 8px;
+  letter-spacing: -0.02em;
+}
+
+.guess-facts {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0 0 16px;
+}
+
+.guess-explanation {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.guess-confidence-bar {
+  position: relative;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.guess-confidence-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #00c878, #fd8100);
+}
+
+.guess-confidence-label {
+  position: absolute;
+  right: 8px;
+  top: -22px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #00c878;
+}
+
+.guess-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-correct {
+  height: 52px;
+  background: linear-gradient(135deg, #00a86b, #00c878);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 6px 20px -6px rgba(0, 168, 107, 0.4);
+}
+
+.btn-correct:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 30px -6px rgba(0, 168, 107, 0.5);
+}
+
+.btn-continue {
+  height: 52px;
+  background: rgba(253, 100, 52, 0.1);
+  color: #fd8100;
+  font-size: 15px;
+  font-weight: 700;
+  border: 1px solid rgba(253, 129, 0, 0.2);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-continue:hover:not(:disabled) {
+  background: rgba(253, 100, 52, 0.2);
+}
+
+/* ═══ Failed Panel ═══ */
+.failed-panel {
+  text-align: center;
+  padding: 32px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.failed-icon { font-size: 56px; }
+.failed-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.failed-desc {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  margin: 0;
+}
+
+.reveal-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.reveal-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  text-align: left;
+}
+
+.reveal-input {
+  width: 100%;
+  height: 48px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 0 16px;
+  color: #ffffff;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s;
+  box-sizing: border-box;
+}
+
+.reveal-input:focus {
+  border-color: #fd8100;
+}
+
+.reveal-input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+/* ═══ Finished Panel ═══ */
+.finished-panel {
+  text-align: center;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.finished-icon { font-size: 56px; }
+.finished-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0;
+}
+
+.finished-message {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  line-height: 1.5;
+}
+
+.finished-stats {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 0;
+}
+
+/* ═══ Error Box ═══ */
+.error-box {
+  margin-top: 16px;
+  padding: 14px 18px;
+  background: rgba(186, 26, 26, 0.1);
+  border: 1px solid rgba(186, 26, 26, 0.2);
+  border-radius: 12px;
+}
+
+.error-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #ff6b6b;
+  margin: 0;
+}
+
+.btn-error-restart {
+  margin-top: 10px;
+  padding: 8px 16px;
+  background: rgba(186, 26, 26, 0.2);
+  color: #ff6b6b;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid rgba(186, 26, 26, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* ═══════════════════════════════════════
+   HOME PAGE STYLES (IPLMindHome)
+   ═══════════════════════════════════════ */
+
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
 
-/* Glass morphism panel */
 .glass-panel {
   background: rgba(255, 255, 255, 0.45);
   backdrop-filter: blur(16px);
@@ -173,7 +615,6 @@ input {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-/* Hero background gradient (cricket field/stadium feel) */
 .stadium-gradient {
   background:
     radial-gradient(circle at top right, rgba(29, 80, 49, 0.15) 0%, transparent 70%),
@@ -181,24 +622,10 @@ input {
     #f8faf5;
 }
 
-/* Shimmer loading effect */
-.shimmer-effect {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  background-size: 200% 100%;
-}
-
-/* Floating animation for cricket ball & stumps */
 .floating {
   animation: floating 6s ease-in-out infinite;
 }
 
-@keyframes floating {
-  0%   { transform: translateY(0px); }
-  50%  { transform: translateY(-20px); }
-  100% { transform: translateY(0px); }
-}
-
-/* Pulse animation for chart bars */
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
@@ -208,20 +635,24 @@ input {
   50% { opacity: 0.5; }
 }
 
-/* ===== Responsive overrides for bento grid ===== */
-@media (max-width: 768px) {
-  .bento-grid {
-    grid-template-columns: 1fr !important;
-  }
-  .bento-card-lg,
-  .bento-card-sm {
-    grid-column: span 1 !important;
-  }
-  .bento-card-content {
-    flex-direction: column !important;
-  }
-  .bento-stats-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-  }
+/* ═══ Font utilities ═══ */
+.font-headline-lg-mobile, .font-headline-lg, .font-headline-md, .font-display-lg {
+  font-family: 'Syne', sans-serif;
+}
+.font-caption, .font-body-lg, .font-body-md, .font-label-bold {
+  font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
+/* ═══ Responsive ═══ */
+@media (max-width: 768px) {
+  .bento-grid { grid-template-columns: 1fr !important; }
+  .bento-card-lg, .bento-card-sm { grid-column: span 1 !important; }
+  .bento-card-content { flex-direction: column !important; }
+  .bento-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
+
+  .game-main { padding: 12px; }
+  .game-card { padding: 20px; }
+  .question-text { font-size: 18px; }
+  .guess-name { font-size: 28px; }
+  .idle-title { font-size: 26px; }
+}

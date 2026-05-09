@@ -54,6 +54,11 @@ const roleQuestions = [
   { patterns: ["wicket keeper", "wicket-keeper"], role: "wicket-keeper" },
 ];
 
+/**
+ * Evaluate answer deterministically.
+ * V2: Uses gradient scoring (0.85/0.15) instead of binary (1/0).
+ * This prevents a single data inconsistency from killing the correct player.
+ */
 export function evaluateDeterministicAnswer(candidates, question, answer) {
   const answerKind = normalizeAnswer(answer);
   if (answerKind === "neutral") return null;
@@ -84,13 +89,19 @@ export function evaluateDeterministicAnswer(candidates, question, answer) {
   return null;
 }
 
+/**
+ * V2: Gradient scoring replaces binary 1/0.
+ * Matching players get 0.85, non-matching get 0.15.
+ * This prevents instant elimination from imperfect data.
+ */
 function scoreCandidates(candidates, answerKind, predicate) {
   const scores = {};
 
   candidates.forEach((player) => {
     const hasTrait = predicate(player);
     const matchesAnswer = answerKind === "yes" ? hasTrait : !hasTrait;
-    scores[player.name] = matchesAnswer ? 1 : 0;
+    // V2: Gradient scoring — soft elimination instead of instant death
+    scores[player.name] = matchesAnswer ? 0.85 : 0.15;
   });
 
   return scores;

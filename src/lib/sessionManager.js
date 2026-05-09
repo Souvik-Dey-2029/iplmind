@@ -1,6 +1,13 @@
 /**
  * Session Manager - handles game session state on the server side.
  * Stores active sessions in memory (could be moved to Redis for production scaling).
+ *
+ * V2 OVERHAUL:
+ * - Continue-after-wrong-guess: resume session, exclude wrong player
+ * - Progressive confidence thresholds: must ask 8+ questions before guessing
+ * - Failure flow: "I couldn't guess" after max questions
+ * - Excluded players tracking for wrong guesses
+ * - Stabilized session lifecycle
  */
 
 import { v4 as uuidv4 } from "uuid";
@@ -21,11 +28,16 @@ import { sanitizePlayerForRender } from "./playerNormalizer";
 // In-memory session store shared across route module instances in the same server process.
 const sessions = globalThis.__IPLMIND_SESSIONS__ || new Map();
 globalThis.__IPLMIND_SESSIONS__ = sessions;
-const CONFIDENCE_THRESHOLD = 65;
-const MIN_CANDIDATES_TO_GUESS = 2;
-const INITIAL_ADAPTIVE_LIMIT = 12;
-const MAX_TOTAL_QUESTIONS = 28;
 
+// ═══════════════════════════════════════════════
+// V2: TUNED GAME CONSTANTS
+// ═══════════════════════════════════════════════
+const CONFIDENCE_THRESHOLD = 72;        // Raised from 65 — requires stronger evidence
+const MIN_CANDIDATES_TO_GUESS = 2;
+const MIN_QUESTIONS_BEFORE_GUESS = 8;   // Raised from 3 — prevents rushing
+const INITIAL_ADAPTIVE_LIMIT = 14;      // Raised from 12
+const MAX_TOTAL_QUESTIONS = 30;         // Raised from 28
+const MAX_WRONG_GUESSES = 3;            // Allow up to 3 wrong guesses before giving up
 
 // Lightweight atomic update mechanism to prevent concurrent corruption
 const sessionLocks = new Map();
@@ -89,10 +101,12 @@ export function createSession() {
     questionNumber: 0,
     adaptiveQuestionLimit: INITIAL_ADAPTIVE_LIMIT,
     maxTotalQuestions: MAX_TOTAL_QUESTIONS,
-
-    minQuestionsBeforeGuess: 3,
-    status: "playing", // playing | guessing | finished
+    minQuestionsBeforeGuess: MIN_QUESTIONS_BEFORE_GUESS,
+    status: "playing", // playing | guessing | continue | finished | failed
     guess: null,
+    guessHistory: [],           // V2: Track all guesses made
+    excludedPlayers: new Set(), // V2: Players excluded after wrong guesses
+    wrongGuessCount: 0,         // V2: How many wrong guesses so far
     currentQuestion: null,
     currentQuestionMeta: null,
     createdAt: Date.now(),
@@ -131,16 +145,29 @@ export async function processAnswer(sessionId, answer) {
 
   // Prefer the structured question predicate. Legacy/Gemini parsing remains a
   // fallback for older sessions or manually injected question text.
-  const matchScores =
+  let matchScores =
     evaluateQuestionAnswer(session.candidates, session.currentQuestionMeta, answer) ||
-    evaluateDeterministicAnswer(session.candidates, currentQuestion, answer) ||
-    (await evaluateCandidates(session.candidates, currentQuestion, answer));
+    evaluateDeterministicAnswer(session.candidates, currentQuestion, answer);
+
+  // AI fallback: only use if deterministic methods returned null
+  if (!matchScores) {
+    try {
+      matchScores = await evaluateCandidates(session.candidates, currentQuestion, answer);
+    } catch (err) {
+      console.warn("[sessionManager] AI evaluation failed, using neutral scores:", err.message);
+      // Fallback: neutral scores so game continues gracefully
+      matchScores = {};
+      session.candidates.forEach((p) => { matchScores[p.name] = 0.5; });
+    }
+  }
 
   // Update probabilities using Bayesian updating
   session.probabilities = updateProbabilities(session.probabilities, matchScores);
 
-  // Filter out very unlikely candidates
-  session.candidates = getViableCandidates(players, session.probabilities);
+  // Filter out very unlikely candidates (but respect excluded players)
+  session.candidates = getViableCandidates(players, session.probabilities)
+    .filter((p) => !session.excludedPlayers.has(p.name));
+
   session.entropyHistory.push(calculateEntropy(session.probabilities));
   session.confidenceHistory.push(getTopCandidate(session.probabilities)?.confidence || 0);
 
@@ -150,41 +177,142 @@ export async function processAnswer(sessionId, answer) {
   const confidentEnough = shouldMakeFinalGuess(session);
 
   if (confidentEnough) {
-    session.status = "guessing";
-    const topCandidate = getTopCandidate(session.probabilities);
-    const playerData = sanitizePlayerForRender(players.find((p) => p.name === topCandidate.name));
+    return await makeGuess(session);
+  }
 
-    if (!playerData || !playerData.name) {
-      throw new Error("Cannot find player data for top candidate: " + topCandidate.name);
-    }
-
-    // Get AI explanation for the guess
-    let explanation = "";
-    try {
-      explanation = await generateGuessExplanation(playerData, session.questionHistory);
-    } catch (err) {
-      console.warn("Failed to generate explanation, using fallback", err);
-      explanation = `${playerData.name} - a notable IPL player.`;
-    }
-
-    session.guess = {
-      player: playerData,
-      confidence: topCandidate.confidence,
-      probability: topCandidate.probability,
-      explanation: explanation || "",
-    };
-
-    return {
-      status: "guessing",
-      guess: session.guess,
-      questionNumber: session.questionNumber,
-      candidatesRemaining: session.candidates.length,
-      confidence: topCandidate.confidence,
-      debugReasoningPanel: buildDebugReasoningPanel(session),
-    };
+  // Check if we've exhausted all questions
+  if (session.questionNumber >= session.maxTotalQuestions) {
+    return handleFailure(session);
   }
 
   // Generate the next question
+  return generateNextQuestion(session);
+}
+
+/**
+ * V2: Make a guess attempt. Extracted to support continue-after-wrong-guess.
+ */
+async function makeGuess(session) {
+  session.status = "guessing";
+
+  // Find top candidate, excluding previously wrong guesses
+  const topCandidate = getTopNonExcludedCandidate(session);
+
+  if (!topCandidate) {
+    return handleFailure(session);
+  }
+
+  const playerData = sanitizePlayerForRender(players.find((p) => p.name === topCandidate.name));
+
+  if (!playerData || !playerData.name) {
+    return handleFailure(session);
+  }
+
+  // Get AI explanation for the guess
+  let explanation = "";
+  try {
+    explanation = await generateGuessExplanation(playerData, session.questionHistory);
+  } catch (err) {
+    console.warn("Failed to generate explanation, using fallback", err);
+    explanation = buildFallbackExplanation(playerData, session.questionHistory);
+  }
+
+  session.guess = {
+    player: playerData,
+    confidence: topCandidate.confidence,
+    probability: topCandidate.probability,
+    explanation: explanation || "",
+    guessNumber: session.wrongGuessCount + 1,
+  };
+
+  // Track guess in history
+  session.guessHistory.push({
+    playerName: playerData.name,
+    confidence: topCandidate.confidence,
+    questionNumber: session.questionNumber,
+  });
+
+  return {
+    status: "guessing",
+    guess: session.guess,
+    questionNumber: session.questionNumber,
+    candidatesRemaining: session.candidates.length,
+    confidence: topCandidate.confidence,
+    wrongGuessCount: session.wrongGuessCount,
+    maxWrongGuesses: MAX_WRONG_GUESSES,
+    debugReasoningPanel: buildDebugReasoningPanel(session),
+  };
+}
+
+/**
+ * V2: Continue game after wrong guess.
+ * Excludes the wrong player, resumes questioning.
+ */
+export async function continueAfterWrongGuess(sessionId) {
+  const session = sessions.get(sessionId);
+  if (!session) throw new Error("Session not found");
+  if (session.status !== "guessing") throw new Error("Game is not in guessing state");
+
+  session.wrongGuessCount++;
+
+  // Check if we've exceeded max wrong guesses
+  if (session.wrongGuessCount >= MAX_WRONG_GUESSES) {
+    return handleFailure(session);
+  }
+
+  // Exclude the wrong player from future consideration
+  const wrongPlayerName = session.guess?.player?.name;
+  if (wrongPlayerName) {
+    session.excludedPlayers.add(wrongPlayerName);
+
+    // Zero out the wrong player's probability
+    session.probabilities[wrongPlayerName] = 0;
+
+    // Remove from candidates
+    session.candidates = session.candidates.filter((p) => p.name !== wrongPlayerName);
+  }
+
+  // Re-normalize probabilities after exclusion
+  const total = Object.values(session.probabilities).reduce((s, v) => s + v, 0);
+  if (total > 0) {
+    for (const name in session.probabilities) {
+      session.probabilities[name] /= total;
+    }
+  }
+
+  // Increase adaptive limit to allow more questions
+  session.adaptiveQuestionLimit = Math.min(
+    session.adaptiveQuestionLimit + 5,
+    session.maxTotalQuestions
+  );
+
+  // Resume playing
+  session.status = "playing";
+  session.guess = null;
+
+  return generateNextQuestion(session);
+}
+
+/**
+ * V2: Handle failure — AI couldn't determine the player.
+ */
+function handleFailure(session) {
+  session.status = "failed";
+  return {
+    status: "failed",
+    questionNumber: session.questionNumber,
+    candidatesRemaining: session.candidates.length,
+    topCandidates: getDisplayCandidates(session).slice(0, 5),
+    message: "I couldn't determine your player this time.",
+    wrongGuessCount: session.wrongGuessCount,
+    debugReasoningPanel: buildDebugReasoningPanel(session),
+  };
+}
+
+/**
+ * Generate the next question for the session.
+ */
+function generateNextQuestion(session) {
   const nextQuestionMeta = selectBestQuestion(
     session.candidates,
     session.probabilities,
@@ -193,7 +321,11 @@ export async function processAnswer(sessionId, answer) {
   const nextQuestion = nextQuestionMeta?.text;
 
   if (!nextQuestion) {
-    throw new Error("Failed to generate next question");
+    // If no more questions can be generated, force a guess or fail
+    if (session.candidates.length > 0) {
+      return makeGuess(session);
+    }
+    return handleFailure(session);
   }
 
   session.currentQuestion = nextQuestion;
@@ -211,6 +343,7 @@ export async function processAnswer(sessionId, answer) {
     entropy: session.entropyHistory.at(-1) || 0,
     confidence: session.confidenceHistory.at(-1) || 0,
     adaptiveQuestionLimit: session.adaptiveQuestionLimit,
+    wrongGuessCount: session.wrongGuessCount,
     debugReasoningPanel: buildDebugReasoningPanel(session),
   };
 }
@@ -251,8 +384,11 @@ export function recordFeedback(sessionId, correctPlayerName) {
     sessionId,
     questions: session.questionHistory,
     guessedPlayer: session.guess?.player?.name,
+    guessHistory: session.guessHistory || [],
     correctPlayer: correctPlayerName || "",
     wasCorrect: false,
+    wrongGuessCount: session.wrongGuessCount,
+    questionsAsked: session.questionNumber,
     timestamp: Date.now(),
   };
 }
@@ -271,7 +407,34 @@ export function confirmGuess(sessionId) {
     sessionId,
     questions: session.questionHistory,
     guessedPlayer: session.guess?.player?.name,
+    guessHistory: session.guessHistory || [],
     wasCorrect: true,
+    wrongGuessCount: session.wrongGuessCount,
+    questionsAsked: session.questionNumber,
+    timestamp: Date.now(),
+  };
+}
+
+/**
+ * V2: Record feedback for failure flow (player reveal after giving up).
+ */
+export function recordFailureFeedback(sessionId, correctPlayerName) {
+  const session = sessions.get(sessionId);
+  if (!session) return null;
+
+  session.status = "finished";
+  session.correctPlayer = correctPlayerName || "";
+  session.wasCorrect = false;
+
+  return {
+    sessionId,
+    questions: session.questionHistory,
+    guessHistory: session.guessHistory || [],
+    correctPlayer: correctPlayerName || "",
+    wasCorrect: false,
+    failed: true,
+    wrongGuessCount: session.wrongGuessCount,
+    questionsAsked: session.questionNumber,
     timestamp: Date.now(),
   };
 }
@@ -288,29 +451,37 @@ export function cleanupSessions() {
   }
 }
 
+/**
+ * V2: Progressive confidence-based guessing.
+ * The longer the game goes, the MORE confident we need to be (not less).
+ * This prevents premature guessing while allowing late-game rescue guesses.
+ */
 function shouldMakeFinalGuess(session) {
   // Safety gate: never allow infinite questioning.
-  // If we reached the hard cap, force a guess with whatever top candidate exists.
   if (session.questionNumber >= session.maxTotalQuestions) {
     return true;
   }
 
+  // V2: Enforce minimum questions — never guess before 8 questions
   if (session.questionNumber < session.minQuestionsBeforeGuess) return false;
 
+  // Progressive threshold: rises with question count, then softens at the end
+  const progressiveThreshold = getProgressiveThreshold(session.questionNumber);
+
   // Primary: strong separation / confidence signal.
-  if (shouldGuess(session.probabilities, CONFIDENCE_THRESHOLD, MIN_CANDIDATES_TO_GUESS)) {
+  if (shouldGuess(session.probabilities, progressiveThreshold, MIN_CANDIDATES_TO_GUESS)) {
     return true;
   }
 
-  // Secondary: very small candidate pool.
+  // Secondary: very small candidate pool (≤2 players left).
   const top = getTopCandidate(session.probabilities);
-  if (session.candidates.length <= MIN_CANDIDATES_TO_GUESS && (top?.confidence || 0) >= 45) {
+  if (session.candidates.length <= MIN_CANDIDATES_TO_GUESS && (top?.confidence || 0) >= 50) {
     return true;
   }
 
   // Adaptive: allow gradual increase, but keep it bounded by the hard cap.
   if (session.questionNumber >= session.adaptiveQuestionLimit) {
-    if (top && (top?.confidence || 0) >= 40) {
+    if (top && (top?.confidence || 0) >= 45) {
       return true;
     }
 
@@ -322,13 +493,41 @@ function shouldMakeFinalGuess(session) {
   return false;
 }
 
+/**
+ * V2: Progressive confidence threshold.
+ * Questions 8-12: need 72% confidence
+ * Questions 13-18: need 65% confidence (more evidence gathered)
+ * Questions 19-25: need 55% confidence (softening for rescue)
+ * Questions 26+: need 40% confidence (last chance)
+ */
+function getProgressiveThreshold(questionNumber) {
+  if (questionNumber <= 12) return 72;
+  if (questionNumber <= 18) return 65;
+  if (questionNumber <= 25) return 55;
+  return 40;
+}
+
+/**
+ * V2: Get top candidate that hasn't been excluded from wrong guesses.
+ */
+function getTopNonExcludedCandidate(session) {
+  const ranked = Object.entries(session.probabilities)
+    .filter(([name]) => !session.excludedPlayers.has(name))
+    .sort((a, b) => b[1] - a[1]);
+
+  if (ranked.length === 0) return null;
+
+  return getTopCandidate(
+    Object.fromEntries(ranked)
+  );
+}
 
 function getDisplayCandidates(session) {
   const viableNames = new Set(session.candidates.map((player) => player.name));
   // Compute top candidates by probability directly (no external dependency)
   const topByProbability = [];
   for (const [name, prob] of Object.entries(session.probabilities)) {
-    if (viableNames.has(name)) {
+    if (viableNames.has(name) && !session.excludedPlayers.has(name)) {
       // Store as probability (0-1) not confidence (0-100) for API consistency
       topByProbability.push({ name, probability: prob });
     }
@@ -344,6 +543,43 @@ function getDisplayCandidates(session) {
       player: player || null,
     };
   });
+}
+
+/**
+ * V2: Build a fallback explanation without AI.
+ */
+function buildFallbackExplanation(playerData, questionHistory) {
+  const matchedTraits = [];
+
+  for (const qa of questionHistory) {
+    if (qa.answer?.toLowerCase() === "yes") {
+      const q = qa.question?.toLowerCase() || "";
+      if (q.includes("batter") || q.includes("batsman")) matchedTraits.push("batter");
+      if (q.includes("bowler")) matchedTraits.push("bowler");
+      if (q.includes("all-rounder")) matchedTraits.push("all-rounder");
+      if (q.includes("wicketkeeper") || q.includes("keeper")) matchedTraits.push("wicketkeeper");
+      if (q.includes("captain")) matchedTraits.push("captain");
+      if (q.includes("overseas")) matchedTraits.push("overseas player");
+      if (q.includes("indian") || q.includes("india")) matchedTraits.push("Indian player");
+      if (q.includes("opener")) matchedTraits.push("opener");
+      if (q.includes("finisher")) matchedTraits.push("finisher");
+      if (q.includes("spinner") || q.includes("spin")) matchedTraits.push("spinner");
+      if (q.includes("pace") || q.includes("fast")) matchedTraits.push("pace bowler");
+      if (q.includes("iconic")) matchedTraits.push("iconic IPL figure");
+    }
+  }
+
+  const team = playerData.latestSeasonTeam || playerData.currentTeam || playerData.teams?.[playerData.teams.length - 1];
+  const parts = [
+    ...new Set(matchedTraits),
+    team ? `associated with ${team}` : null,
+  ].filter(Boolean);
+
+  if (parts.length === 0) {
+    return `${playerData.name} — matched through the process of elimination.`;
+  }
+
+  return `${playerData.name} — ${parts.join(", ")}.`;
 }
 
 function buildDebugReasoningPanel(session) {
@@ -366,8 +602,10 @@ function buildDebugReasoningPanel(session) {
     eliminationReasoning: {
       candidatesRemaining: session.candidates.length,
       confidence: session.confidenceHistory.at(-1) || 0,
-      threshold: CONFIDENCE_THRESHOLD,
+      threshold: getProgressiveThreshold(session.questionNumber),
       adaptiveQuestionLimit: session.adaptiveQuestionLimit,
+      wrongGuessCount: session.wrongGuessCount,
+      excludedPlayers: [...session.excludedPlayers],
     },
     confidenceEvolution: session.confidenceHistory,
   };

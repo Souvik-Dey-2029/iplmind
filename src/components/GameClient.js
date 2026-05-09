@@ -1,8 +1,35 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const answerOptions = ["Yes", "No", "Maybe", "Don't Know"];
+const answerEmojis = { Yes: "✅", No: "❌", Maybe: "🤔", "Don't Know": "🤷" };
+
+// Mascot reactions based on game state
+const MASCOT_STATES = {
+  idle: { emoji: "🏏", text: "Think of any IPL player... I'll read your mind!" },
+  thinking: { emoji: "🧠", text: "Hmm, let me think about this..." },
+  confident: { emoji: "👀", text: "I think I'm getting close now..." },
+  veryConfident: { emoji: "😏", text: "Oh, I definitely know who this is!" },
+  shocked: { emoji: "😲", text: "Wait... that changes everything!" },
+  wrong: { emoji: "😅", text: "Oops! Let me try again..." },
+  victory: { emoji: "🎉", text: "I knew it! The cricket brain never fails!" },
+  failed: { emoji: "🤯", text: "You've stumped me! Well played!" },
+  earlyGame: { emoji: "🔍", text: "Just warming up... need more clues!" },
+};
+
+function getMascotState(phase, confidence, questionNumber, lastAnswer) {
+  if (phase === "finished") return MASCOT_STATES.victory;
+  if (phase === "failed") return MASCOT_STATES.failed;
+  if (phase === "guessing") return MASCOT_STATES.veryConfident;
+  if (phase === "idle") return MASCOT_STATES.idle;
+  if (lastAnswer === "No") return MASCOT_STATES.shocked;
+  if (questionNumber < 4) return MASCOT_STATES.earlyGame;
+  if (confidence > 60) return MASCOT_STATES.veryConfident;
+  if (confidence > 35) return MASCOT_STATES.confident;
+  return MASCOT_STATES.thinking;
+}
 
 export default function GameClient() {
   const [sessionId, setSessionId] = useState(null);
@@ -12,31 +39,34 @@ export default function GameClient() {
   const [guess, setGuess] = useState(null);
   const [topCandidates, setTopCandidates] = useState([]);
   const [confidence, setConfidence] = useState(0);
-  const [adaptiveQuestionLimit, setAdaptiveQuestionLimit] = useState(12);
-  const [debugReasoningPanel, setDebugReasoningPanel] = useState(null);
+  const [adaptiveQuestionLimit, setAdaptiveQuestionLimit] = useState(14);
+  const [wrongGuessCount, setWrongGuessCount] = useState(0);
   const [phase, setPhase] = useState("idle");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [correctPlayer, setCorrectPlayer] = useState("");
   const [finishedMessage, setFinishedMessage] = useState("");
+  const [lastAnswer, setLastAnswer] = useState("");
+  const [showReveal, setShowReveal] = useState(false);
 
-  // Prevent rapid double submissions causing broken state / race conditions.
   const inFlightRef = useRef(false);
+  const mascot = getMascotState(phase, confidence, questionNumber, lastAnswer);
 
   const progress = useMemo(
-    () => Math.min(Math.max(confidence, questionNumber * 6), 100),
+    () => Math.min(Math.max(confidence, questionNumber * 4), 100),
     [confidence, questionNumber]
   );
 
   async function startGame() {
     if (inFlightRef.current) return;
     inFlightRef.current = true;
-
     setLoading(true);
     setError("");
     setGuess(null);
     setFinishedMessage("");
     setCorrectPlayer("");
+    setWrongGuessCount(0);
+    setShowReveal(false);
 
     try {
       const response = await fetch("/api/session/start", { method: "POST" });
@@ -47,9 +77,8 @@ export default function GameClient() {
       setQuestion(data.question);
       setQuestionNumber(data.questionNumber);
       setCandidatesRemaining(data.candidatesRemaining);
-      setAdaptiveQuestionLimit(data.adaptiveQuestionLimit || 12);
+      setAdaptiveQuestionLimit(data.adaptiveQuestionLimit || 14);
       setConfidence(0);
-      setDebugReasoningPanel(null);
       setTopCandidates([]);
       setPhase("playing");
     } catch (err) {
@@ -61,12 +90,11 @@ export default function GameClient() {
   }
 
   async function answerQuestion(answer) {
-    if (!sessionId) return;
-    if (inFlightRef.current) return;
+    if (!sessionId || inFlightRef.current) return;
     inFlightRef.current = true;
-
     setLoading(true);
     setError("");
+    setLastAnswer(answer);
 
     try {
       const response = await fetch("/api/session/answer", {
@@ -74,7 +102,6 @@ export default function GameClient() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sessionId, answer }),
       });
-
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Could not submit answer");
 
@@ -82,11 +109,18 @@ export default function GameClient() {
       setCandidatesRemaining(data.candidatesRemaining);
       setConfidence(data.confidence ?? data.guess?.confidence ?? 0);
       setAdaptiveQuestionLimit(data.adaptiveQuestionLimit || adaptiveQuestionLimit);
-      setDebugReasoningPanel(data.debugReasoningPanel ?? null);
+      setWrongGuessCount(data.wrongGuessCount || 0);
 
       if (data.status === "guessing") {
         setGuess(data.guess);
         setPhase("guessing");
+        setShowReveal(false);
+        return;
+      }
+
+      if (data.status === "failed") {
+        setPhase("failed");
+        setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
         return;
       }
 
@@ -100,11 +134,9 @@ export default function GameClient() {
     }
   }
 
-  async function sendFeedback(wasCorrect) {
-    if (!sessionId) return;
-    if (inFlightRef.current) return;
+  async function handleContinueGame() {
+    if (!sessionId || inFlightRef.current) return;
     inFlightRef.current = true;
-
     setLoading(true);
     setError("");
 
@@ -112,21 +144,53 @@ export default function GameClient() {
       const response = await fetch("/api/session/feedback", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          sessionId,
-          wasCorrect,
-          correctPlayerName: correctPlayer,
-        }),
+        body: JSON.stringify({ sessionId, action: "continue" }),
       });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not continue game");
 
+      if (data.status === "failed") {
+        setPhase("failed");
+        setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
+        return;
+      }
+
+      setQuestion(data.question);
+      setQuestionNumber(data.questionNumber);
+      setCandidatesRemaining(data.candidatesRemaining);
+      setConfidence(data.confidence || 0);
+      setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
+      setWrongGuessCount(data.wrongGuessCount || 0);
+      setGuess(null);
+      setPhase("playing");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      inFlightRef.current = false;
+    }
+  }
+
+  async function sendFeedback(wasCorrect) {
+    if (!sessionId || inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch("/api/session/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, wasCorrect, correctPlayerName: correctPlayer }),
+      });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Could not save feedback");
 
       setPhase("finished");
       setFinishedMessage(
         wasCorrect
-          ? "Called it. The cricket brain is warm."
-          : "Noted. I logged the correction for this round."
+          ? "🎯 Nailed it! The cricket brain stays undefeated."
+          : `📝 Noted! I'll remember ${correctPlayer || "that player"} for next time.`
       );
     } catch (err) {
       setError(err.message);
@@ -136,286 +200,200 @@ export default function GameClient() {
     }
   }
 
+  async function revealPlayer() {
+    if (!sessionId || inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+
+    try {
+      await fetch("/api/session/feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, action: "reveal", correctPlayerName: correctPlayer }),
+      });
+      setPhase("finished");
+      setFinishedMessage(`📝 ${correctPlayer || "Unknown player"} — I'll learn from this!`);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      inFlightRef.current = false;
+    }
+  }
+
   return (
-    <main className="min-h-screen overflow-hidden bg-[#f8f6ef] text-[#15211f]">
-      <section className="relative flex min-h-screen items-center px-5 py-8 sm:px-10 lg:px-16">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(235,99,52,0.2),transparent_28%),radial-gradient(circle_at_80%_15%,rgba(0,115,94,0.2),transparent_30%),linear-gradient(135deg,#f8f6ef_0%,#e8f0df_45%,#d9e8e1_100%)]" />
-        <div className="absolute bottom-0 left-0 right-0 h-44 bg-[linear-gradient(180deg,transparent,#14624f_85%)] opacity-90" />
-        <div className="absolute bottom-8 left-1/2 h-32 w-[120vw] -translate-x-1/2 rounded-[50%] border-[18px] border-white/50" />
+    <main className="game-main">
+      <div className="game-bg" />
+      <div className="game-container">
+        {/* Mascot */}
+        <motion.div
+          className="mascot-bar"
+          key={mascot.text}
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <span className="mascot-emoji">{mascot.emoji}</span>
+          <span className="mascot-text">{mascot.text}</span>
+        </motion.div>
 
-        <div className="relative mx-auto grid w-full max-w-6xl gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="space-y-7">
-            <div className="inline-flex items-center gap-3 rounded-full border border-[#15211f]/15 bg-white/60 px-4 py-2 text-sm font-semibold backdrop-blur">
-              <span className="h-2.5 w-2.5 rounded-full bg-[#eb6334]" />
-              IPLMind
-            </div>
-            <div>
-              <h1 className="max-w-2xl text-5xl font-black leading-[0.95] tracking-normal text-[#101817] sm:text-7xl">
-                Think of an IPL player.
-              </h1>
-              <p className="mt-5 max-w-xl text-lg leading-8 text-[#34433f]">
-                I will keep asking high-signal yes/no questions until the read is
-                strong enough.
-              </p>
-            </div>
-            <button
-              className="h-13 rounded-md bg-[#eb6334] px-7 text-base font-bold text-white shadow-lg shadow-[#eb6334]/25 transition hover:bg-[#d85429] disabled:cursor-not-allowed disabled:opacity-60"
-              disabled={loading}
-              onClick={startGame}
-            >
-              {phase === "idle" ? "Start game" : "Restart game"}
-            </button>
-          </div>
-
-          <div className="rounded-lg border border-[#15211f]/12 bg-white/80 p-5 shadow-2xl shadow-[#15211f]/10 backdrop-blur md:p-7">
-            {phase === "idle" && <IdlePanel />}
+        {/* Game Card */}
+        <div className="game-card">
+          <AnimatePresence mode="wait">
+            {phase === "idle" && (
+              <motion.div key="idle" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="idle-panel">
+                <div className="idle-icon">🏏</div>
+                <h2 className="idle-title">Ready to Play?</h2>
+                <p className="idle-desc">Think of any IPL player — legend, star, opener, finisher, spinner, anyone in the database.</p>
+                <button className="btn-primary" disabled={loading} onClick={startGame}>
+                  {loading ? "Starting..." : "Start Game"}
+                </button>
+              </motion.div>
+            )}
 
             {phase === "playing" && (
-              <div className="space-y-6">
-                <div className="flex flex-wrap items-center justify-between gap-3">
+              <motion.div key="playing" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="playing-panel">
+                <div className="question-header">
                   <div>
-                    <p className="text-sm font-bold uppercase text-[#eb6334]">
-                      Question {questionNumber}
-                    </p>
-                    <p className="text-sm text-[#63706d]">
-                      {candidatesRemaining} candidates still alive
-                    </p>
+                    <p className="question-number">Question {questionNumber}</p>
+                    <p className="candidates-count">{candidatesRemaining} candidates remaining</p>
                   </div>
-                  <div className="h-2 w-44 overflow-hidden rounded-full bg-[#d8ddd4]">
-                    <div
-                      className="h-full rounded-full bg-[#00735e] transition-all"
-                      style={{ width: `${progress}%` }}
-                    />
+                  <div className="progress-container">
+                    <div className="progress-bar">
+                      <motion.div className="progress-fill" animate={{ width: `${progress}%` }} transition={{ duration: 0.6 }} />
+                    </div>
+                    <span className="progress-label">{Math.round(confidence)}%</span>
                   </div>
                 </div>
 
                 {question ? (
-                  <div className="rounded-md bg-[#15211f] p-6 text-white">
-                    <p className="text-2xl font-black leading-tight sm:text-3xl">{question}</p>
-                  </div>
+                  <motion.div className="question-box" key={question} initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}>
+                    <p className="question-text">{question}</p>
+                  </motion.div>
                 ) : (
-                  <div className="rounded-md bg-[#15211f] p-6 text-white">
-                    <p className="text-lg text-white/60">Loading next question...</p>
-                  </div>
+                  <div className="question-box"><p className="loading-text">Loading next question...</p></div>
                 )}
 
-                <div className="grid gap-3 sm:grid-cols-2">
+                <div className="answer-grid">
                   {answerOptions.map((a) => (
-                    <button
+                    <motion.button
                       key={a}
-                      className="h-14 rounded-md border border-[#15211f]/15 bg-white px-4 text-base font-bold transition hover:border-[#00735e] hover:bg-[#e8f0df] disabled:cursor-not-allowed disabled:opacity-60"
+                      className="btn-answer"
                       disabled={loading}
                       onClick={() => answerQuestion(a)}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
                     >
-                      {a}
-                    </button>
+                      <span className="answer-emoji">{answerEmojis[a]}</span> {a}
+                    </motion.button>
                   ))}
                 </div>
 
+                {wrongGuessCount > 0 && (
+                  <p className="wrong-guess-badge">❌ {wrongGuessCount} wrong guess{wrongGuessCount > 1 ? "es" : ""} so far</p>
+                )}
+
                 {topCandidates.length > 0 && (
-                  <div className="rounded-md bg-[#f3f0e6] p-4">
-                    <p className="text-sm font-bold text-[#34433f]">Current read</p>
-                    <div className="mt-3 grid gap-2">
-                      {topCandidates.map((candidate) => {
-                        const displayProbability = (candidate.probability ?? 0) * 100;
-                        return (
-                          <div
-                            key={candidate.id || candidate.name}
-                            className="flex items-center justify-between rounded-md bg-white px-3 py-2 text-sm"
-                          >
-                            <span>{displayName(candidate)}</span>
-                            <span className="font-bold text-[#00735e]">
-                              {displayProbability.toFixed(1)}%
-                            </span>
-                          </div>
-                        );
-                      })}
-                    </div>
+                  <div className="candidates-panel">
+                    <p className="candidates-title">🎯 Current Read</p>
+                    {topCandidates.slice(0, 4).map((c) => (
+                      <div key={c.id || c.name} className="candidate-row">
+                        <span>{cleanText(c?.player?.name || c?.name)}</span>
+                        <span className="candidate-prob">{((c.probability ?? 0) * 100).toFixed(1)}%</span>
+                      </div>
+                    ))}
                   </div>
                 )}
-              </div>
+              </motion.div>
             )}
 
             {phase === "guessing" && guess && (
-              <div className="space-y-6">
-                <p className="text-sm font-bold uppercase text-[#eb6334]">My guess</p>
-
-                {guess.player && guess.player.name ? (
-                  <div className="rounded-md bg-[#15211f] p-6 text-white">
-                    <p className="text-4xl font-black">{guess.player.name}</p>
-                    <p className="mt-2 text-white/75">{(guessFacts(guess) || []).join(" | ")}</p>
-                    <p className="mt-5 text-lg leading-7">{cleanText(guess.explanation || "")}</p>
-                  </div>
+              <motion.div key="guessing" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="guess-panel">
+                <p className="guess-label">🎯 My Guess</p>
+                {guess.player?.name ? (
+                  <>
+                    <motion.div className="guess-reveal" initial={{ filter: "blur(12px)" }} animate={{ filter: "blur(0px)" }} transition={{ duration: 1.2 }}>
+                      <h2 className="guess-name">{guess.player.name}</h2>
+                      <p className="guess-facts">{(guessFacts(guess) || []).join(" • ")}</p>
+                      <p className="guess-explanation">{cleanText(guess.explanation || "")}</p>
+                      <div className="guess-confidence-bar">
+                        <motion.div className="guess-confidence-fill" initial={{ width: 0 }} animate={{ width: `${Math.min(guess.confidence, 97)}%` }} transition={{ duration: 1, delay: 0.5 }} />
+                        <span className="guess-confidence-label">{Math.round(guess.confidence)}% confidence</span>
+                      </div>
+                    </motion.div>
+                    <div className="guess-actions">
+                      <button className="btn-correct" disabled={loading} onClick={() => sendFeedback(true)}>
+                        ✅ Correct!
+                      </button>
+                      <button className="btn-continue" disabled={loading} onClick={handleContinueGame}>
+                        ❌ Wrong — Continue Game
+                      </button>
+                    </div>
+                  </>
                 ) : (
-                  <div className="rounded-md bg-[#15211f] p-6 text-white">
-                    <p className="text-lg text-white/60">Player data unavailable</p>
-                  </div>
+                  <div className="question-box"><p className="loading-text">Player data unavailable</p></div>
                 )}
+              </motion.div>
+            )}
 
-                <div className="grid gap-3 sm:grid-cols-2">
-                  <button
-                    className="h-13 rounded-md bg-[#00735e] px-5 font-bold text-white transition hover:bg-[#095f50]"
-                    disabled={loading}
-                    onClick={() => sendFeedback(true)}
-                  >
-                    Correct
+            {phase === "failed" && (
+              <motion.div key="failed" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="failed-panel">
+                <div className="failed-icon">🤯</div>
+                <h2 className="failed-title">You Stumped Me!</h2>
+                <p className="failed-desc">I couldn&apos;t figure out your player after {questionNumber} questions.</p>
+                <div className="reveal-form">
+                  <p className="reveal-label">Who was it?</p>
+                  <input
+                    className="reveal-input"
+                    placeholder="Enter player name..."
+                    value={correctPlayer}
+                    onChange={(e) => setCorrectPlayer(e.target.value)}
+                  />
+                  <button className="btn-primary" disabled={loading || !correctPlayer.trim()} onClick={revealPlayer}>
+                    Reveal & Teach Me
                   </button>
-                  <div className="flex gap-2">
-                    <input
-                      className="min-w-0 flex-1 rounded-md border border-[#15211f]/15 bg-white px-3 outline-none focus:border-[#eb6334]"
-                      placeholder="Who was it?"
-                      value={correctPlayer}
-                      onChange={(e) => setCorrectPlayer(e.target.value)}
-                    />
-                    <button
-                      className="h-13 rounded-md border border-[#15211f]/15 bg-white px-5 font-bold transition hover:bg-[#f3f0e6]"
-                      disabled={loading}
-                      onClick={() => sendFeedback(false)}
-                    >
-                      Missed
-                    </button>
-                  </div>
                 </div>
-              </div>
+                <button className="btn-secondary" disabled={loading} onClick={startGame}>
+                  Play Again
+                </button>
+              </motion.div>
             )}
 
             {phase === "finished" && (
-              <div className="grid min-h-[390px] place-items-center rounded-md bg-[#15211f] p-8 text-center text-white">
-                <div>
-                  <CricketMark />
-                  <h2 className="mt-6 text-3xl font-black">Round complete</h2>
-                  <p className="mt-3 text-white/75">{finishedMessage}</p>
-                  <button
-                    className="mt-7 h-13 rounded-md bg-[#eb6334] px-7 font-bold text-white transition hover:bg-[#d85429] disabled:cursor-not-allowed disabled:opacity-60"
-                    disabled={loading}
-                    onClick={startGame}
-                  >
-                    Play again
-                  </button>
-                </div>
-              </div>
+              <motion.div key="finished" initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="finished-panel">
+                <div className="finished-icon">🏆</div>
+                <h2 className="finished-title">Round Complete</h2>
+                <p className="finished-message">{finishedMessage}</p>
+                <p className="finished-stats">Questions asked: {questionNumber} • Wrong guesses: {wrongGuessCount}</p>
+                <button className="btn-primary" disabled={loading} onClick={startGame}>
+                  Play Again
+                </button>
+              </motion.div>
             )}
+          </AnimatePresence>
 
-            {error && (
-              <div className="mt-4 rounded-md bg-red-50 px-4 py-3">
-                <p className="text-sm font-semibold text-red-700">{error}</p>
-                {phase !== "idle" && (
-                  <button
-                    className="mt-3 h-10 rounded-md bg-red-600 px-4 text-sm font-bold text-white transition hover:bg-red-700"
-                    onClick={startGame}
-                  >
-                    Restart game
-                  </button>
-                )}
-              </div>
-            )}
-
-            {debugReasoningPanel && (
-              <DebugReasoningPanel debugReasoningPanel={debugReasoningPanel} />
-            )}
-          </div>
+          {error && (
+            <div className="error-box">
+              <p className="error-text">⚠️ {error}</p>
+              {phase !== "idle" && (
+                <button className="btn-error-restart" onClick={startGame}>Restart Game</button>
+              )}
+            </div>
+          )}
         </div>
-      </section>
+      </div>
     </main>
   );
 }
 
-function DebugReasoningPanel({ debugReasoningPanel }) {
-  const topCandidate = debugReasoningPanel.canonicalCandidates?.[0];
-
-  return (
-    <details className="mt-4 rounded-md border border-[#15211f]/12 bg-white/75 p-4 text-sm">
-      <summary className="cursor-pointer font-bold text-[#34433f]">
-        Debug reasoning panel
-      </summary>
-      <div className="mt-3 grid gap-2 text-[#53615d]">
-        <p>Canonical player id: {cleanText(topCandidate?.canonicalPlayerId) || "n/a"}</p>
-        <p>Original raw source: {cleanText(topCandidate?.originalRawSource?.name) || "n/a"}</p>
-        <p>Normalization result: {cleanText(topCandidate?.normalizationResult?.name) || "n/a"}</p>
-        <p>Question category: {cleanText(debugReasoningPanel.questionCategory) || "n/a"}</p>
-        <p>Entropy score: {Number(debugReasoningPanel.entropyScore || 0).toFixed(3)}</p>
-        <p>Entropy delta: {Number(debugReasoningPanel.entropyDelta || 0).toFixed(3)}</p>
-        <p>
-          Confidence:{" "}
-          {Number(debugReasoningPanel.eliminationReasoning?.confidence || 0).toFixed(1)}%
-        </p>
-        <p>
-          Confidence evolution:{" "}
-          {(debugReasoningPanel.confidenceEvolution || [])
-            .map((v) => Number(v || 0).toFixed(1))
-            .join(" -> ") || "n/a"}
-        </p>
-      </div>
-    </details>
-  );
-}
-
-function displayName(candidate) {
-  return cleanText(candidate?.player?.name || candidate?.name);
-}
-
 function guessFacts(g) {
   const player = g.player || {};
-  return [
-    player.country,
-    player.role,
-    player.latestSeasonTeam || player.currentTeam || player.teams?.at?.(-1),
-    `${Math.round(g.confidence)}% confidence`,
-  ]
+  return [player.country, player.role, player.latestSeasonTeam || player.currentTeam || player.teams?.at?.(-1)]
     .map(cleanText)
     .filter(Boolean);
 }
 
 function cleanText(value) {
-  const cleaned = String(value || "")
-    .replace(/\bunknown\b/gi, "")
-    .replace(/\s+\|\s+\|/g, " | ")
-    .replace(/\s+/g, " ")
-    .trim();
+  const cleaned = String(value || "").replace(/\bunknown\b/gi, "").replace(/\s+\|\s+\|/g, " | ").replace(/\s+/g, " ").trim();
   return /^(unknown|null|undefined|n\/a|na|-|none)$/i.test(cleaned) ? "" : cleaned;
 }
-
-function IdlePanel() {
-  return (
-    <div className="grid min-h-[390px] place-items-center rounded-md border border-dashed border-[#15211f]/20 bg-[#fffaf0]/70 p-8 text-center">
-      <div>
-        <CricketMark />
-        <h2 className="mt-6 text-2xl font-black">Ready when you are</h2>
-        <p className="mt-2 text-[#53615d]">
-          Pick someone in your head: legend, current star, opener, finisher, spinner,
-          quick, anyone in the dataset.
-        </p>
-      </div>
-    </div>
-  );
-}
-
-function CricketMark() {
-  return (
-    <svg
-      className="mx-auto h-20 w-20"
-      viewBox="0 0 120 120"
-      role="img"
-      aria-label="Cricket bat and ball"
-    >
-      <circle cx="60" cy="60" r="56" fill="#f3f0e6" />
-      <path
-        d="M76 18c7 4 12 10 15 18L45 82c-5 5-13 5-18 0s-5-13 0-18L76 18Z"
-        fill="#eb6334"
-      />
-      <path d="M72 22 91 41" stroke="#15211f" strokeWidth="5" />
-      <rect
-        x="24"
-        y="73"
-        width="21"
-        height="33"
-        rx="8"
-        transform="rotate(45 24 73)"
-        fill="#00735e"
-      />
-      <circle cx="85" cy="82" r="15" fill="#fff" stroke="#15211f" strokeWidth="5" />
-      <path d="M74 76c7 3 13 8 17 15" stroke="#eb6334" strokeWidth="4" />
-    </svg>
-  );
-}
-

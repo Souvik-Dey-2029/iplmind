@@ -46,7 +46,7 @@ export async function POST(request) {
       throw new Error("Invalid response from processAnswer");
     }
 
-    if (result.status !== "playing" && result.status !== "guessing") {
+    if (!["playing", "guessing", "failed"].includes(result.status)) {
       throw new Error(`Invalid status: ${result.status}`);
     }
 
@@ -64,6 +64,8 @@ export async function POST(request) {
     if (result.status === "guessing" && !result.guess) {
       throw new Error("No guess generated for guessing phase");
     }
+
+    // For failed phase, return as-is (contains message and top candidates)
 
     return Response.json(result);
   } catch (error) {
