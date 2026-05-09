@@ -66,22 +66,16 @@ if (typeof globalThis !== "undefined") {
   initializeSessionCleanup();
 }
 
-function atomicSessionUpdate(sessionId, updateFn) {
-  // Retrieve session - synchronous check
-  const session = sessions.get(sessionId);
-  if (!session) return null;
+// Lightweight async lock to prevent double-click / concurrent corruption
 
-  // Mark session as being updated (lightweight flag, not a true mutex)
+function acquireLock(sessionId) {
+  if (sessionLocks.get(sessionId)) return false;
   sessionLocks.set(sessionId, true);
-  try {
-    // Execute update with current session state
-    const result = updateFn(session);
-    // Session object modified in place, changes are atomic within single-threaded Node.js
-    return result !== undefined ? result : session;
-  } finally {
-    // Clear the update flag
-    sessionLocks.delete(sessionId);
-  }
+  return true;
+}
+
+function releaseLock(sessionId) {
+  sessionLocks.delete(sessionId);
 }
 
 /**
@@ -128,9 +122,12 @@ export function getSession(sessionId) {
  * Returns the updated session with next question or guess.
  */
 export async function processAnswer(sessionId, answer) {
-  const session = atomicSessionUpdate(sessionId, (session) => session);
-  if (!session) throw new Error("Session not found");
-  if (session.status !== "playing") throw new Error("Game is not in playing state");
+  if (!acquireLock(sessionId)) throw new Error("Concurrent request in progress");
+  
+  try {
+    const session = sessions.get(sessionId);
+    if (!session) throw new Error("Session not found");
+    if (session.status !== "playing") throw new Error("Game is not in playing state");
 
   const currentQuestion = session.currentQuestion;
   if (!currentQuestion) throw new Error("No current question to answer");
@@ -186,7 +183,10 @@ export async function processAnswer(sessionId, answer) {
   }
 
   // Generate the next question
-  return generateNextQuestion(session);
+    return generateNextQuestion(session);
+  } finally {
+    releaseLock(sessionId);
+  }
 }
 
 /**
@@ -249,9 +249,12 @@ async function makeGuess(session) {
  * Excludes the wrong player, resumes questioning.
  */
 export async function continueAfterWrongGuess(sessionId) {
-  const session = sessions.get(sessionId);
-  if (!session) throw new Error("Session not found");
-  if (session.status !== "guessing") throw new Error("Game is not in guessing state");
+  if (!acquireLock(sessionId)) throw new Error("Concurrent request in progress");
+  
+  try {
+    const session = sessions.get(sessionId);
+    if (!session) throw new Error("Session not found");
+    if (session.status !== "guessing") throw new Error("Game is not in guessing state");
 
   session.wrongGuessCount++;
 
@@ -290,7 +293,10 @@ export async function continueAfterWrongGuess(sessionId) {
   session.status = "playing";
   session.guess = null;
 
-  return generateNextQuestion(session);
+    return generateNextQuestion(session);
+  } finally {
+    releaseLock(sessionId);
+  }
 }
 
 /**

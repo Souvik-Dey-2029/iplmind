@@ -7,16 +7,18 @@ import { sanitizePlayerForRender } from "./playerNormalizer";
 import { logError, logWarn } from "./logger";
 
 // Initialize providers
+const geminiKey = process.env.GEMINI_API_KEY || "";
 const openRouterKey = process.env.OPENROUTER_API_KEY || "";
 
-// OpenRouter configuration
+// Provider Configurations
+const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/v1beta/models";
+const GEMINI_MODEL = "gemini-2.5-flash"; // Highly reliable, fast model
 const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1";
-const OPENROUTER_MODEL = "google/gemini-2.0-flash-001"; // OpenRouter's endpoint
+const OPENROUTER_MODEL = "google/gemini-2.0-flash-001"; // Fallback model
 
-/**
- * AI Provider Status and Metrics
- */
 export const aiProviderMetrics = {
+    geminiSuccesses: 0,
+    geminiFailures: 0,
     openRouterSuccesses: 0,
     openRouterFailures: 0,
     fallbackCount: 0,
@@ -29,21 +31,53 @@ function logProviderUsage(provider, success, operation) {
     const timestamp = new Date().toISOString();
     const status = success ? "✅" : "❌";
 
-    if (provider === "openrouter") {
-        if (success) {
-            aiProviderMetrics.openRouterSuccesses++;
-        } else {
-            aiProviderMetrics.openRouterFailures++;
-        }
-
-        if (!success && aiProviderMetrics.openRouterFailures === 1) {
-            logWarn("aiProvider", `First ${provider} failure detected`, { operation });
-        }
+    if (provider === "gemini") {
+        if (success) aiProviderMetrics.geminiSuccesses++;
+        else aiProviderMetrics.geminiFailures++;
+    } else if (provider === "openrouter") {
+        if (success) aiProviderMetrics.openRouterSuccesses++;
+        else aiProviderMetrics.openRouterFailures++;
     }
 
-    console.log(
-        `[${timestamp}] ${status} ${provider.toUpperCase()} - ${operation}`
-    );
+    if (!success) {
+        logWarn("aiProvider", `Provider failure detected`, { provider, operation });
+    }
+
+    console.log(`[${timestamp}] ${status} ${provider.toUpperCase()} - ${operation}`);
+}
+
+async function callGemini(prompt, batchInfo = "") {
+    if (!geminiKey) throw new Error("Gemini API key not configured");
+
+    try {
+        const response = await fetch(
+            `${GEMINI_BASE_URL}/${GEMINI_MODEL}:generateContent?key=${geminiKey}`,
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: { temperature: 0.7, maxOutputTokens: 2000 },
+                }),
+            }
+        );
+
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(`Gemini API error: ${response.status} - ${errorData.error?.message || "Unknown"}`);
+        }
+
+        const data = await response.json();
+        const content = data.candidates?.[0]?.content?.parts?.[0]?.text;
+
+        if (!content) throw new Error("No content in Gemini response");
+
+        logProviderUsage("gemini", true, `generateContent ${batchInfo}`);
+        return content.trim();
+    } catch (error) {
+        logProviderUsage("gemini", false, `generateContent ${batchInfo}`);
+        throw error;
+    }
 }
 
 /**
@@ -100,23 +134,42 @@ async function callOpenRouter(prompt, batchInfo = "") {
 }
 
 /**
- * Try AI provider
+ * Try AI providers with fallback and retry logic
  */
-async function withFallback(
-    operation,
-    prompt,
-    batchInfo = ""
-) {
-    try {
-        return await callOpenRouter(prompt, batchInfo);
-    } catch (error) {
-        const errorMsg = `AI provider failed - OpenRouter: ${error.message}`;
-        logError("aiProvider", errorMsg, new Error(errorMsg), {
-            operation,
-            error: error.message,
-        });
-        throw new Error(errorMsg);
+async function withFallback(operation, prompt, batchInfo = "", maxRetries = 2) {
+    let lastError;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+        // Try Gemini first
+        if (geminiKey) {
+            try {
+                return await callGemini(prompt, batchInfo);
+            } catch (error) {
+                lastError = error;
+                console.warn(`Gemini attempt ${attempt} failed:`, error.message);
+            }
+        }
+
+        // Fallback to OpenRouter
+        if (openRouterKey) {
+            aiProviderMetrics.fallbackCount++;
+            try {
+                return await callOpenRouter(prompt, batchInfo);
+            } catch (error) {
+                lastError = error;
+                console.warn(`OpenRouter attempt ${attempt} failed:`, error.message);
+            }
+        }
+
+        // Wait before retry
+        if (attempt < maxRetries) {
+            await new Promise(r => setTimeout(r, 1000 * attempt));
+        }
     }
+
+    const errorMsg = `All AI providers failed after ${maxRetries} attempts. Last error: ${lastError?.message}`;
+    logError("aiProvider", errorMsg, new Error(errorMsg), { operation, batchInfo });
+    throw new Error(errorMsg);
 }
 
 /**
@@ -226,22 +279,23 @@ Write a brief, confident 1-2 sentence explanation of why this player matches all
     }
 }
 
-/**
- * Get provider status and metrics for monitoring
- */
 export function getProviderStatus() {
-    const totalOpenRouter =
-        aiProviderMetrics.openRouterSuccesses + aiProviderMetrics.openRouterFailures;
+    const totalGemini = aiProviderMetrics.geminiSuccesses + aiProviderMetrics.geminiFailures;
+    const totalOpenRouter = aiProviderMetrics.openRouterSuccesses + aiProviderMetrics.openRouterFailures;
 
     return {
+        gemini: {
+            available: !!geminiKey,
+            successes: aiProviderMetrics.geminiSuccesses,
+            failures: aiProviderMetrics.geminiFailures,
+            successRate: totalGemini > 0 ? (aiProviderMetrics.geminiSuccesses / totalGemini) * 100 : 0,
+            total: totalGemini,
+        },
         openRouter: {
             available: !!openRouterKey,
             successes: aiProviderMetrics.openRouterSuccesses,
             failures: aiProviderMetrics.openRouterFailures,
-            successRate:
-                totalOpenRouter > 0
-                    ? (aiProviderMetrics.openRouterSuccesses / totalOpenRouter) * 100
-                    : 0,
+            successRate: totalOpenRouter > 0 ? (aiProviderMetrics.openRouterSuccesses / totalOpenRouter) * 100 : 0,
             total: totalOpenRouter,
         },
         fallbackCount: aiProviderMetrics.fallbackCount,
@@ -252,6 +306,8 @@ export function getProviderStatus() {
  * Reset metrics (useful for testing/monitoring)
  */
 export function resetProviderMetrics() {
+    aiProviderMetrics.geminiSuccesses = 0;
+    aiProviderMetrics.geminiFailures = 0;
     aiProviderMetrics.openRouterSuccesses = 0;
     aiProviderMetrics.openRouterFailures = 0;
     aiProviderMetrics.fallbackCount = 0;

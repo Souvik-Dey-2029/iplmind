@@ -56,6 +56,11 @@ export default function GameClient({ onBackToHome }) {
     [confidence, questionNumber]
   );
 
+  const getApiUrl = (endpoint) => {
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+    return `${baseUrl}${endpoint}`;
+  };
+
   async function startGame() {
     if (inFlightRef.current) return;
     inFlightRef.current = true;
@@ -67,7 +72,7 @@ export default function GameClient({ onBackToHome }) {
     setWrongGuessCount(0);
 
     try {
-      const response = await fetch("/api/session/start", { method: "POST" });
+      const response = await fetch(getApiUrl("/api/session/start"), { method: "POST" });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Could not start game");
 
@@ -95,7 +100,7 @@ export default function GameClient({ onBackToHome }) {
     setLastAnswer(answer);
 
     try {
-      const response = await fetch("/api/session/answer", {
+      const response = await fetch(getApiUrl("/api/session/answer"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sessionId, answer }),
@@ -138,7 +143,7 @@ export default function GameClient({ onBackToHome }) {
     setError("");
 
     try {
-      const response = await fetch("/api/session/feedback", {
+      const response = await fetch(getApiUrl("/api/session/feedback"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sessionId, action: "continue" }),
@@ -175,7 +180,7 @@ export default function GameClient({ onBackToHome }) {
     setError("");
 
     try {
-      const response = await fetch("/api/session/feedback", {
+      const response = await fetch(getApiUrl("/api/session/feedback"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sessionId, wasCorrect, correctPlayerName: correctPlayer }),
@@ -203,7 +208,7 @@ export default function GameClient({ onBackToHome }) {
     setLoading(true);
 
     try {
-      await fetch("/api/session/feedback", {
+      await fetch(getApiUrl("/api/session/feedback"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sessionId, action: "reveal", correctPlayerName: correctPlayer }),
