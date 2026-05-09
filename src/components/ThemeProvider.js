@@ -15,12 +15,12 @@ export const THEMES = [
 ];
 
 export function ThemeProvider({ children }) {
-  const [theme, setThemeState] = useState("light");
+  const [theme, setThemeState] = useState("ipl");
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    const saved = localStorage.getItem("iplmind-theme") || "light";
+    const saved = localStorage.getItem("iplmind-theme") || "ipl";
     setThemeState(saved);
     document.documentElement.setAttribute("data-theme", saved);
   }, []);
