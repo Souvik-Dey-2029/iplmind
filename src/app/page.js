@@ -8,7 +8,7 @@ export default function Home() {
   const [isPlaying, setIsPlaying] = useState(false);
 
   if (isPlaying) {
-    return <GameClient />;
+    return <GameClient onBackToHome={() => setIsPlaying(false)} />;
   }
 
   return <IPLMindHome onStartGame={() => setIsPlaying(true)} />;

@@ -24,8 +24,8 @@
 
 /* ===== Base Styles ===== */
 body {
-  background: #0a0e1a;
-  color: #e8e8e8;
+  background: #f8faf5;
+  color: #191c19;
   font-family: 'Plus Jakarta Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -36,7 +36,8 @@ button, input {
 }
 
 /* ═══════════════════════════════════════
-   GAME UI STYLES — Premium Akinator Theme
+   GAME UI — Matching Home Page Aesthetic
+   Light cream/green + deep green + orange
    ═══════════════════════════════════════ */
 
 .game-main {
@@ -53,20 +54,20 @@ button, input {
   position: fixed;
   inset: 0;
   background:
-    radial-gradient(ellipse at 20% 0%, rgba(0, 200, 120, 0.08) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 100%, rgba(253, 129, 0, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 50%, rgba(20, 30, 60, 1) 0%, rgba(10, 14, 26, 1) 100%);
+    radial-gradient(circle at top right, rgba(29, 80, 49, 0.12) 0%, transparent 60%),
+    radial-gradient(circle at bottom left, rgba(253, 129, 0, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #f8faf5 0%, #e8f0df 50%, #d9e8e1 100%);
   z-index: 0;
 }
 
 .game-bg::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background-image:
-    radial-gradient(circle at 25% 25%, rgba(255,255,255,0.015) 1px, transparent 1px),
-    radial-gradient(circle at 75% 75%, rgba(255,255,255,0.01) 1px, transparent 1px);
-  background-size: 60px 60px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 180px;
+  background: linear-gradient(180deg, transparent, rgba(20, 98, 79, 0.08) 85%);
 }
 
 .game-container {
@@ -85,10 +86,11 @@ button, input {
   align-items: center;
   gap: 12px;
   padding: 12px 20px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(21, 33, 31, 0.08);
   border-radius: 16px;
   backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .mascot-emoji {
@@ -105,20 +107,21 @@ button, input {
   font-family: 'Syne', sans-serif;
   font-size: 14px;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.7);
+  color: #414942;
   letter-spacing: -0.01em;
 }
 
 /* ═══ Game Card ═══ */
 .game-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(21, 33, 31, 0.08);
   border-radius: 24px;
   padding: 28px;
   backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
   box-shadow:
-    0 0 0 1px rgba(255,255,255,0.03) inset,
-    0 20px 60px -15px rgba(0, 0, 0, 0.5);
+    0 1px 3px rgba(0, 0, 0, 0.04),
+    0 20px 60px -15px rgba(0, 54, 26, 0.08);
 }
 
 /* ═══ Idle Panel ═══ */
@@ -142,14 +145,14 @@ button, input {
   font-family: 'Syne', sans-serif;
   font-size: 32px;
   font-weight: 800;
-  color: #ffffff;
+  color: #00361a;
   margin: 0 0 12px;
   letter-spacing: -0.02em;
 }
 
 .idle-desc {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #414942;
   line-height: 1.6;
   margin: 0 0 28px;
   max-width: 400px;
@@ -164,7 +167,7 @@ button, input {
   justify-content: center;
   gap: 8px;
   padding: 16px 36px;
-  background: linear-gradient(135deg, #fd8100, #e06b00);
+  background: linear-gradient(135deg, #fd8100, #954a00);
   color: #ffffff;
   font-family: 'Syne', sans-serif;
   font-size: 18px;
@@ -172,13 +175,13 @@ button, input {
   border-radius: 14px;
   border: none;
   cursor: pointer;
-  box-shadow: 0 8px 30px -8px rgba(253, 129, 0, 0.4);
+  box-shadow: 0 8px 30px -8px rgba(253, 129, 0, 0.35);
   transition: all 0.3s ease;
 }
 
 .btn-primary:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 12px 40px -8px rgba(253, 129, 0, 0.5);
+  box-shadow: 0 12px 40px -8px rgba(253, 129, 0, 0.45);
 }
 
 .btn-primary:disabled {
@@ -191,18 +194,21 @@ button, input {
   align-items: center;
   justify-content: center;
   padding: 12px 28px;
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 54, 26, 0.05);
+  color: #414942;
   font-size: 15px;
   font-weight: 600;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(21, 33, 31, 0.1);
   cursor: pointer;
   transition: all 0.2s;
   margin-top: 12px;
 }
 
-.btn-secondary:hover:not(:disabled) { background: rgba(255,255,255,0.1); }
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(0, 54, 26, 0.08);
+  border-color: rgba(21, 33, 31, 0.15);
+}
 
 /* ═══ Playing Panel ═══ */
 .playing-panel { display: flex; flex-direction: column; gap: 20px; }
@@ -220,14 +226,14 @@ button, input {
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
-  color: #fd8100;
+  color: #954a00;
   letter-spacing: 0.05em;
   margin: 0;
 }
 
 .candidates-count {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.35);
+  color: #717971;
   margin: 2px 0 0;
 }
 
@@ -240,7 +246,7 @@ button, input {
 .progress-bar {
   width: 120px;
   height: 6px;
-  background: rgba(255, 255, 255, 0.06);
+  background: #e1e3de;
   border-radius: 99px;
   overflow: hidden;
 }
@@ -248,22 +254,21 @@ button, input {
 .progress-fill {
   height: 100%;
   border-radius: 99px;
-  background: linear-gradient(90deg, #00c878, #fd8100);
+  background: linear-gradient(90deg, #1a4d2e, #fd8100);
   transition: width 0.6s ease;
 }
 
 .progress-label {
   font-size: 12px;
   font-weight: 700;
-  color: #00c878;
+  color: #1a4d2e;
   min-width: 36px;
   text-align: right;
 }
 
 /* ═══ Question Box ═══ */
 .question-box {
-  background: linear-gradient(135deg, rgba(0, 200, 120, 0.08), rgba(253, 129, 0, 0.05));
-  border: 1px solid rgba(0, 200, 120, 0.12);
+  background: #00361a;
   border-radius: 16px;
   padding: 24px;
 }
@@ -279,7 +284,7 @@ button, input {
 }
 
 .loading-text {
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.5);
   font-size: 15px;
   margin: 0;
 }
@@ -297,10 +302,10 @@ button, input {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #ffffff;
+  border: 1px solid rgba(21, 33, 31, 0.1);
   border-radius: 12px;
-  color: #ffffff;
+  color: #191c19;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
@@ -308,8 +313,9 @@ button, input {
 }
 
 .btn-answer:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(0, 200, 120, 0.3);
+  background: #e8f0df;
+  border-color: #1a4d2e;
+  color: #00361a;
 }
 
 .btn-answer:disabled {
@@ -322,15 +328,17 @@ button, input {
 .wrong-guess-badge {
   text-align: center;
   font-size: 12px;
-  color: rgba(255, 160, 60, 0.7);
+  color: #954a00;
   margin: 0;
-  padding: 6px 0;
+  padding: 6px 12px;
+  background: rgba(253, 129, 0, 0.06);
+  border-radius: 8px;
 }
 
 /* ═══ Candidates Panel ═══ */
 .candidates-panel {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: #f3f4ef;
+  border: 1px solid rgba(21, 33, 31, 0.06);
   border-radius: 12px;
   padding: 14px;
 }
@@ -338,7 +346,7 @@ button, input {
 .candidates-title {
   font-size: 12px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.4);
+  color: #414942;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0 0 10px;
@@ -351,17 +359,18 @@ button, input {
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.6);
+  color: #414942;
 }
 
 .candidate-row:nth-child(2) {
-  background: rgba(0, 200, 120, 0.06);
-  color: #ffffff;
+  background: rgba(0, 54, 26, 0.04);
+  color: #00361a;
+  font-weight: 600;
 }
 
 .candidate-prob {
   font-weight: 700;
-  color: #00c878;
+  color: #1a4d2e;
 }
 
 /* ═══ Guess Panel ═══ */
@@ -376,14 +385,13 @@ button, input {
   font-size: 13px;
   font-weight: 700;
   text-transform: uppercase;
-  color: #fd8100;
+  color: #954a00;
   letter-spacing: 0.05em;
   margin: 0;
 }
 
 .guess-reveal {
-  background: linear-gradient(135deg, rgba(0, 200, 120, 0.1), rgba(253, 129, 0, 0.06));
-  border: 1px solid rgba(0, 200, 120, 0.15);
+  background: #00361a;
   border-radius: 20px;
   padding: 28px;
   text-align: center;
@@ -400,13 +408,13 @@ button, input {
 
 .guess-facts {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.55);
   margin: 0 0 16px;
 }
 
 .guess-explanation {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(255, 255, 255, 0.75);
   line-height: 1.6;
   margin: 0 0 20px;
 }
@@ -414,9 +422,10 @@ button, input {
 .guess-confidence-bar {
   position: relative;
   height: 8px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 99px;
   overflow: hidden;
+  margin-top: 4px;
 }
 
 .guess-confidence-fill {
@@ -425,7 +434,7 @@ button, input {
   left: 0;
   height: 100%;
   border-radius: 99px;
-  background: linear-gradient(90deg, #00c878, #fd8100);
+  background: linear-gradient(90deg, #9dd3aa, #fd8100);
 }
 
 .guess-confidence-label {
@@ -434,7 +443,7 @@ button, input {
   top: -22px;
   font-size: 12px;
   font-weight: 700;
-  color: #00c878;
+  color: #9dd3aa;
 }
 
 .guess-actions {
@@ -445,7 +454,7 @@ button, input {
 
 .btn-correct {
   height: 52px;
-  background: linear-gradient(135deg, #00a86b, #00c878);
+  background: linear-gradient(135deg, #1a4d2e, #00361a);
   color: #ffffff;
   font-size: 16px;
   font-weight: 700;
@@ -453,28 +462,29 @@ button, input {
   border-radius: 14px;
   cursor: pointer;
   transition: all 0.2s;
-  box-shadow: 0 6px 20px -6px rgba(0, 168, 107, 0.4);
+  box-shadow: 0 6px 20px -6px rgba(0, 54, 26, 0.3);
 }
 
 .btn-correct:hover:not(:disabled) {
   transform: translateY(-1px);
-  box-shadow: 0 10px 30px -6px rgba(0, 168, 107, 0.5);
+  box-shadow: 0 10px 30px -6px rgba(0, 54, 26, 0.4);
 }
 
 .btn-continue {
   height: 52px;
-  background: rgba(253, 100, 52, 0.1);
-  color: #fd8100;
+  background: rgba(253, 129, 0, 0.06);
+  color: #954a00;
   font-size: 15px;
   font-weight: 700;
-  border: 1px solid rgba(253, 129, 0, 0.2);
+  border: 1px solid rgba(253, 129, 0, 0.15);
   border-radius: 14px;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .btn-continue:hover:not(:disabled) {
-  background: rgba(253, 100, 52, 0.2);
+  background: rgba(253, 129, 0, 0.12);
+  border-color: rgba(253, 129, 0, 0.25);
 }
 
 /* ═══ Failed Panel ═══ */
@@ -492,13 +502,13 @@ button, input {
   font-family: 'Syne', sans-serif;
   font-size: 28px;
   font-weight: 800;
-  color: #ffffff;
+  color: #00361a;
   margin: 0;
 }
 
 .failed-desc {
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
+  color: #414942;
   margin: 0;
 }
 
@@ -513,7 +523,7 @@ button, input {
 .reveal-label {
   font-size: 13px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.6);
+  color: #414942;
   margin: 0;
   text-align: left;
 }
@@ -521,11 +531,11 @@ button, input {
 .reveal-input {
   width: 100%;
   height: 48px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  border: 1px solid rgba(21, 33, 31, 0.12);
   border-radius: 12px;
   padding: 0 16px;
-  color: #ffffff;
+  color: #191c19;
   font-size: 15px;
   outline: none;
   transition: border-color 0.2s;
@@ -534,10 +544,11 @@ button, input {
 
 .reveal-input:focus {
   border-color: #fd8100;
+  box-shadow: 0 0 0 3px rgba(253, 129, 0, 0.08);
 }
 
 .reveal-input::placeholder {
-  color: rgba(255, 255, 255, 0.25);
+  color: #717971;
 }
 
 /* ═══ Finished Panel ═══ */
@@ -555,20 +566,20 @@ button, input {
   font-family: 'Syne', sans-serif;
   font-size: 28px;
   font-weight: 800;
-  color: #ffffff;
+  color: #00361a;
   margin: 0;
 }
 
 .finished-message {
   font-size: 15px;
-  color: rgba(255, 255, 255, 0.6);
+  color: #414942;
   margin: 0;
   line-height: 1.5;
 }
 
 .finished-stats {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.3);
+  color: #717971;
   margin: 0;
 }
 
@@ -576,32 +587,32 @@ button, input {
 .error-box {
   margin-top: 16px;
   padding: 14px 18px;
-  background: rgba(186, 26, 26, 0.1);
-  border: 1px solid rgba(186, 26, 26, 0.2);
+  background: rgba(186, 26, 26, 0.04);
+  border: 1px solid rgba(186, 26, 26, 0.12);
   border-radius: 12px;
 }
 
 .error-text {
   font-size: 13px;
   font-weight: 600;
-  color: #ff6b6b;
+  color: #ba1a1a;
   margin: 0;
 }
 
 .btn-error-restart {
   margin-top: 10px;
   padding: 8px 16px;
-  background: rgba(186, 26, 26, 0.2);
-  color: #ff6b6b;
+  background: rgba(186, 26, 26, 0.06);
+  color: #ba1a1a;
   font-size: 13px;
   font-weight: 700;
-  border: 1px solid rgba(186, 26, 26, 0.3);
+  border: 1px solid rgba(186, 26, 26, 0.15);
   border-radius: 8px;
   cursor: pointer;
 }
 
 /* ═══════════════════════════════════════
-   HOME PAGE STYLES (IPLMindHome)
+   HOME PAGE SHARED STYLES
    ═══════════════════════════════════════ */
 
 .material-symbols-outlined {
@@ -651,8 +662,9 @@ button, input {
   .bento-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
 
   .game-main { padding: 12px; }
-  .game-card { padding: 20px; }
+  .game-card { padding: 20px; border-radius: 18px; }
   .question-text { font-size: 18px; }
   .guess-name { font-size: 28px; }
   .idle-title { font-size: 26px; }
+  .mascot-bar { padding: 10px 16px; }
 }
