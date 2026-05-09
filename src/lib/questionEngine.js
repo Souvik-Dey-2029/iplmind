@@ -1,4 +1,5 @@
 import { calculateEntropy, normalizeProbabilities } from "./probabilityEngine.js";
+import { rankQuestionsByGain } from "./reasoningEngine.js";
 
 const MIN_SPLIT = 0.12;
 const FRANCHISE_HISTORY_COOLDOWN = 3;
@@ -41,14 +42,46 @@ export function selectBestQuestion(candidates, probabilities, history = []) {
   const categoryCounts = countCategories(history);
   const baseEntropy = calculateEntropy(scopedProbabilities);
 
-  const ranked = options
+  // Score questions using information gain + balance + diversity
+  const scored = options
     .filter((option) => !askedIds.has(option.id) && !askedTexts.has(normalize(option.text)))
     .filter((option) => !isHardSuppressed(option, history, candidates.length))
     .map((option) => scoreQuestion(option, candidates, scopedProbabilities, baseEntropy, categoryCounts))
     .filter((option) => option.yesProbability >= MIN_SPLIT && option.noProbability >= MIN_SPLIT)
-    .sort((a, b) => b.score - a.score);
+    .map((option) => ({
+      ...option,
+      adaptiveBoost: calculateAdaptiveBoost(option, categoryCounts, history),
+    }))
+    .sort((a, b) => (b.score * b.adaptiveBoost) - (a.score * a.adaptiveBoost));
 
-  return ranked[0] || fallbackQuestion(candidates, history);
+  return scored[0] || fallbackQuestion(candidates, history);
+}
+
+/**
+ * Calculate adaptive boost for question based on category diversity.
+ * Encourages diverse question categories to avoid repetition.
+ */
+function calculateAdaptiveBoost(option, categoryCounts, history) {
+  let boost = 1.0;
+
+  // Boost if category hasn't been asked much
+  const categoryAskedCount = categoryCounts[option.category] || 0;
+  if (categoryAskedCount === 0) boost *= 1.2;
+  else if (categoryAskedCount === 1) boost *= 1.05;
+  else if (categoryAskedCount >= 3) boost *= 0.7;
+
+  // Boost team-related if not recently asked
+  const isTeam = isTeamCategory(option.category);
+  const teamAskedCount = categoryCounts.currentTeamAndHistorical || 0;
+  if (isTeam && teamAskedCount === 0) boost *= 1.1;
+  else if (isTeam && teamAskedCount >= 2) boost *= 0.6;
+
+  // Slight boost for questions that differ from most recent 3
+  const recentCategories = history.slice(-3).map((h) => h.category);
+  const categoryInRecent = recentCategories.filter((c) => c === option.category).length;
+  if (categoryInRecent === 0) boost *= 1.05;
+
+  return boost;
 }
 
 export function evaluateQuestionAnswer(candidates, questionMeta, answer) {
