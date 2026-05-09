@@ -1,6 +1,14 @@
 "use client";
 
 import React from 'react';
+import ThemeSwitcher from './ThemeSwitcher';
+import { useTheme } from './ThemeProvider';
+
+const HOME_BG = {
+  light: 'radial-gradient(circle at top right, rgba(29, 80, 49, 0.15) 0%, transparent 70%), radial-gradient(circle at bottom left, rgba(253, 129, 0, 0.1) 0%, transparent 60%), #f8faf5',
+  dark: 'radial-gradient(circle at top right, rgba(125, 216, 154, 0.06) 0%, transparent 70%), radial-gradient(circle at bottom left, rgba(255, 155, 46, 0.04) 0%, transparent 60%), #0f1210',
+  ipl: 'radial-gradient(circle at top right, rgba(0, 229, 255, 0.08) 0%, transparent 60%), radial-gradient(circle at bottom left, rgba(123, 47, 247, 0.06) 0%, transparent 50%), #0a0e1a',
+};
 
 /**
  * IPLMindHome - Landing page component.
@@ -8,45 +16,48 @@ import React from 'react';
  * bypassing Tailwind v4 theme mapping issues.
  */
 export default function IPLMindHome({ onStartGame }) {
+  const { theme } = useTheme();
   return (
     <div style={{
-      background: 'radial-gradient(circle at top right, rgba(29, 80, 49, 0.15) 0%, transparent 70%), radial-gradient(circle at bottom left, rgba(253, 129, 0, 0.1) 0%, transparent 60%), #f8faf5',
+      background: HOME_BG[theme] || HOME_BG.light,
       minHeight: '100vh',
-      color: '#191c19',
+      color: 'var(--text, #191c19)',
       overflowX: 'hidden',
+      transition: 'background 0.4s ease',
     }}>
 
       {/* ===== Top Navigation ===== */}
       <header style={{
-        background: 'rgba(248, 250, 245, 0.6)',
+        background: 'var(--bg-header, rgba(248, 250, 245, 0.6))',
         backdropFilter: 'blur(24px)',
         WebkitBackdropFilter: 'blur(24px)',
-        borderBottom: '1px solid rgba(255,255,255,0.2)',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+        borderBottom: '1px solid var(--border-light, rgba(255,255,255,0.2))',
+        boxShadow: '0 1px 3px var(--shadow, rgba(0,0,0,0.04))',
         position: 'sticky',
         top: 0,
         zIndex: 50,
+        transition: 'background 0.3s ease',
       }}>
-        <nav style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          width: '100%',
-          maxWidth: 1280,
-          margin: '0 auto',
-          padding: '16px 24px',
-        }}>
-          {/* Logo */}
-          <div style={{
-            fontFamily: "'Syne', sans-serif",
-            fontSize: 40,
-            fontWeight: 800,
-            color: '#00361a',
-            letterSpacing: '-0.01em',
-            lineHeight: 1.2,
+          <nav style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%',
+            maxWidth: 1280,
+            margin: '0 auto',
+            padding: '12px 16px',
           }}>
-            IPL Genius
-          </div>
+          {/* Logo */}
+            <div style={{
+              fontFamily: "'Syne', sans-serif",
+              fontSize: 'clamp(28px, 5vw, 40px)',
+              fontWeight: 800,
+              color: 'var(--primary, #00361a)',
+              letterSpacing: '-0.01em',
+              lineHeight: 1.2,
+            }}>
+              IPL Genius
+            </div>
 
           {/* Nav Links (desktop) */}
           <div style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
@@ -73,23 +84,15 @@ export default function IPLMindHome({ onStartGame }) {
             }}>History</a>
           </div>
 
-          {/* Icon Buttons */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <button style={iconBtnStyle}>
-              <span className="material-symbols-outlined" style={{ color: '#00361a', fontSize: 24 }}>leaderboard</span>
-            </button>
-            <button style={iconBtnStyle}>
-              <span className="material-symbols-outlined" style={{ color: '#00361a', fontSize: 24 }}>help</span>
-            </button>
-            <button style={iconBtnStyle}>
-              <span className="material-symbols-outlined" style={{ color: '#00361a', fontSize: 24 }}>account_circle</span>
-            </button>
-          </div>
+            {/* Icon Buttons */}
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+              <ThemeSwitcher />
+            </div>
         </nav>
       </header>
 
       {/* ===== Hero Section ===== */}
-      <main style={{ maxWidth: 1280, margin: '0 auto', padding: '48px 24px' }}>
+      <main style={{ maxWidth: 1280, margin: '0 auto', padding: 'clamp(24px, 4vw, 48px) clamp(12px, 3vw, 24px)' }}>
         <div style={{
           position: 'relative',
           display: 'flex',
@@ -199,23 +202,23 @@ export default function IPLMindHome({ onStartGame }) {
             {/* Main Heading */}
             <h1 style={{
               fontFamily: "'Syne', sans-serif",
-              fontSize: 'clamp(40px, 5vw, 64px)',
+              fontSize: 'clamp(32px, 5vw, 64px)',
               fontWeight: 800,
               lineHeight: 1.1,
               letterSpacing: '-0.02em',
-              color: '#00361a',
+              color: 'var(--primary, #00361a)',
               margin: 0,
             }}>
               Think of any <br />
-              <span style={{ color: '#fd8100' }}>IPL player.</span>
+              <span style={{ color: 'var(--accent, #fd8100)' }}>IPL player.</span>
             </h1>
 
             {/* Sub text */}
             <p style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
-              fontSize: 18,
+              fontSize: 'clamp(15px, 2vw, 18px)',
               lineHeight: 1.6,
-              color: '#414942',
+              color: 'var(--text-muted, #414942)',
               maxWidth: 560,
               margin: '24px auto 0',
             }}>

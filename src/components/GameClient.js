@@ -4,6 +4,14 @@
 
 import { useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import ThemeSwitcher from "./ThemeSwitcher";
+import { useTheme } from "./ThemeProvider";
+
+const THEME_BG = {
+  light: 'radial-gradient(circle at top right, rgba(29, 80, 49, 0.15) 0%, transparent 70%), radial-gradient(circle at bottom left, rgba(253, 129, 0, 0.1) 0%, transparent 60%), #f8faf5',
+  dark: 'radial-gradient(circle at top right, rgba(125, 216, 154, 0.06) 0%, transparent 70%), radial-gradient(circle at bottom left, rgba(255, 155, 46, 0.04) 0%, transparent 60%), #0f1210',
+  ipl: 'radial-gradient(circle at top right, rgba(0, 229, 255, 0.08) 0%, transparent 60%), radial-gradient(circle at bottom left, rgba(123, 47, 247, 0.06) 0%, transparent 50%), radial-gradient(circle at center, rgba(255, 107, 46, 0.04) 0%, transparent 70%), #0a0e1a',
+};
 
 const answerOptions = ["Yes", "No", "Maybe", "Don't Know"];
 const answerEmojis = { Yes: "✅", No: "❌", Maybe: "🤔", "Don't Know": "🤷" };
@@ -34,6 +42,7 @@ function getMascotState(phase, confidence, questionNumber, lastAnswer) {
 }
 
 export default function GameClient({ onBackToHome }) {
+  const { theme } = useTheme();
   const [sessionId, setSessionId] = useState(null);
   const [question, setQuestion] = useState(null);
   const [questionNumber, setQuestionNumber] = useState(0);
@@ -229,14 +238,15 @@ export default function GameClient({ onBackToHome }) {
   }
 
   return (
-    <div style={{ background: 'radial-gradient(circle at top right, rgba(29, 80, 49, 0.15) 0%, transparent 70%), radial-gradient(circle at bottom left, rgba(253, 129, 0, 0.1) 0%, transparent 60%), #f8faf5', minHeight: '100vh' }}>
+    <div style={{ background: THEME_BG[theme] || THEME_BG.light, minHeight: '100vh', transition: 'background 0.4s ease' }}>
       {/* ── Shared Header (same as Home) ── */}
       <header style={{
-        background: 'rgba(248, 250, 245, 0.6)',
+        background: 'var(--bg-header, rgba(248, 250, 245, 0.6))',
         backdropFilter: 'blur(24px)',
         WebkitBackdropFilter: 'blur(24px)',
-        borderBottom: '1px solid rgba(255,255,255,0.2)',
-        boxShadow: '0 1px 3px rgba(0,0,0,0.04)',
+        borderBottom: '1px solid var(--border-light, rgba(255,255,255,0.2))',
+        boxShadow: '0 1px 3px var(--shadow, rgba(0,0,0,0.04))',
+        transition: 'background 0.3s ease',
         position: 'sticky',
         top: 0,
         zIndex: 50,
@@ -254,9 +264,9 @@ export default function GameClient({ onBackToHome }) {
             onClick={onBackToHome}
             style={{
               fontFamily: "'Syne', sans-serif",
-              fontSize: 40,
+              fontSize: 'clamp(28px, 5vw, 40px)',
               fontWeight: 800,
-              color: '#00361a',
+              color: 'var(--primary, #00361a)',
               letterSpacing: '-0.01em',
               lineHeight: 1.2,
               cursor: onBackToHome ? 'pointer' : 'default',
@@ -264,12 +274,12 @@ export default function GameClient({ onBackToHome }) {
           >
             IPL Genius
           </div>
-          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
             <span style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 700,
-              color: '#954a00',
-              fontSize: 14,
+              color: 'var(--accent-dark, #954a00)',
+              fontSize: 13,
             }}>
               🎮 In Game
             </span>
@@ -277,15 +287,16 @@ export default function GameClient({ onBackToHome }) {
               <span style={{
                 fontFamily: "'Plus Jakarta Sans', sans-serif",
                 fontWeight: 600,
-                color: '#414942',
-                fontSize: 13,
-                background: '#e7e9e4',
-                padding: '4px 12px',
+                color: 'var(--text-muted, #414942)',
+                fontSize: 12,
+                background: 'var(--bg-card-alt, #e7e9e4)',
+                padding: '4px 10px',
                 borderRadius: 9999,
               }}>
                 Q{questionNumber}
               </span>
             )}
+            <ThemeSwitcher />
           </div>
         </nav>
       </header>

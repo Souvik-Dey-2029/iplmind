@@ -654,17 +654,189 @@ button, input {
   font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
-/*  Responsive  */
+/* ═══════════ THEME SYSTEM ═══════════ */
+:root {
+  --bg: #f8faf5; --bg-card: rgba(255,255,255,0.75); --bg-card-alt: #f3f4ef;
+  --bg-header: rgba(248,250,245,0.6); --bg-question: #00361a; --bg-guess: #00361a;
+  --text: #191c19; --text-muted: #414942; --text-hint: #717971;
+  --primary: #00361a; --accent: #fd8100; --accent-dark: #954a00;
+  --border: rgba(21,33,31,0.08); --border-light: rgba(255,255,255,0.2);
+  --shadow: rgba(0,0,0,0.04); --btn-bg: #ffffff; --progress-bg: #e1e3de;
+  --mascot-bg: rgba(255,255,255,0.6); --error-bg: rgba(186,26,26,0.04);
+}
+
+[data-theme="dark"] {
+  --bg: #0f1210; --bg-card: rgba(30,36,32,0.85); --bg-card-alt: #1a201c;
+  --bg-header: rgba(15,18,16,0.75); --bg-question: #1a2e22; --bg-guess: #1a2e22;
+  --text: #e4e8e2; --text-muted: #a8b0a8; --text-hint: #6b756b;
+  --primary: #7dd89a; --accent: #ff9b2e; --accent-dark: #ffb96a;
+  --border: rgba(255,255,255,0.08); --border-light: rgba(255,255,255,0.06);
+  --shadow: rgba(0,0,0,0.2); --btn-bg: #1e2420; --progress-bg: #2a322c;
+  --mascot-bg: rgba(30,36,32,0.7); --error-bg: rgba(186,26,26,0.12);
+}
+[data-theme="dark"] body { background: #0f1210; color: #e4e8e2; }
+[data-theme="dark"] .game-card { background: var(--bg-card); border-color: var(--border); }
+[data-theme="dark"] .mascot-bar { background: var(--mascot-bg); border-color: var(--border); }
+[data-theme="dark"] .mascot-text { color: var(--text-muted); }
+[data-theme="dark"] .question-box { background: var(--bg-question); }
+[data-theme="dark"] .guess-reveal { background: var(--bg-guess); }
+[data-theme="dark"] .btn-answer { background: var(--btn-bg); color: var(--text); border-color: var(--border); }
+[data-theme="dark"] .btn-answer:hover:not(:disabled) { background: #253028; border-color: var(--primary); color: var(--primary); }
+[data-theme="dark"] .candidates-panel { background: var(--bg-card-alt); border-color: var(--border); }
+[data-theme="dark"] .candidates-title, [data-theme="dark"] .candidate-row { color: var(--text-muted); }
+[data-theme="dark"] .candidate-prob { color: var(--primary); }
+[data-theme="dark"] .candidate-row:nth-child(2) { background: rgba(125,216,154,0.08); color: var(--primary); }
+[data-theme="dark"] .idle-title, [data-theme="dark"] .failed-title, [data-theme="dark"] .finished-title { color: var(--primary); }
+[data-theme="dark"] .idle-desc, [data-theme="dark"] .failed-desc, [data-theme="dark"] .finished-message { color: var(--text-muted); }
+[data-theme="dark"] .question-number, [data-theme="dark"] .guess-label { color: var(--accent); }
+[data-theme="dark"] .candidates-count, [data-theme="dark"] .finished-stats { color: var(--text-hint); }
+[data-theme="dark"] .progress-bar { background: var(--progress-bg); }
+[data-theme="dark"] .progress-label { color: var(--primary); }
+[data-theme="dark"] .reveal-input { background: var(--btn-bg); color: var(--text); border-color: var(--border); }
+[data-theme="dark"] .reveal-input::placeholder { color: var(--text-hint); }
+[data-theme="dark"] .reveal-label { color: var(--text-muted); }
+[data-theme="dark"] .btn-secondary { background: rgba(125,216,154,0.06); color: var(--text-muted); border-color: var(--border); }
+[data-theme="dark"] .error-box { background: var(--error-bg); }
+[data-theme="dark"] .wrong-guess-badge { background: rgba(255,155,46,0.1); color: var(--accent); }
+
+[data-theme="ipl"] {
+  --bg: #0a0e1a; --bg-card: rgba(18,22,42,0.85); --bg-card-alt: #141830;
+  --bg-header: rgba(10,14,26,0.8); --bg-question: linear-gradient(135deg,#1a1040,#0d2040); --bg-guess: linear-gradient(135deg,#1a1040,#0d2040);
+  --text: #e8eaf0; --text-muted: #a0a8c0; --text-hint: #606880;
+  --primary: #00e5ff; --accent: #ff6b2e; --accent-dark: #ff9b6a;
+  --border: rgba(0,229,255,0.1); --border-light: rgba(0,229,255,0.05);
+  --shadow: rgba(0,0,0,0.3); --btn-bg: #141830; --progress-bg: #1e2240;
+  --mascot-bg: rgba(18,22,42,0.7); --error-bg: rgba(255,50,50,0.1);
+}
+[data-theme="ipl"] body { background: #0a0e1a; color: #e8eaf0; }
+[data-theme="ipl"] .game-card { background: var(--bg-card); border: 1px solid var(--border); box-shadow: 0 0 40px rgba(0,229,255,0.05), 0 20px 60px rgba(0,0,0,0.3); }
+[data-theme="ipl"] .mascot-bar { background: var(--mascot-bg); border-color: var(--border); }
+[data-theme="ipl"] .mascot-text { color: var(--text-muted); }
+[data-theme="ipl"] .question-box { background: linear-gradient(135deg,#1a1040,#0d2040); border: 1px solid rgba(0,229,255,0.15); }
+[data-theme="ipl"] .guess-reveal { background: linear-gradient(135deg,#1a1040,#0d2040); border: 1px solid rgba(0,229,255,0.15); }
+[data-theme="ipl"] .btn-answer { background: var(--btn-bg); color: var(--text); border: 1px solid var(--border); }
+[data-theme="ipl"] .btn-answer:hover:not(:disabled) { background: rgba(0,229,255,0.08); border-color: var(--primary); color: var(--primary); box-shadow: 0 0 12px rgba(0,229,255,0.15); }
+[data-theme="ipl"] .btn-primary { background: linear-gradient(135deg, #ff6b2e, #ff3d00); box-shadow: 0 8px 30px rgba(255,107,46,0.3); }
+[data-theme="ipl"] .btn-correct { background: linear-gradient(135deg, #00e5ff, #0088cc); box-shadow: 0 6px 20px rgba(0,229,255,0.25); }
+[data-theme="ipl"] .btn-continue { background: rgba(255,107,46,0.08); color: var(--accent); border-color: rgba(255,107,46,0.2); }
+[data-theme="ipl"] .progress-fill { background: linear-gradient(90deg, #00e5ff, #7b2ff7, #ff6b2e); }
+[data-theme="ipl"] .candidates-panel { background: var(--bg-card-alt); border-color: var(--border); }
+[data-theme="ipl"] .candidates-title, [data-theme="ipl"] .candidate-row { color: var(--text-muted); }
+[data-theme="ipl"] .candidate-prob { color: var(--primary); }
+[data-theme="ipl"] .candidate-row:nth-child(2) { background: rgba(0,229,255,0.06); color: var(--primary); }
+[data-theme="ipl"] .idle-title, [data-theme="ipl"] .failed-title, [data-theme="ipl"] .finished-title { color: var(--primary); }
+[data-theme="ipl"] .idle-desc, [data-theme="ipl"] .failed-desc, [data-theme="ipl"] .finished-message { color: var(--text-muted); }
+[data-theme="ipl"] .question-number, [data-theme="ipl"] .guess-label { color: var(--accent); }
+[data-theme="ipl"] .candidates-count, [data-theme="ipl"] .finished-stats { color: var(--text-hint); }
+[data-theme="ipl"] .progress-bar { background: var(--progress-bg); }
+[data-theme="ipl"] .progress-label { color: var(--primary); }
+[data-theme="ipl"] .reveal-input { background: var(--btn-bg); color: var(--text); border-color: var(--border); }
+[data-theme="ipl"] .reveal-input::placeholder { color: var(--text-hint); }
+[data-theme="ipl"] .reveal-label { color: var(--text-muted); }
+[data-theme="ipl"] .btn-secondary { background: rgba(0,229,255,0.06); color: var(--text-muted); border-color: var(--border); }
+[data-theme="ipl"] .error-box { background: var(--error-bg); }
+[data-theme="ipl"] .wrong-guess-badge { background: rgba(255,107,46,0.1); color: var(--accent); }
+[data-theme="ipl"] .guess-confidence-fill { background: linear-gradient(90deg, #00e5ff, #7b2ff7, #ff6b2e); }
+[data-theme="ipl"] .guess-confidence-label { color: #00e5ff; }
+
+/* ═══════════ THEME SWITCHER ═══════════ */
+.theme-switcher-btn {
+  width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--border, rgba(21,33,31,0.08));
+  background: var(--btn-bg, #fff); cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
+}
+.theme-switcher-btn:hover { transform: scale(1.08); }
+.theme-dropdown {
+  position: absolute; right: 0; top: 48px; z-index: 100;
+  background: var(--bg-card, rgba(255,255,255,0.95)); border: 1px solid var(--border);
+  border-radius: 12px; padding: 6px; min-width: 160px;
+  box-shadow: 0 12px 40px var(--shadow, rgba(0,0,0,0.12));
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+}
+.theme-option {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 14px;
+  background: none; border: none; border-radius: 8px; cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600;
+  color: var(--text-muted, #414942); transition: background 0.15s;
+}
+.theme-option:hover { background: var(--bg-card-alt, #f3f4ef); }
+.theme-option.active { color: var(--primary, #00361a); font-weight: 700; }
+
+/* ═══════════ RESPONSIVE ═══════════ */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .bento-grid { grid-template-columns: 1fr 1fr !important; }
+  .bento-card-lg { grid-column: span 2 !important; }
+  .bento-card-sm { grid-column: span 1 !important; }
+}
+
+/* Mobile */
 @media (max-width: 768px) {
   .bento-grid { grid-template-columns: 1fr !important; }
   .bento-card-lg, .bento-card-sm { grid-column: span 1 !important; }
   .bento-card-content { flex-direction: column !important; }
   .bento-stats-grid { grid-template-columns: repeat(2, 1fr) !important; }
 
-  .game-main { padding: 12px; }
-  .game-card { padding: 20px; border-radius: 18px; }
-  .question-text { font-size: 18px; }
-  .guess-name { font-size: 28px; }
-  .idle-title { font-size: 26px; }
-  .mascot-bar { padding: 10px 16px; }
+  .game-main { padding: 8px; min-height: calc(100vh - 60px) !important; align-items: flex-start; padding-top: 12px; }
+  .game-container { gap: 10px; }
+  .game-card { padding: 16px; border-radius: 16px; }
+  .mascot-bar { padding: 8px 14px; border-radius: 12px; gap: 8px; }
+  .mascot-emoji { font-size: 22px; }
+  .mascot-text { font-size: 13px; }
+
+  .playing-panel { gap: 12px; }
+  .question-header { gap: 8px; }
+  .question-number { font-size: 12px; }
+  .candidates-count { font-size: 11px; }
+  .question-box { padding: 16px; border-radius: 12px; }
+  .question-text { font-size: 17px; }
+  .answer-grid { gap: 8px; }
+  .btn-answer { height: 46px; font-size: 14px; border-radius: 10px; }
+  .answer-emoji { font-size: 14px; }
+  .progress-bar { width: 80px; }
+
+  .candidates-panel { padding: 10px; border-radius: 10px; }
+  .candidates-title { font-size: 11px; margin-bottom: 6px; }
+  .candidate-row { padding: 4px 8px; font-size: 12px; }
+
+  .idle-panel { padding: 24px 12px; }
+  .idle-icon { font-size: 48px; margin-bottom: 12px; }
+  .idle-title { font-size: 24px; }
+  .idle-desc { font-size: 14px; margin-bottom: 20px; }
+  .btn-primary { padding: 14px 28px; font-size: 16px; border-radius: 12px; }
+
+  .guess-panel { gap: 14px; }
+  .guess-reveal { padding: 20px; border-radius: 16px; }
+  .guess-name { font-size: 26px; }
+  .guess-facts { font-size: 13px; }
+  .guess-explanation { font-size: 14px; margin-bottom: 14px; }
+  .guess-actions { gap: 8px; }
+  .btn-correct, .btn-continue { height: 46px; font-size: 14px; border-radius: 12px; }
+
+  .failed-panel { padding: 20px 12px; gap: 10px; }
+  .failed-icon { font-size: 44px; }
+  .failed-title { font-size: 22px; }
+  .reveal-input { height: 44px; font-size: 14px; }
+
+  .finished-panel { padding: 24px 12px; gap: 10px; }
+  .finished-icon { font-size: 44px; }
+  .finished-title { font-size: 22px; }
+
+  .wrong-guess-badge { font-size: 11px; padding: 4px 10px; }
+}
+
+/* Small phones */
+@media (max-width: 380px) {
+  .game-card { padding: 12px; }
+  .question-text { font-size: 15px; }
+  .btn-answer { height: 42px; font-size: 13px; }
+  .guess-name { font-size: 22px; }
+  .idle-title { font-size: 20px; }
+  .btn-primary { padding: 12px 24px; font-size: 15px; }
+}
+
+/* Desktop ultra-wide */
+@media (min-width: 1440px) {
+  .game-container { max-width: 640px; }
 }

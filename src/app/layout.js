@@ -1,4 +1,5 @@
 import "./globals.css";
+import "./mobile.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata = {
