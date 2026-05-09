@@ -251,10 +251,6 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
         <div className="ipl-game-layout">
           {/* Left Column: AI Assistant */}
           <div className="ipl-ai-section">
-              <button className="ipl-back-btn" style={{ alignSelf: "flex-start" }} onClick={onBackToHome}>
-                <span>←</span> Back
-              </button>
-              
               <div className="ipl-ai-bubble">
                 {commentary || mascot.text}
               </div>
@@ -275,14 +271,22 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
 
             {/* Middle Column: Main Question/Action Area */}
             <div className="ipl-question-card ipl-glow">
+              
+              {/* Mobile & Desktop Back Button */}
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+                <button className="ipl-back-btn" style={{ margin: 0, padding: "6px 12px", fontSize: "12px" }} onClick={onBackToHome}>
+                  <span>←</span> Home
+                </button>
+                <div style={{ flex: 1, textAlign: "right" }}>
+                  <span className="ipl-question-badge">
+                    Q {questionNumber} / {adaptiveQuestionLimit}
+                  </span>
+                </div>
+              </div>
+
               <AnimatePresence mode="wait">
                 {phase === "playing" && (
                   <motion.div key="playing" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
-                    <div style={{ textAlign: "center", marginBottom: 10 }}>
-                      <span className="ipl-question-badge">
-                        → QUESTION {questionNumber} / {adaptiveQuestionLimit}
-                      </span>
-                    </div>
                     
                     {question ? (
                       <h2 className="ipl-question-text">{question}</h2>

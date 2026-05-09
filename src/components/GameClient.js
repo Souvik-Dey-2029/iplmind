@@ -260,19 +260,44 @@ export default function GameClient({ onBackToHome }) {
           margin: '0 auto',
           padding: '16px 24px',
         }}>
-          <div
-            onClick={onBackToHome}
-            style={{
-              fontFamily: "'Syne', sans-serif",
-              fontSize: 'clamp(28px, 5vw, 40px)',
-              fontWeight: 800,
-              color: 'var(--primary, #00361a)',
-              letterSpacing: '-0.01em',
-              lineHeight: 1.2,
-              cursor: onBackToHome ? 'pointer' : 'default',
-            }}
-          >
-            IPL Genius
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            {onBackToHome && (
+              <button 
+                onClick={onBackToHome}
+                style={{
+                  background: 'var(--bg-card-alt, #e7e9e4)',
+                  border: '1px solid var(--border-light, rgba(0,0,0,0.1))',
+                  borderRadius: 8,
+                  width: 40,
+                  height: 40,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  color: 'var(--text-primary, #1e2520)',
+                  fontSize: 18,
+                  transition: 'all 0.2s'
+                }}
+                onMouseOver={(e) => e.currentTarget.style.background = 'var(--border-light, rgba(0,0,0,0.1))'}
+                onMouseOut={(e) => e.currentTarget.style.background = 'var(--bg-card-alt, #e7e9e4)'}
+              >
+                ←
+              </button>
+            )}
+            <div
+              onClick={onBackToHome}
+              style={{
+                fontFamily: "'Syne', sans-serif",
+                fontSize: 'clamp(24px, 4vw, 32px)',
+                fontWeight: 800,
+                color: 'var(--primary, #00361a)',
+                letterSpacing: '-0.01em',
+                lineHeight: 1.2,
+                cursor: onBackToHome ? 'pointer' : 'default',
+              }}
+            >
+              IPL Genius
+            </div>
           </div>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
             <span style={{
