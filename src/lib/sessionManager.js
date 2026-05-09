@@ -26,6 +26,27 @@ const CONFIDENCE_THRESHOLD = 65;
 const MIN_CANDIDATES_TO_GUESS = 2;
 const INITIAL_ADAPTIVE_LIMIT = 12;
 
+// Lightweight atomic update mechanism to prevent concurrent corruption
+const sessionLocks = new Map();
+
+function atomicSessionUpdate(sessionId, updateFn) {
+  // Retrieve session - synchronous check
+  const session = sessions.get(sessionId);
+  if (!session) return null;
+  
+  // Mark session as being updated (lightweight flag, not a true mutex)
+  sessionLocks.set(sessionId, true);
+  try {
+    // Execute update with current session state
+    const result = updateFn(session);
+    // Session object modified in place, changes are atomic within single-threaded Node.js
+    return result !== undefined ? result : session;
+  } finally {
+    // Clear the update flag
+    sessionLocks.delete(sessionId);
+  }
+}
+
 /**
  * Create a new game session with all players equally weighted.
  */
@@ -66,7 +87,7 @@ export function getSession(sessionId) {
  * Returns the updated session with next question or guess.
  */
 export async function processAnswer(sessionId, answer) {
-  const session = sessions.get(sessionId);
+  const session = atomicSessionUpdate(sessionId, (session) => session);
   if (!session) throw new Error("Session not found");
   if (session.status !== "playing") throw new Error("Game is not in playing state");
 

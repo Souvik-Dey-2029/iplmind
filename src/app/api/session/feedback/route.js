@@ -1,4 +1,6 @@
 import { confirmGuess, recordFeedback } from "@/lib/sessionManager";
+import { db } from "@/lib/firebase";
+import { collection, addDoc } from "firebase/firestore";
 
 export const dynamic = "force-dynamic";
 
@@ -16,6 +18,14 @@ export async function POST(request) {
 
     if (!feedback) {
       return Response.json({ error: "Session not found" }, { status: 404 });
+    }
+
+    // Persist feedback to Firestore
+    try {
+      await addDoc(collection(db, "game_sessions"), feedback);
+    } catch (firebaseError) {
+      console.warn("Failed to persist feedback to Firestore:", firebaseError.message);
+      // Continue despite Firebase failure - don't block user experience
     }
 
     return Response.json({ status: "finished", feedback });

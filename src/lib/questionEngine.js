@@ -3,6 +3,9 @@ import { calculateEntropy, normalizeProbabilities } from "./probabilityEngine.js
 const MIN_SPLIT = 0.12;
 const FRANCHISE_HISTORY_COOLDOWN = 3;
 
+// Lazy-loaded cache for static questions (O(1) lookup by ID)
+let staticQuestionCache = null;
+
 const staticQuestions = [
   question("overseas", "origin", "Is this player an overseas player?", (p) => p.overseas),
   question("indian", "origin", "Is this player from India?", (p) => p.country === "India"),
@@ -49,10 +52,18 @@ export function selectBestQuestion(candidates, probabilities, history = []) {
 
 export function evaluateQuestionAnswer(candidates, questionMeta, answer) {
   const answerKind = normalizeAnswer(answer);
-  if (answerKind === "neutral" || !questionMeta) return neutralScores(candidates, 0.55);
+  if (answerKind === "neutral") return null;
+  
+  if (!questionMeta) {
+    console.warn("[questionEngine] Missing questionMeta in evaluateQuestionAnswer - cannot evaluate answer");
+    return neutralScores(candidates, 0.55);
+  }
 
   const option = hydrateQuestion(questionMeta);
-  if (!option) return null;
+  if (!option) {
+    console.warn(`[questionEngine] Failed to hydrate question with ID: ${questionMeta.id}`);
+    return null;
+  }
 
   const scores = {};
   candidates.forEach((player) => {
@@ -156,7 +167,13 @@ function fallbackQuestion(candidates, history) {
 }
 
 function hydrateQuestion(meta) {
-  return buildQuestionOptions([]).find((option) => option.id === meta.id) || hydrateDynamicQuestion(meta);
+  // Use cached lookup for O(1) retrieval instead of rebuilding all questions
+  if (!staticQuestionCache) {
+    staticQuestionCache = new Map(staticQuestions.map(q => [q.id, q]));
+  }
+  
+  const staticQuestion = staticQuestionCache.get(meta.id);
+  return staticQuestion || hydrateDynamicQuestion(meta);
 }
 
 function hydrateDynamicQuestion(meta) {
