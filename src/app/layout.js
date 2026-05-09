@@ -1,5 +1,6 @@
 import "./globals.css";
 import "./mobile.css";
+import "./ipl-stadium.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export const metadata = {

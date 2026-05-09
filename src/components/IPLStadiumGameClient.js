@@ -1,0 +1,466 @@
+"use client";
+
+import { useMemo, useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import ThemeSwitcher from "./ThemeSwitcher";
+
+const answerOptions = ["Yes", "No", "Maybe", "Don't Know"];
+const answerIcons = { Yes: "🏏", No: "🚫", Maybe: "🤔", "Don't Know": "🤷‍♂️" };
+
+const MASCOT_STATES = {
+  idle: { emoji: "🏏", text: "Think of any IPL player... I'll read your mind!" },
+  thinking: { emoji: "🧠", text: "Hmm, let me think about this..." },
+  confident: { emoji: "👀", text: "I think I'm getting close now..." },
+  veryConfident: { emoji: "😏", text: "Oh, I definitely know who this is!" },
+  shocked: { emoji: "😲", text: "Wait... that changes everything!" },
+  wrong: { emoji: "😅", text: "Oops! Let me try again..." },
+  victory: { emoji: "🎉", text: "I knew it! The cricket brain never fails!" },
+  failed: { emoji: "🤯", text: "You've stumped me! Well played!" },
+  earlyGame: { emoji: "🔍", text: "Just warming up... need more clues!" },
+};
+
+function getMascotState(phase, confidence, questionNumber, lastAnswer) {
+  if (phase === "finished") return MASCOT_STATES.victory;
+  if (phase === "failed") return MASCOT_STATES.failed;
+  if (phase === "guessing") return MASCOT_STATES.veryConfident;
+  if (phase === "idle") return MASCOT_STATES.idle;
+  if (lastAnswer === "No") return MASCOT_STATES.shocked;
+  if (questionNumber < 4) return MASCOT_STATES.earlyGame;
+  if (confidence > 60) return MASCOT_STATES.veryConfident;
+  if (confidence > 35) return MASCOT_STATES.confident;
+  return MASCOT_STATES.thinking;
+}
+
+export default function IPLStadiumGameClient({ onBackToHome }) {
+  const [sessionId, setSessionId] = useState(null);
+  const [question, setQuestion] = useState(null);
+  const [questionNumber, setQuestionNumber] = useState(0);
+  const [candidatesRemaining, setCandidatesRemaining] = useState(0);
+  const [guess, setGuess] = useState(null);
+  const [topCandidates, setTopCandidates] = useState([]);
+  const [confidence, setConfidence] = useState(0);
+  const [adaptiveQuestionLimit, setAdaptiveQuestionLimit] = useState(14);
+  const [wrongGuessCount, setWrongGuessCount] = useState(0);
+  const [phase, setPhase] = useState("playing"); // Default to playing for auto-start
+  const [loading, setLoading] = useState(true); // Start loading immediately
+  const [error, setError] = useState("");
+  const [correctPlayer, setCorrectPlayer] = useState("");
+  const [finishedMessage, setFinishedMessage] = useState("");
+  const [lastAnswer, setLastAnswer] = useState("");
+  const [commentary, setCommentary] = useState("");
+
+  const inFlightRef = useRef(false);
+  const mascot = getMascotState(phase, confidence, questionNumber, lastAnswer);
+
+  const getApiUrl = (endpoint) => {
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+    return `${baseUrl}${endpoint}`;
+  };
+
+  // Auto-start game on mount
+  useEffect(() => {
+    startGame();
+  }, []);
+
+  async function startGame() {
+    if (inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setError("");
+    setGuess(null);
+    setFinishedMessage("");
+    setCorrectPlayer("");
+    setWrongGuessCount(0);
+
+    try {
+      const response = await fetch(getApiUrl("/api/session/start"), { method: "POST" });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not start game");
+
+      setSessionId(data.sessionId);
+      setQuestion(data.question);
+      setQuestionNumber(data.questionNumber);
+      setCandidatesRemaining(data.candidatesRemaining);
+      setAdaptiveQuestionLimit(data.adaptiveQuestionLimit || 14);
+      setConfidence(0);
+      setTopCandidates([]);
+      setPhase("playing");
+      setCommentary("Let's see if I can read your mind... 🏏");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      inFlightRef.current = false;
+    }
+  }
+
+  async function answerQuestion(answer) {
+    if (!sessionId || inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setError("");
+    setLastAnswer(answer);
+
+    try {
+      const response = await fetch(getApiUrl("/api/session/answer"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, answer }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not submit answer");
+
+      setQuestionNumber(data.questionNumber);
+      setCandidatesRemaining(data.candidatesRemaining);
+      setConfidence(data.confidence ?? data.guess?.confidence ?? 0);
+      setAdaptiveQuestionLimit(data.adaptiveQuestionLimit || adaptiveQuestionLimit);
+      setWrongGuessCount(data.wrongGuessCount || 0);
+
+      if (data.status === "guessing") {
+        setGuess(data.guess);
+        setPhase("guessing");
+        return;
+      }
+
+      if (data.status === "failed") {
+        setPhase("failed");
+        setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
+        return;
+      }
+
+      setQuestion(data.question);
+      setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
+      if (data.commentary) setCommentary(data.commentary);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      inFlightRef.current = false;
+    }
+  }
+
+  async function handleContinueGame() {
+    if (!sessionId || inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch(getApiUrl("/api/session/feedback"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, action: "continue" }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not continue game");
+
+      if (data.status === "failed") {
+        setPhase("failed");
+        setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
+        return;
+      }
+
+      setQuestion(data.question);
+      setQuestionNumber(data.questionNumber);
+      setCandidatesRemaining(data.candidatesRemaining);
+      setConfidence(data.confidence || 0);
+      setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
+      setWrongGuessCount(data.wrongGuessCount || 0);
+      setGuess(null);
+      setPhase("playing");
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      inFlightRef.current = false;
+    }
+  }
+
+  async function sendFeedback(wasCorrect) {
+    if (!sessionId || inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch(getApiUrl("/api/session/feedback"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, wasCorrect, correctPlayerName: correctPlayer }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not save feedback");
+
+      setPhase("finished");
+      setFinishedMessage(
+        wasCorrect
+          ? "🎯 Nailed it! The cricket brain stays undefeated."
+          : `📝 Noted! I'll remember ${correctPlayer || "that player"} for next time.`
+      );
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      inFlightRef.current = false;
+    }
+  }
+
+  async function revealPlayer() {
+    if (!sessionId || inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+
+    try {
+      await fetch(getApiUrl("/api/session/feedback"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId, action: "reveal", correctPlayerName: correctPlayer }),
+      });
+      setPhase("finished");
+      setFinishedMessage(`📝 ${correctPlayer || "Unknown player"} — I'll learn from this!`);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      inFlightRef.current = false;
+    }
+  }
+
+  return (
+    <div className="ipl-stadium-bg">
+      {/* Header */}
+      <header className="ipl-header" style={{ position: "sticky", top: 0, zIndex: 50 }}>
+        <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 1400, margin: "0 auto", padding: "12px 20px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ fontSize: 24 }}>🏏</span>
+            <span className="ipl-logo">IPL Genius</span>
+          </div>
+          <div style={{ display: "flex", gap: 24, alignItems: "center", display: window?.innerWidth > 768 ? "flex" : "none" }}>
+            <span className="ipl-nav-link active">Predict</span>
+            <span className="ipl-nav-link">Leaderboard</span>
+            <span className="ipl-nav-link">History</span>
+          </div>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <ThemeSwitcher />
+            <div style={{ width: 36, height: 36, borderRadius: "50%", background: "linear-gradient(135deg, #c084fc, #818cf8)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 16 }}>👤</div>
+          </div>
+        </nav>
+      </header>
+
+      <main>
+        <div className="ipl-game-layout">
+          {/* Left Column: AI Assistant */}
+          <div className="ipl-ai-section">
+              <button className="ipl-back-btn" style={{ alignSelf: "flex-start" }} onClick={onBackToHome}>
+                <span>←</span> Back
+              </button>
+              
+              <div className="ipl-ai-bubble">
+                {commentary || mascot.text}
+              </div>
+              
+              <div className="ipl-ai-avatar">
+                {mascot.emoji}
+              </div>
+
+              <div className="ipl-ai-analysis">
+                <div className="ipl-ai-analysis-title">
+                  <span>🧠</span> AI ANALYSIS
+                </div>
+                <div className="ipl-ai-analysis-text">Scanning database...</div>
+                <div className="ipl-ai-analysis-bar"><div className="ipl-ai-analysis-fill" /></div>
+                <div className="ipl-players-count">{candidatesRemaining || 842} Players</div>
+              </div>
+            </div>
+
+            {/* Middle Column: Main Question/Action Area */}
+            <div className="ipl-question-card ipl-glow">
+              <AnimatePresence mode="wait">
+                {phase === "playing" && (
+                  <motion.div key="playing" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }}>
+                    <div style={{ textAlign: "center", marginBottom: 10 }}>
+                      <span className="ipl-question-badge">
+                        → QUESTION {questionNumber} / {adaptiveQuestionLimit}
+                      </span>
+                    </div>
+                    
+                    {question ? (
+                      <h2 className="ipl-question-text">{question}</h2>
+                    ) : (
+                      <h2 className="ipl-question-text">Loading next question...</h2>
+                    )}
+                    
+                    <p className="ipl-question-hint">
+                      This helps me understand the player type better.
+                    </p>
+
+                    <div className="ipl-answer-grid">
+                      {answerOptions.map((a) => (
+                        <button
+                          key={a}
+                          className="ipl-answer-btn"
+                          disabled={loading}
+                          onClick={() => answerQuestion(a)}
+                        >
+                          <span className="ipl-answer-icon">{answerIcons[a]}</span>
+                          {a}
+                        </button>
+                      ))}
+                    </div>
+                    {wrongGuessCount > 0 && (
+                      <p style={{ textAlign: "center", color: "rgba(255,100,20,0.8)", fontSize: 13, marginTop: 16 }}>
+                        ❌ {wrongGuessCount} wrong guess{wrongGuessCount > 1 ? "es" : ""} so far
+                      </p>
+                    )}
+                  </motion.div>
+                )}
+
+                {phase === "guessing" && guess && (
+                  <motion.div key="guessing" className="ipl-guess-reveal" initial={{ filter: "blur(12px)" }} animate={{ filter: "blur(0px)" }} transition={{ duration: 1.2 }}>
+                    <p style={{ color: "rgba(200,200,255,0.6)", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", marginBottom: 8 }}>
+                      MY GUESS IS
+                    </p>
+                    {guess.player?.name ? (
+                      <>
+                        <h2 className="ipl-guess-name">{guess.player.name}</h2>
+                        <p style={{ color: "rgba(200,200,255,0.5)", fontSize: 14, marginBottom: 16 }}>
+                          {(guessFacts(guess) || []).join(" • ")}
+                        </p>
+                        <p style={{ color: "#fff", fontSize: 15, lineHeight: 1.5, marginBottom: 24 }}>
+                          {cleanText(guess.explanation || "")}
+                        </p>
+                        <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
+                          <button className="ipl-btn-primary" style={{ padding: "12px 24px", fontSize: 14 }} disabled={loading} onClick={() => sendFeedback(true)}>
+                            ✅ CORRECT
+                          </button>
+                          <button className="ipl-btn-primary" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", boxShadow: "none", border: "1px solid rgba(255,255,255,0.2)", padding: "12px 24px", fontSize: 14 }} disabled={loading} onClick={handleContinueGame}>
+                            ❌ WRONG
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <p>Player data unavailable</p>
+                    )}
+                  </motion.div>
+                )}
+
+                {phase === "failed" && (
+                  <motion.div key="failed" style={{ textAlign: "center", padding: "40px 0" }} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                    <div style={{ fontSize: 64, marginBottom: 16 }}>🤯</div>
+                    <h2 className="ipl-question-text">You Stumped Me!</h2>
+                    <p style={{ color: "rgba(200,200,255,0.6)", marginBottom: 24 }}>
+                      I couldn&apos;t figure out your player after {questionNumber} questions.
+                    </p>
+                    <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 300, margin: "0 auto" }}>
+                      <input
+                        style={{ padding: "12px 16px", borderRadius: 8, background: "rgba(0,0,0,0.3)", border: "1px solid rgba(100,80,255,0.3)", color: "#fff" }}
+                        placeholder="Who was the player?"
+                        value={correctPlayer}
+                        onChange={(e) => setCorrectPlayer(e.target.value)}
+                      />
+                      <button className="ipl-btn-primary" style={{ padding: "12px 24px", fontSize: 14 }} disabled={loading || !correctPlayer.trim()} onClick={revealPlayer}>
+                        TEACH ME
+                      </button>
+                      <button className="ipl-back-btn" style={{ justifyContent: "center", margin: "10px 0 0" }} disabled={loading} onClick={startGame}>
+                        Play Again
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+
+                {phase === "finished" && (
+                  <motion.div key="finished" style={{ textAlign: "center", padding: "40px 0" }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
+                    <div style={{ fontSize: 64, marginBottom: 16 }}>🏆</div>
+                    <h2 className="ipl-question-text">Round Complete</h2>
+                    <p style={{ color: "#fff", fontSize: 16, marginBottom: 8 }}>{finishedMessage}</p>
+                    <p style={{ color: "rgba(200,200,255,0.5)", fontSize: 13, marginBottom: 24 }}>
+                      Questions asked: {questionNumber} • Wrong guesses: {wrongGuessCount}
+                    </p>
+                    <button className="ipl-btn-primary" disabled={loading} onClick={startGame}>
+                      PLAY AGAIN
+                    </button>
+                  </motion.div>
+                )}
+                
+                {error && (
+                  <div style={{ marginTop: 20, padding: 12, background: "rgba(255,50,50,0.1)", border: "1px solid rgba(255,50,50,0.3)", borderRadius: 8, color: "#ff8c8c", fontSize: 13, textAlign: "center" }}>
+                    ⚠️ {error}
+                  </div>
+                )}
+              </AnimatePresence>
+            </div>
+
+            {/* Right Column: Progress & Leaderboard */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+              <div className="ipl-side-panel">
+                <h3 className="ipl-panel-title">
+                  <span>LIVE PROGRESS</span>
+                  <span>📊</span>
+                </h3>
+                <div style={{ color: "rgba(200,200,255,0.5)", fontSize: 12, marginBottom: 8 }}>Confidence</div>
+                <div className="ipl-confidence-value">{Math.round(confidence)}%</div>
+                <div className="ipl-confidence-bar">
+                  <div className="ipl-confidence-fill" style={{ width: `${Math.min(Math.max(confidence, questionNumber * 4), 100)}%` }} />
+                </div>
+                <div className="ipl-confidence-hint">Keep answering to increase confidence!</div>
+              </div>
+
+              <div className="ipl-side-panel">
+                <h3 className="ipl-panel-title">
+                  <span>TOP CANDIDATES</span>
+                  <span>🏆</span>
+                </h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                  {topCandidates.length > 0 ? topCandidates.slice(0, 5).map((c, i) => (
+                    <div key={c.id || c.name || i} className="ipl-candidate-row">
+                      <div className={`ipl-candidate-rank ipl-rank-${i + 1 > 3 ? "default" : i + 1}`}>{i + 1}</div>
+                      <span>{cleanText(c?.player?.name || c?.name)}</span>
+                      <span className="ipl-candidate-prob">{((c.probability ?? 0) * 100).toFixed(0)}%</span>
+                    </div>
+                  )) : (
+                    Array(5).fill(0).map((_, i) => (
+                      <div key={i} className="ipl-candidate-row" style={{ opacity: 0.5 }}>
+                        <div className={`ipl-candidate-rank ipl-rank-${i + 1 > 3 ? "default" : i + 1}`}>{i + 1}</div>
+                        <span>Player Name</span>
+                        <span className="ipl-candidate-prob">--%</span>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+        {/* Bottom Bar (Desktop only) */}
+        {phase !== "idle" && (
+          <div className="ipl-bottom-bar">
+            <div className="ipl-bottom-item">
+              <div className="ipl-bottom-icon" style={{ background: "rgba(100,80,255,0.15)", color: "#c084fc" }}>🎫</div>
+              <div><strong>Play & Win Tickets</strong><br />Answer daily & earn</div>
+            </div>
+            <div className="ipl-bottom-item" style={{ borderLeft: "1px solid rgba(100,80,255,0.15)", paddingLeft: 32 }}>
+              <div className="ipl-bottom-icon" style={{ background: "rgba(0,180,255,0.15)", color: "#00d4ff" }}>📊</div>
+              <div><strong>Climb Leaderboard</strong><br />Beat other cricket fans</div>
+            </div>
+            <div className="ipl-bottom-item" style={{ borderLeft: "1px solid rgba(100,80,255,0.15)", paddingLeft: 32 }}>
+              <div className="ipl-bottom-icon" style={{ background: "rgba(255,140,0,0.15)", color: "#ff8c00" }}>🛡️</div>
+              <div><strong>Unlock Achievements</strong><br />Show off your skills</div>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
+
+function guessFacts(g) {
+  const player = g.player || {};
+  return [player.country, player.role, player.latestSeasonTeam || player.currentTeam || player.teams?.at?.(-1)]
+    .map(cleanText)
+    .filter(Boolean);
+}
+
+function cleanText(value) {
+  const cleaned = String(value || "").replace(/\bunknown\b/gi, "").replace(/\s+\|\s+\|/g, " | ").replace(/\s+/g, " ").trim();
+  return /^(unknown|null|undefined|n\/a|na|-|none)$/i.test(cleaned) ? "" : cleaned;
+}
