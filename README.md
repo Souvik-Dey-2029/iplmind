@@ -68,7 +68,7 @@ Simply connect the repository to Vercel. Next.js will handle both the frontend a
 
 This project was built for the GDG Hackathon by:
 
-- **Souvik Dey** – Full backend architecture, core game logic, Bayesian probability engine, and AI integrations.
+- **Souvik Dey** – Full backend architecture, core game logic, Bayesian probability engine,UI Fixes, and AI integrations.
 - **Partha Sarthi Sarkar** – Project structure, premium UI/UX design, and database Integration.
 - **Snehasis Chakraborty** – QA testing, performance evaluation, and website runner.
 - **Samrat Chatterjee** – Presentation (PPT) and project documentation.
