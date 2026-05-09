@@ -7,7 +7,10 @@
  * - Entropy-based confidence smoothing prevents fake 100%
  * - Progressive confidence: requires more evidence before high confidence
  * - Uncertainty tolerance: "Maybe" and "Don't Know" nudge, don't slam
+ * - Learning Memory Priors: applies historical difficulty weights
  */
+
+import { getPlayerPriors } from "./learningMemory.js";
 
 /**
  * Scale likelihood smoothly with uncertainty tolerance.
@@ -16,44 +19,29 @@
  * so they can recover if later answers contradict.
  */
 function adjustLikelihood(likelihood) {
-  // Strong mismatch (< 0.15): heavy penalty but survivable
-  if (likelihood < 0.15) {
-    // Map [0, 0.15) → [0.03, 0.08] — punished but not dead
-    return 0.03 + (likelihood / 0.15) * 0.05;
-  }
-
-  // Moderate mismatch (0.15 - 0.35): notable penalty
-  if (likelihood < 0.35) {
-    // Map [0.15, 0.35) → [0.08, 0.25]
-    return 0.08 + ((likelihood - 0.15) / 0.2) * 0.17;
-  }
-
-  // Uncertain zone (0.35 - 0.65): very gentle nudge
-  if (likelihood < 0.65) {
-    // Map [0.35, 0.65) → [0.25, 0.75] — near-neutral
-    return 0.25 + ((likelihood - 0.35) / 0.3) * 0.5;
-  }
-
-  // Moderate match (0.65 - 0.85): moderate boost
-  if (likelihood < 0.85) {
-    // Map [0.65, 0.85) → [0.75, 0.92]
-    return 0.75 + ((likelihood - 0.65) / 0.2) * 0.17;
-  }
-
-  // Strong match (>= 0.85): confident boost
-  // Map [0.85, 1.0] → [0.92, 1.0]
-  return 0.92 + ((likelihood - 0.85) / 0.15) * 0.08;
+  // Softer penalties to prevent premature death
+  if (likelihood < 0.15) return 0.15; // Raised floor from 0.03
+  if (likelihood < 0.35) return 0.30;
+  if (likelihood < 0.65) return 0.50; // True neutral
+  if (likelihood < 0.85) return 0.70;
+  return 0.85; // Lowered ceiling from 0.92 to prevent fake 100%
 }
 
 /**
- * Initialize equal probabilities for all players.
+ * Initialize probabilities for all players using historical priors.
  * Returns a Map of player name -> probability score.
  */
 export function initializeProbabilities(players) {
-  const equalProb = 1.0 / players.length;
+  const priors = getPlayerPriors(players);
+  let totalPrior = 0;
+  
+  players.forEach(p => {
+    totalPrior += priors[p.name] || 1.0;
+  });
+
   const probabilities = {};
   players.forEach((player) => {
-    probabilities[player.name] = equalProb;
+    probabilities[player.name] = (priors[player.name] || 1.0) / totalPrior;
   });
   return probabilities;
 }
@@ -131,7 +119,7 @@ export function getRankedPlayers(probabilities) {
  *
  * This prevents fake 100% after 2-3 questions.
  */
-export function getTopCandidate(probabilities) {
+export function getTopCandidate(probabilities, questionCount = 10) {
   const ranked = getRankedPlayers(probabilities);
   if (ranked.length === 0) return null;
 
@@ -151,16 +139,18 @@ export function getTopCandidate(probabilities) {
   // entropyFactor: 0 (max entropy, total uncertainty) → 1 (zero entropy, total certainty)
   const entropyFactor = 1 - entropyRatio;
 
-  // Blended confidence: weighted combination of all three factors
-  // This makes confidence rise gradually and honestly
+  // Factor 4: Question Count Penalty (prevents early fake 100%)
+  const evidencePenalty = Math.min(1, questionCount / 12); // Max confidence requires at least 12 questions
+
+  // Blended confidence: weighted combination of all factors
   const blendedConfidence = (
     rawScore * 0.4 +          // Raw probability matters
-    separation * 100 * 0.3 +  // How far ahead of #2
-    entropyFactor * 100 * 0.3 // Overall distribution certainty
-  );
+    separation * 100 * 0.2 +  // How far ahead of #2
+    entropyFactor * 100 * 0.4 // Overall distribution certainty
+  ) * evidencePenalty;
 
-  // Apply smoothing cap: never exceed 97% to acknowledge uncertainty
-  const confidence = Math.max(0, Math.min(97, blendedConfidence));
+  // Apply smoothing cap: never exceed 99% to acknowledge uncertainty
+  const confidence = Math.max(0, Math.min(99, blendedConfidence));
 
   return {
     name: top.name,
@@ -175,8 +165,8 @@ export function getTopCandidate(probabilities) {
  * Check if confidence threshold is met for making a guess.
  * V2: Much more conservative — requires strong evidence across multiple signals.
  */
-export function shouldGuess(probabilities, threshold = 70, minimumViableCandidates = 1) {
-  const top = getTopCandidate(probabilities);
+export function shouldGuess(probabilities, threshold = 70, minimumViableCandidates = 1, questionCount = 10) {
+  const top = getTopCandidate(probabilities, questionCount);
   if (!top) return false;
 
   // Also check relative confidence: top should be significantly ahead
@@ -198,7 +188,7 @@ export function shouldGuess(probabilities, threshold = 70, minimumViableCandidat
  * Filter out players with very low probabilities.
  * V2: More conservative pruning — keeps more candidates alive longer.
  */
-export function getViableCandidates(players, probabilities, minRatio = 0.02) {
+export function getViableCandidates(players, probabilities, minRatio = 0.05) {
   const top = getTopCandidate(probabilities);
   if (!top) return players;
 

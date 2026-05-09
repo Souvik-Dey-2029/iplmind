@@ -24,6 +24,7 @@ import { evaluateDeterministicAnswer } from "./answerEvaluator";
 import { evaluateCandidates, generateGuessExplanation } from "./aiProvider";
 import { evaluateQuestionAnswer, selectBestQuestion } from "./questionEngine";
 import { sanitizePlayerForRender } from "./playerNormalizer";
+import { recordSuccess, recordFailure } from "./learningMemory";
 
 // In-memory session store shared across route module instances in the same server process.
 const sessions = globalThis.__IPLMIND_SESSIONS__ || new Map();
@@ -162,11 +163,11 @@ export async function processAnswer(sessionId, answer) {
   session.probabilities = updateProbabilities(session.probabilities, matchScores);
 
   // Filter out very unlikely candidates (but respect excluded players)
-  session.candidates = getViableCandidates(players, session.probabilities)
+  session.candidates = getViableCandidates(players, session.probabilities, 0.05, session.questionNumber)
     .filter((p) => !session.excludedPlayers.has(p.name));
 
   session.entropyHistory.push(calculateEntropy(session.probabilities));
-  session.confidenceHistory.push(getTopCandidate(session.probabilities)?.confidence || 0);
+  session.confidenceHistory.push(getTopCandidate(session.probabilities, session.questionNumber)?.confidence || 0);
 
   session.questionNumber++;
 
@@ -351,7 +352,33 @@ function generateNextQuestion(session) {
     adaptiveQuestionLimit: session.adaptiveQuestionLimit,
     wrongGuessCount: session.wrongGuessCount,
     debugReasoningPanel: buildDebugReasoningPanel(session),
+    commentary: generateCommentary(session),
   };
+}
+
+function generateCommentary(session) {
+  const qNum = session.questionNumber;
+  const conf = session.confidenceHistory.at(-1) || 0;
+  const prevConf = session.confidenceHistory.at(-2) || 0;
+  const cands = session.candidates.length;
+  const lastAnswer = session.questionHistory.at(-1)?.answer;
+
+  if (qNum === 1) return "Let's see if I can read your mind... 🏏";
+  if (cands === 1) return "I know exactly who this is! 🤯";
+  if (conf > 85 && conf - prevConf > 15) return "Ah! That changes everything! 🔥";
+  if (conf > 80) return "I think I'm getting close... 👀";
+  if (lastAnswer === "no" && prevConf > 70 && conf < 50) return "Wait... not them? I'm confused! 😵";
+  if (cands < 5) return "Only a few legends fit this description! 🏆";
+  if (qNum > 15 && conf < 30) return "You've picked a tricky one... 🤔";
+  
+  // Random flavor
+  const flavors = [
+    "Interesting...",
+    "Hmm...",
+    "Okay, let's dig deeper.",
+    "Good answer."
+  ];
+  return flavors[Math.floor(Math.random() * flavors.length)];
 }
 
 /**
@@ -385,6 +412,11 @@ export function recordFeedback(sessionId, correctPlayerName) {
   session.correctPlayer = correctPlayerName || "";
   session.wasCorrect = false;
 
+  // Record failure in learning memory
+  if (correctPlayerName) {
+    recordFailure(correctPlayerName);
+  }
+
   // Return data for Firebase storage
   return {
     sessionId,
@@ -409,10 +441,16 @@ export function confirmGuess(sessionId) {
   session.status = "finished";
   session.wasCorrect = true;
 
+  // Record success in learning memory
+  const guessedPlayer = session.guess?.player?.name;
+  if (guessedPlayer) {
+    recordSuccess(guessedPlayer, session.questionHistory);
+  }
+
   return {
     sessionId,
     questions: session.questionHistory,
-    guessedPlayer: session.guess?.player?.name,
+    guessedPlayer: guessedPlayer,
     guessHistory: session.guessHistory || [],
     wasCorrect: true,
     wrongGuessCount: session.wrongGuessCount,
@@ -431,6 +469,11 @@ export function recordFailureFeedback(sessionId, correctPlayerName) {
   session.status = "finished";
   session.correctPlayer = correctPlayerName || "";
   session.wasCorrect = false;
+
+  // Record failure in learning memory
+  if (correctPlayerName) {
+    recordFailure(correctPlayerName);
+  }
 
   return {
     sessionId,
@@ -475,12 +518,12 @@ function shouldMakeFinalGuess(session) {
   const progressiveThreshold = getProgressiveThreshold(session.questionNumber);
 
   // Primary: strong separation / confidence signal.
-  if (shouldGuess(session.probabilities, progressiveThreshold, MIN_CANDIDATES_TO_GUESS)) {
+  if (shouldGuess(session.probabilities, progressiveThreshold, MIN_CANDIDATES_TO_GUESS, session.questionNumber)) {
     return true;
   }
 
   // Secondary: very small candidate pool (≤2 players left).
-  const top = getTopCandidate(session.probabilities);
+  const top = getTopCandidate(session.probabilities, session.questionNumber);
   if (session.candidates.length <= MIN_CANDIDATES_TO_GUESS && (top?.confidence || 0) >= 50) {
     return true;
   }
@@ -524,7 +567,8 @@ function getTopNonExcludedCandidate(session) {
   if (ranked.length === 0) return null;
 
   return getTopCandidate(
-    Object.fromEntries(ranked)
+    Object.fromEntries(ranked),
+    session.questionNumber
   );
 }
 

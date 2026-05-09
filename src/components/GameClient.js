@@ -49,6 +49,7 @@ export default function GameClient({ onBackToHome }) {
   const [correctPlayer, setCorrectPlayer] = useState("");
   const [finishedMessage, setFinishedMessage] = useState("");
   const [lastAnswer, setLastAnswer] = useState("");
+  const [commentary, setCommentary] = useState("");
 
   const inFlightRef = useRef(false);
   const mascot = getMascotState(phase, confidence, questionNumber, lastAnswer);
@@ -86,6 +87,7 @@ export default function GameClient({ onBackToHome }) {
       setConfidence(0);
       setTopCandidates([]);
       setPhase("playing");
+      setCommentary("Let's see if I can read your mind... 🏏");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -130,6 +132,7 @@ export default function GameClient({ onBackToHome }) {
 
       setQuestion(data.question);
       setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
+      if (data.commentary) setCommentary(data.commentary);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -293,13 +296,13 @@ export default function GameClient({ onBackToHome }) {
           {/* Mascot */}
           <motion.div
             className="mascot-bar"
-            key={mascot.text}
+            key={commentary || mascot.text}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
             <span className="mascot-emoji">{mascot.emoji}</span>
-            <span className="mascot-text">{mascot.text}</span>
+            <span className="mascot-text">{commentary || mascot.text}</span>
           </motion.div>
 
           {/* Game Card */}
