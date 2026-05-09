@@ -4,6 +4,8 @@ import { logError, logInfo, logWarn } from "@/lib/logger";
 
 export const dynamic = "force-dynamic";
 
+const START_TIMEOUT_MS = 10000; // 10 second timeout
+
 export async function POST() {
   try {
     const session = createSession();
@@ -20,10 +22,21 @@ export async function POST() {
       );
     }
 
-    const question = await getFirstQuestion(session.id);
-    if (!question) {
-      logWarn("session/start", "First question generation returned null", {
+    // Wrap with timeout protection
+    const question = await Promise.race([
+      getFirstQuestion(session.id),
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(new Error("Question generation timed out")),
+          START_TIMEOUT_MS
+        )
+      ),
+    ]);
+
+    if (!question || typeof question !== "string") {
+      logWarn("session/start", "First question generation returned invalid value", {
         sessionId: session.id,
+        questionType: typeof question,
       });
       return Response.json(
         { error: "Failed to generate opening question" },
@@ -33,7 +46,7 @@ export async function POST() {
 
     logInfo("session/start", "New session created", {
       sessionId: session.id,
-      candidates: session.candidates.length,
+      candidates: session.candidates?.length || 0,
     });
 
     return Response.json({
@@ -41,12 +54,12 @@ export async function POST() {
       question,
       questionNumber: 1,
       adaptiveQuestionLimit: session.adaptiveQuestionLimit,
-      candidatesRemaining: session.candidates.length,
+      candidatesRemaining: session.candidates?.length || 0,
     });
   } catch (error) {
     logError("session/start", "Failed to create session", error);
     return Response.json(
-      { error: "Internal server error" },
+      { error: error.message || "Internal server error" },
       { status: 500 }
     );
   }

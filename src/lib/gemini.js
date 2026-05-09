@@ -5,6 +5,25 @@ import { sanitizePlayerForRender } from "./playerNormalizer";
 // Initialize Gemini with server-side API key
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
+function withTimeout(promise, ms) {
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      reject(new Error(`Gemini timeout after ${ms}ms`));
+    }, ms);
+
+    promise
+      .then((v) => {
+        clearTimeout(timer);
+        resolve(v);
+      })
+      .catch((err) => {
+        clearTimeout(timer);
+        reject(err);
+      });
+  });
+}
+
+
 /**
  * Generates the next best question to ask the user.
  * Takes remaining candidates and previous Q&A history,
@@ -51,8 +70,9 @@ Return ONLY a JSON object mapping player names to scores. Example:
 Important: Use exact player names as given. Return valid JSON only.`;
 
     try {
-      const result = await model.generateContent(prompt);
+      const result = await withTimeout(model.generateContent(prompt), 8000);
       let responseText = result.response.text().trim();
+
 
       // Clean up markdown code blocks if present
       responseText = responseText.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
@@ -92,7 +112,7 @@ I'm guessing the player is: ${cleanPlayer.name}
 Write a brief, confident 1-2 sentence explanation of why this player matches all the clues. Do not mention unknown, missing, null, or unavailable metadata. Don't start with "Based on".`;
 
   try {
-    const result = await model.generateContent(prompt);
+    const result = await withTimeout(model.generateContent(prompt), 8000);
     return result.response.text().trim();
   } catch (error) {
     const team = cleanPlayer.latestSeasonTeam || cleanPlayer.currentTeam || cleanPlayer.teams?.[cleanPlayer.teams.length - 1] || null;

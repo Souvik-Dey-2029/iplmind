@@ -24,6 +24,8 @@ globalThis.__IPLMIND_SESSIONS__ = sessions;
 const CONFIDENCE_THRESHOLD = 65;
 const MIN_CANDIDATES_TO_GUESS = 2;
 const INITIAL_ADAPTIVE_LIMIT = 12;
+const MAX_TOTAL_QUESTIONS = 28;
+
 
 // Lightweight atomic update mechanism to prevent concurrent corruption
 const sessionLocks = new Map();
@@ -86,6 +88,8 @@ export function createSession() {
     confidenceHistory: [],
     questionNumber: 0,
     adaptiveQuestionLimit: INITIAL_ADAPTIVE_LIMIT,
+    maxTotalQuestions: MAX_TOTAL_QUESTIONS,
+
     minQuestionsBeforeGuess: 3,
     status: "playing", // playing | guessing | finished
     guess: null,
@@ -150,13 +154,24 @@ export async function processAnswer(sessionId, answer) {
     const topCandidate = getTopCandidate(session.probabilities);
     const playerData = sanitizePlayerForRender(players.find((p) => p.name === topCandidate.name));
 
+    if (!playerData || !playerData.name) {
+      throw new Error("Cannot find player data for top candidate: " + topCandidate.name);
+    }
+
     // Get AI explanation for the guess
-    const explanation = await generateGuessExplanation(playerData, session.questionHistory);
+    let explanation = "";
+    try {
+      explanation = await generateGuessExplanation(playerData, session.questionHistory);
+    } catch (err) {
+      console.warn("Failed to generate explanation, using fallback", err);
+      explanation = `${playerData.name} - a notable IPL player.`;
+    }
 
     session.guess = {
       player: playerData,
       confidence: topCandidate.confidence,
-      explanation,
+      probability: topCandidate.probability,
+      explanation: explanation || "",
     };
 
     return {
@@ -164,6 +179,7 @@ export async function processAnswer(sessionId, answer) {
       guess: session.guess,
       questionNumber: session.questionNumber,
       candidatesRemaining: session.candidates.length,
+      confidence: topCandidate.confidence,
       debugReasoningPanel: buildDebugReasoningPanel(session),
     };
   }
@@ -174,21 +190,25 @@ export async function processAnswer(sessionId, answer) {
     session.probabilities,
     session.questionHistory
   );
-  const nextQuestion = nextQuestionMeta.text;
+  const nextQuestion = nextQuestionMeta?.text;
+
+  if (!nextQuestion) {
+    throw new Error("Failed to generate next question");
+  }
 
   session.currentQuestion = nextQuestion;
   session.currentQuestionMeta = stripQuestionPredicate(nextQuestionMeta);
 
-  // Get top 3 candidates for display
-  const ranked = getDisplayCandidates(session).slice(0, 3);
+  // Get top 5 candidates for display (normalize field naming)
+  const ranked = getDisplayCandidates(session).slice(0, 5);
 
   return {
     status: "playing",
     question: nextQuestion,
-    questionNumber: session.questionNumber + 1,
+    questionNumber: session.questionNumber,
     candidatesRemaining: session.candidates.length,
     topCandidates: ranked,
-    entropy: session.entropyHistory.at(-1),
+    entropy: session.entropyHistory.at(-1) || 0,
     confidence: session.confidenceHistory.at(-1) || 0,
     adaptiveQuestionLimit: session.adaptiveQuestionLimit,
     debugReasoningPanel: buildDebugReasoningPanel(session),
@@ -269,26 +289,39 @@ export function cleanupSessions() {
 }
 
 function shouldMakeFinalGuess(session) {
+  // Safety gate: never allow infinite questioning.
+  // If we reached the hard cap, force a guess with whatever top candidate exists.
+  if (session.questionNumber >= session.maxTotalQuestions) {
+    return true;
+  }
+
   if (session.questionNumber < session.minQuestionsBeforeGuess) return false;
 
+  // Primary: strong separation / confidence signal.
   if (shouldGuess(session.probabilities, CONFIDENCE_THRESHOLD, MIN_CANDIDATES_TO_GUESS)) {
     return true;
   }
 
+  // Secondary: very small candidate pool.
   const top = getTopCandidate(session.probabilities);
   if (session.candidates.length <= MIN_CANDIDATES_TO_GUESS && (top?.confidence || 0) >= 45) {
     return true;
   }
 
+  // Adaptive: allow gradual increase, but keep it bounded by the hard cap.
   if (session.questionNumber >= session.adaptiveQuestionLimit) {
     if (top && (top?.confidence || 0) >= 40) {
-      return true; // Force guess when adaptive limit reached and confidence sufficient
+      return true;
     }
-    session.adaptiveQuestionLimit += 4;
+
+    // Increase the adaptive limit but never beyond maxTotalQuestions.
+    const next = session.adaptiveQuestionLimit + 4;
+    session.adaptiveQuestionLimit = Math.min(next, session.maxTotalQuestions);
   }
 
   return false;
 }
+
 
 function getDisplayCandidates(session) {
   const viableNames = new Set(session.candidates.map((player) => player.name));
@@ -296,18 +329,19 @@ function getDisplayCandidates(session) {
   const topByProbability = [];
   for (const [name, prob] of Object.entries(session.probabilities)) {
     if (viableNames.has(name)) {
-      topByProbability.push({ name, confidence: prob * 100 });
+      // Store as probability (0-1) not confidence (0-100) for API consistency
+      topByProbability.push({ name, probability: prob });
     }
   }
-  topByProbability.sort((a, b) => b.confidence - a.confidence);
+  topByProbability.sort((a, b) => b.probability - a.probability);
 
   return topByProbability.map((candidate) => {
     const player = sanitizePlayerForRender(players.find((p) => p.name === candidate.name));
     return {
-      ...candidate,
       id: player?.canonicalPlayerId || player?.id || candidate.name,
       name: player?.name || candidate.name,
-      player,
+      probability: candidate.probability,
+      player: player || null,
     };
   });
 }

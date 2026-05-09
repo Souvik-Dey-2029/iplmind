@@ -4,6 +4,8 @@ import { logError, logWarn } from "@/lib/logger";
 
 export const dynamic = "force-dynamic";
 
+const ANSWER_TIMEOUT_MS = 15000; // 15 second timeout for AI operations
+
 export async function POST(request) {
   try {
     const payload = await request.json();
@@ -28,19 +30,52 @@ export async function POST(request) {
       return Response.json({ error: validation.error }, { status: 400 });
     }
 
-    const result = await processAnswer(sessionId, answer);
+    // Wrap processAnswer with timeout protection
+    const result = await Promise.race([
+      processAnswer(sessionId, answer),
+      new Promise((_, reject) =>
+        setTimeout(
+          () => reject(new Error("Answer processing timed out after " + ANSWER_TIMEOUT_MS + "ms")),
+          ANSWER_TIMEOUT_MS
+        )
+      ),
+    ]);
+
+    // Validate response structure
+    if (!result || typeof result !== "object") {
+      throw new Error("Invalid response from processAnswer");
+    }
+
+    if (result.status !== "playing" && result.status !== "guessing") {
+      throw new Error(`Invalid status: ${result.status}`);
+    }
 
     // Ensure confidence is properly clamped in response
     if (result.confidence !== undefined) {
       result.confidence = clampConfidence(result.confidence);
     }
 
+    // For playing phase, ensure question exists
+    if (result.status === "playing" && !result.question) {
+      throw new Error("No question generated for playing phase");
+    }
+
+    // For guessing phase, ensure guess exists
+    if (result.status === "guessing" && !result.guess) {
+      throw new Error("No guess generated for guessing phase");
+    }
+
     return Response.json(result);
   } catch (error) {
-    const status = error.message === "Session not found" ? 404 : 500;
+    const status =
+      error.message === "Session not found" ? 404 : 500;
     logError("session/answer", "Failed to process answer", error, {
       status,
+      errorMessage: error.message,
     });
-    return Response.json({ error: error.message }, { status });
+    return Response.json(
+      { error: error.message || "Internal server error" },
+      { status }
+    );
   }
 }
