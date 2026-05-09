@@ -1,13 +1,34 @@
 /**
  * Question Generation Testing Utility
  * Moved from production gemini.js to testing module.
- * Uses Gemini to generate questions for testing purposes only.
+ * Uses AI to generate questions for testing purposes only.
  */
 
-import { GoogleGenerativeAI } from "@google/generative-ai";
 import { sanitizePlayerForRender } from "@/lib/playerNormalizer";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || "";
+const MODEL = "google/gemini-2.0-flash-001";
+
+async function callOpenRouter(prompt) {
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      messages: [{ role: "user", content: prompt }]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data.choices[0].message.content;
+}
 
 /**
  * TESTING ONLY: Generates the next best question to ask during testing.
@@ -17,8 +38,6 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
  * Not used in production gameplay - use questionEngine.selectBestQuestion instead.
  */
 export async function generateQuestion(candidates, previousQA, questionNumber) {
-    const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
     // Build a summary of top candidate attributes for the AI
     const topCandidates = candidates.slice(0, 30).map(sanitizePlayerForRender);
     const candidateSummary = topCandidates.map((p) => {
@@ -67,11 +86,10 @@ QUESTION CATEGORIES TO CONSIDER (pick the most discriminating one):
 Return ONLY the question text, nothing else. No numbering, no prefix.`;
 
     try {
-        const result = await model.generateContent(prompt);
-        const question = result.response.text().trim();
-        return question;
+        const question = await callOpenRouter(prompt);
+        return question.trim();
     } catch (error) {
-        console.error("Gemini API error:", error);
+        console.error("OpenRouter API error:", error);
         // Fallback questions if API fails
         const fallbacks = [
             "Is this player from India?",

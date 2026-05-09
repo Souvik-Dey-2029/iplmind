@@ -1,9 +1,29 @@
-// Gemini AI client - handles AI-powered question generation and explanations
-import { GoogleGenerativeAI } from "@google/generative-ai";
+// OpenRouter AI client - handles AI-powered question generation and explanations
 import { sanitizePlayerForRender } from "./playerNormalizer";
 
-// Initialize Gemini with server-side API key
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || "";
+const MODEL = "google/gemini-2.0-flash-001";
+
+async function callOpenRouter(prompt) {
+  const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Authorization": `Bearer ${OPENROUTER_API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      model: MODEL,
+      messages: [{ role: "user", content: prompt }]
+    })
+  });
+
+  if (!response.ok) {
+    throw new Error(`OpenRouter API error: ${response.status} ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  return data.choices[0].message.content;
+}
 
 /**
  * Generates the next best question to ask the user.
@@ -15,12 +35,10 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
  */
 
 /**
- * Uses Gemini to evaluate how each candidate matches a question+answer pair.
+ * Uses AI to evaluate how each candidate matches a question+answer pair.
  * Returns a match score between 0 and 1 for each candidate.
  */
 export async function evaluateCandidates(candidates, question, answer) {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
-
   // Process in batches to avoid token limits
   const batchSize = 50;
   const allScores = {};
@@ -51,8 +69,8 @@ Return ONLY a JSON object mapping player names to scores. Example:
 Important: Use exact player names as given. Return valid JSON only.`;
 
     try {
-      const result = await model.generateContent(prompt);
-      let responseText = result.response.text().trim();
+      let responseText = await callOpenRouter(prompt);
+      responseText = responseText.trim();
 
       // Clean up markdown code blocks if present
       responseText = responseText.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
@@ -76,7 +94,6 @@ Important: Use exact player names as given. Return valid JSON only.`;
  * Returns a confidence explanation from the AI.
  */
 export async function generateGuessExplanation(player, previousQA) {
-  const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
   const cleanPlayer = sanitizePlayerForRender(player);
 
   const qaContext = previousQA
@@ -92,8 +109,8 @@ I'm guessing the player is: ${cleanPlayer.name}
 Write a brief, confident 1-2 sentence explanation of why this player matches all the clues. Do not mention unknown, missing, null, or unavailable metadata. Don't start with "Based on".`;
 
   try {
-    const result = await model.generateContent(prompt);
-    return result.response.text().trim();
+    let responseText = await callOpenRouter(prompt);
+    return responseText.trim();
   } catch (error) {
     const team = cleanPlayer.latestSeasonTeam || cleanPlayer.currentTeam || cleanPlayer.teams?.[cleanPlayer.teams.length - 1] || null;
     const parts = [cleanPlayer.role, cleanPlayer.country ? `from ${cleanPlayer.country}` : "", team ? `who played for ${team}` : ""];
