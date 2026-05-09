@@ -1,5 +1,15 @@
+"use client";
+
+import { useState } from "react";
 import GameClient from "@/components/GameClient";
+import IPLMindHome from "@/components/IPLMindHome";
 
 export default function Home() {
-  return <GameClient />;
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  if (isPlaying) {
+    return <GameClient />;
+  }
+
+  return <IPLMindHome onStartGame={() => setIsPlaying(true)} />;
 }
