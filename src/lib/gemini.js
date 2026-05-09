@@ -161,7 +161,7 @@ Write a brief, confident 1-2 sentence explanation of why this player matches all
     const result = await model.generateContent(prompt);
     return result.response.text().trim();
   } catch (error) {
-    const team = cleanPlayer.latestSeasonTeam || cleanPlayer.currentTeam || cleanPlayer.teams.at(-1);
+    const team = cleanPlayer.latestSeasonTeam || cleanPlayer.currentTeam || cleanPlayer.teams?.[cleanPlayer.teams.length - 1] || null;
     const parts = [cleanPlayer.role, cleanPlayer.country ? `from ${cleanPlayer.country}` : "", team ? `who played for ${team}` : ""];
     return `${cleanPlayer.name} - ${parts.filter(Boolean).join(" ")}.`;
   }

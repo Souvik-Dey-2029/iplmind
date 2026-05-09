@@ -45,6 +45,8 @@ export function createSession() {
     minQuestionsBeforeGuess: 3,
     status: "playing", // playing | guessing | finished
     guess: null,
+    currentQuestion: null,
+    currentQuestionMeta: null,
     createdAt: Date.now(),
   };
 
@@ -235,6 +237,9 @@ function shouldMakeFinalGuess(session) {
   }
 
   if (session.questionNumber >= session.adaptiveQuestionLimit) {
+    if (top && (top?.confidence || 0) >= 40) {
+      return true; // Force guess when adaptive limit reached and confidence sufficient
+    }
     session.adaptiveQuestionLimit += 4;
   }
 
