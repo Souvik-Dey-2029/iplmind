@@ -58,7 +58,9 @@ export function updateProbabilities(currentProbabilities, matchScores) {
   for (const playerName in currentProbabilities) {
     const prior = currentProbabilities[playerName];
     // Default to 0.5 (neutral) if no score provided
-    const likelihood = matchScores[playerName] ?? 0.5;
+    let likelihood = matchScores[playerName] ?? 0.5;
+    // Clamp likelihood to valid range [0, 1]
+    likelihood = Math.max(0, Math.min(1, likelihood));
     // Apply smooth likelihood adjustment for stable confidence scaling
     const adjustedLikelihood = adjustLikelihood(likelihood);
 
@@ -72,6 +74,8 @@ export function updateProbabilities(currentProbabilities, matchScores) {
   if (totalScore > 0) {
     for (const playerName in updated) {
       updated[playerName] = updated[playerName] / totalScore;
+      // Extra safety: clamp to [0, 1] after normalization
+      updated[playerName] = Math.max(0, Math.min(1, updated[playerName]));
     }
   }
 
@@ -82,9 +86,15 @@ export function normalizeProbabilities(probabilities) {
   const total = Object.values(probabilities).reduce((sum, value) => sum + value, 0);
   if (!total) return probabilities;
 
-  return Object.fromEntries(
-    Object.entries(probabilities).map(([name, probability]) => [name, probability / total])
+  const normalized = Object.fromEntries(
+    Object.entries(probabilities).map(([name, probability]) => {
+      // Clamp to valid probability range [0, 1]
+      const clamped = Math.max(0, Math.min(1, probability / total));
+      return [name, clamped];
+    })
   );
+
+  return normalized;
 }
 
 /**
@@ -106,12 +116,14 @@ export function getTopCandidate(probabilities) {
 
   const top = ranked[0];
   // Confidence is how much the top candidate stands above the rest
-  const confidence = top.probability * 100;
+  const rawConfidence = top.probability * 100;
+  // Clamp to [0, 100] range for safety
+  const confidence = Math.max(0, Math.min(100, rawConfidence));
 
   return {
     name: top.name,
-    confidence: Math.min(confidence, 100),
-    probability: top.probability,
+    confidence,
+    probability: Math.max(0, Math.min(1, top.probability)),
   };
 }
 

@@ -90,10 +90,10 @@ export function normalizePlayerProfiles(rawPlayers) {
     const override = currentPlayerOverrides[canonicalName] || {};
     const latestSeasonTeam = getCanonicalTeamName(
       latestTeamOverrides[canonicalName] ||
-        override.latestSeasonTeam ||
-        override.currentTeam ||
-        rawPlayer.latestSeasonTeam ||
-        rawPlayer.currentTeam
+      override.latestSeasonTeam ||
+      override.currentTeam ||
+      rawPlayer.latestSeasonTeam ||
+      rawPlayer.currentTeam
     );
     const historicalTeams = normalizeTeams([
       ...(rawPlayer.historicalTeams || []),
@@ -111,6 +111,10 @@ export function normalizePlayerProfiles(rawPlayers) {
       role: sanitizeDisplayValue(override.role || rawPlayer.role),
       battingStyle: sanitizeDisplayValue(override.battingStyle || rawPlayer.battingStyle),
       bowlingStyle: sanitizeDisplayValue(override.bowlingStyle || rawPlayer.bowlingStyle),
+      primaryBattingPosition: normalizePrimaryBattingPosition(
+        override.primaryBattingPosition || rawPlayer.primaryBattingPosition,
+        sanitizeDisplayValue(override.role || rawPlayer.role)
+      ),
       currentTeam: latestSeasonTeam,
       latestSeasonTeam,
       historicalTeams,
@@ -179,4 +183,31 @@ function slugify(value) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+/**
+ * Normalize primaryBattingPosition with intelligent fallback.
+ * If null/missing, infer from role or use safe default.
+ * Strategy: bowlers rarely bat, wicketkeepers often bat, batsmen position varies
+ */
+function normalizePrimaryBattingPosition(position, role) {
+  // If position is provided and valid, use it
+  const cleaned = sanitizeDisplayValue(position);
+  if (cleaned) return cleaned;
+
+  // If no position, infer intelligent default from role
+  const normalizedRole = (role || "").toLowerCase();
+
+  if (normalizedRole.includes("batsman")) {
+    return "Middle Order"; // Default safe position for batsmen
+  }
+  if (normalizedRole.includes("wicket")) {
+    return "Wicket-keeper"; // Wicketkeepers have fixed position
+  }
+  if (normalizedRole.includes("bowler") || normalizedRole.includes("all-rounder")) {
+    return "Lower Order"; // Bowlers typically bat lower
+  }
+
+  // Final fallback for unknown role
+  return "Middle Order";
 }
