@@ -21,7 +21,7 @@ import {
   calculateEntropy,
 } from "./probabilityEngine";
 import { evaluateDeterministicAnswer } from "./answerEvaluator";
-import { evaluateCandidates, generateGuessExplanation } from "./aiProvider";
+import { evaluateCandidates, generateGuessExplanation, generateAdaptiveQuestion } from "./aiProvider";
 import { evaluateQuestionAnswer, selectBestQuestion } from "./questionEngine";
 import { sanitizePlayerForRender } from "./playerNormalizer";
 import { recordSuccess, recordFailure } from "./learningMemory";
@@ -319,7 +319,34 @@ function handleFailure(session) {
 /**
  * Generate the next question for the session.
  */
-function generateNextQuestion(session) {
+async function generateNextQuestion(session) {
+  // AI Adaptive Questioning for small candidate pools (where static templates fail to differentiate obscure players)
+  if (session.candidates.length <= 10 && session.candidates.length > 1) {
+      try {
+          const aiQuestion = await generateAdaptiveQuestion(session.candidates, session.questionHistory);
+          if (aiQuestion) {
+             session.currentQuestion = aiQuestion;
+             session.currentQuestionMeta = null; // Mark as dynamic AI question (evaluated via evaluateCandidates)
+             
+             return {
+                status: "playing",
+                question: aiQuestion,
+                questionNumber: session.questionNumber,
+                candidatesRemaining: session.candidates.length,
+                topCandidates: getDisplayCandidates(session).slice(0, 5),
+                entropy: session.entropyHistory.at(-1) || 0,
+                confidence: session.confidenceHistory.at(-1) || 0,
+                adaptiveQuestionLimit: session.adaptiveQuestionLimit,
+                wrongGuessCount: session.wrongGuessCount,
+                debugReasoningPanel: buildDebugReasoningPanel(session),
+                commentary: generateCommentary(session),
+              };
+          }
+      } catch (error) {
+          console.warn("[sessionManager] AI adaptive questioning failed, falling back to deterministic", error);
+      }
+  }
+
   const nextQuestionMeta = selectBestQuestion(
     session.candidates,
     session.probabilities,
@@ -414,7 +441,7 @@ export function recordFeedback(sessionId, correctPlayerName) {
 
   // Record failure in learning memory
   if (correctPlayerName) {
-    recordFailure(correctPlayerName);
+    recordFailure(correctPlayerName, session.questionHistory);
   }
 
   // Return data for Firebase storage
@@ -472,7 +499,7 @@ export function recordFailureFeedback(sessionId, correctPlayerName) {
 
   // Record failure in learning memory
   if (correctPlayerName) {
-    recordFailure(correctPlayerName);
+    recordFailure(correctPlayerName, session.questionHistory);
   }
 
   return {

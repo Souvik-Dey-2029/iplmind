@@ -279,6 +279,72 @@ Write a brief, confident 1-2 sentence explanation of why this player matches all
     }
 }
 
+/**
+ * Generate an adaptive, highly contextual question based on remaining candidates.
+ * Maximizes information gain by splitting the candidate pool logically.
+ */
+export async function generateAdaptiveQuestion(candidates, previousQA) {
+    if (!candidates || candidates.length === 0) return null;
+
+    const qaContext = previousQA
+        .map((qa, i) => `Q${i + 1}: ${qa.question} → ${qa.answer}`)
+        .join("\n");
+
+    const candidateNames = candidates.map(c => c.name).slice(0, 15).join(", ");
+
+    const prompt = `You are the AI engine of an Akinator-style IPL player guessing game.
+The game is stuck trying to differentiate between these remaining players:
+${candidateNames}
+
+PREVIOUS QUESTIONS AND ANSWERS:
+${qaContext}
+
+Your goal: Generate ONE highly specific, creative, and yes/no question that perfectly splits this remaining candidate pool in half. 
+DO NOT ask a generic question like "Is he a batsman?". Ask something deep about their IPL history, iconic moments, specific franchise roles, specific bowling variations, or unique records. 
+Example: "Did this player ever captain a franchise that has won multiple IPL titles?" or "Is this player primarily known as a death-overs specialist?"
+
+Return ONLY the text of the question. Nothing else.`;
+
+    try {
+        const responseText = await withFallback("generateAdaptiveQuestion", prompt);
+        return responseText.trim();
+    } catch (error) {
+        console.error("Generate adaptive question error:", error);
+        logError("aiProvider", "generateAdaptiveQuestion failed", error);
+        return null;
+    }
+}
+
+/**
+ * Automatically enrich missing metadata for a player when the AI fails to guess them.
+ */
+export async function generatePlayerMetadataEnrichment(playerName, questionHistory) {
+    const qaContext = questionHistory
+        .map((qa, i) => `Q${i + 1}: ${qa.question} → ${qa.answer}`)
+        .join("\n");
+
+    const prompt = `The AI failed to guess the IPL player: "${playerName}".
+Based on the user's answers:
+${qaContext}
+
+Generate an enriched metadata profile for this player to improve future guessing. Provide a JSON object with:
+- tags (array of strings, e.g., ["one-season-wonder", "uncapped", "PBKS"])
+- role (string, e.g., "batsman", "bowler", "all-rounder")
+- iconic_moment (string)
+- era (string, e.g., "2008-2012")
+
+Return ONLY the valid JSON object. No markdown formatting.`;
+
+    try {
+        const responseText = await withFallback("generatePlayerMetadataEnrichment", prompt);
+        const cleaned = responseText.replace(/```json\n?/g, "").replace(/```\n?/g, "").trim();
+        return JSON.parse(cleaned);
+    } catch (error) {
+        console.error("Generate metadata enrichment error:", error);
+        return null;
+    }
+}
+
 export function getProviderStatus() {
     const totalGemini = aiProviderMetrics.geminiSuccesses + aiProviderMetrics.geminiFailures;
     const totalOpenRouter = aiProviderMetrics.openRouterSuccesses + aiProviderMetrics.openRouterFailures;

@@ -1,9 +1,14 @@
 {
   "playerPopularity": {
     "Shreyas Iyer": 1,
-    "Kagiso Rabada": 1
+    "Kagiso Rabada": 1,
+    "David Warner": 1,
+    "Hardik Pandya": 1,
+    "Kuldeep Yadav": 1
   },
-  "playerDifficulty": {},
+  "playerDifficulty": {
+    "unknown player": 3
+  },
   "questionEffectiveness": {},
-  "totalGames": 2
+  "totalGames": 8
 }
