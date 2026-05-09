@@ -24,7 +24,7 @@ import { evaluateDeterministicAnswer } from "./answerEvaluator";
 import { evaluateCandidates, generateGuessExplanation, generateAdaptiveQuestion } from "./aiProvider";
 import { evaluateQuestionAnswer, selectBestQuestion } from "./questionEngine";
 import { sanitizePlayerForRender } from "./playerNormalizer";
-import { recordSuccess, recordFailure } from "./learningMemory";
+import { recordSuccess, recordFailure, detectStagnation } from "./learningMemory";
 import { validateQuestion } from "./questionValidation";
 import { determinePhase } from "./reasoningPhaseManager";
 
@@ -170,6 +170,9 @@ export async function processAnswer(sessionId, answer) {
 
   session.entropyHistory.push(calculateEntropy(session.probabilities));
   session.confidenceHistory.push(getTopCandidate(session.probabilities, session.questionNumber)?.confidence || 0);
+
+  // Stagnation detection — flag session if reasoning is stuck
+  session.isStagnating = detectStagnation(session.entropyHistory, session.confidenceHistory);
 
   session.questionNumber++;
 
@@ -443,9 +446,10 @@ export function recordFeedback(sessionId, correctPlayerName) {
   session.correctPlayer = correctPlayerName || "";
   session.wasCorrect = false;
 
-  // Record failure in learning memory
+  // Record failure in learning memory with guessed player for confusion tracking
   if (correctPlayerName) {
-    recordFailure(correctPlayerName, session.questionHistory);
+    const guessedPlayer = session.guess?.player?.name || null;
+    recordFailure(correctPlayerName, session.questionHistory, guessedPlayer);
   }
 
   // Return data for Firebase storage
@@ -501,9 +505,10 @@ export function recordFailureFeedback(sessionId, correctPlayerName) {
   session.correctPlayer = correctPlayerName || "";
   session.wasCorrect = false;
 
-  // Record failure in learning memory
+  // Record failure in learning memory with guessed player for confusion tracking
   if (correctPlayerName) {
-    recordFailure(correctPlayerName, session.questionHistory);
+    const guessedPlayer = session.guess?.player?.name || null;
+    recordFailure(correctPlayerName, session.questionHistory, guessedPlayer);
   }
 
   return {
@@ -688,6 +693,7 @@ function buildDebugReasoningPanel(session) {
       wrongGuessCount: session.wrongGuessCount,
       excludedPlayers: [...session.excludedPlayers],
       phase: determinePhase(session.candidates.length, session.questionNumber),
+      isStagnating: session.isStagnating || false,
     },
     confidenceEvolution: session.confidenceHistory,
   };

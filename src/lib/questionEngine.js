@@ -255,9 +255,22 @@ function calculateAdaptiveBoost(option, categoryCounts, history) {
 export function evaluateQuestionAnswer(candidates, questionMeta, answer) {
   const answerKind = normalizeAnswer(answer);
 
-  // "Maybe" and "Don't Know" should barely move probabilities
+  // "Don't Know" — truly neutral, barely moves anything
   if (answerKind === "neutral") {
     return neutralScores(candidates, 0.5);
+  }
+
+  // "Maybe" — soft probabilistic nudge (leans toward "yes" but weakly)
+  if (answerKind === "maybe") {
+    const option = hydrateQuestion(questionMeta);
+    if (!option) return neutralScores(candidates, 0.5);
+    const scores = {};
+    candidates.forEach((player) => {
+      const yes = option.predicate(player);
+      // Soft nudge: matching players get slight boost, non-matching get slight penalty
+      scores[player.name] = yes ? 0.65 : 0.40;
+    });
+    return scores;
   }
 
   if (!questionMeta) {
@@ -275,9 +288,9 @@ export function evaluateQuestionAnswer(candidates, questionMeta, answer) {
   candidates.forEach((player) => {
     const yes = option.predicate(player);
     const matches = answerKind === "yes" ? yes : !yes;
-    // V2: Gradient scoring — matching players get boost, non-matching get penalty
-    // But not binary death. Allows recovery from data inaccuracies.
-    scores[player.name] = matches ? 0.85 : 0.15;
+    // V3: Stronger gradient — matching players get strong boost, mismatches decay hard.
+    // Combined with adjustLikelihood's 19x ratio, this creates real probability movement.
+    scores[player.name] = matches ? 0.95 : 0.05;
   });
 
   return scores;
@@ -454,7 +467,8 @@ function normalizeAnswer(answer) {
   const normalized = normalize(answer);
   if (normalized === "yes") return "yes";
   if (normalized === "no") return "no";
-  return "neutral";
+  if (normalized === "maybe" || normalized === "probably") return "maybe";
+  return "neutral"; // "don't know" and other answers
 }
 
 function normalize(value) {

@@ -13,18 +13,17 @@
 import { getPlayerPriors } from "./learningMemory.js";
 
 /**
- * Scale likelihood smoothly with uncertainty tolerance.
- * Key change: eliminates the hard 0.0001 floor that caused instant death.
- * Now uses sigmoid-like mapping that keeps eliminated players barely alive
- * so they can recover if later answers contradict.
+ * Scale likelihood with meaningful differentiation.
+ * V3: Much wider spread than V2 to prevent probability stagnation.
+ * V2 was compressing [0,1] into [0.15,0.85] — only a 5.67x ratio.
+ * V3 uses [0.05, 0.95] — a 19x ratio, creating real movement per answer.
  */
 function adjustLikelihood(likelihood) {
-  // Softer penalties to prevent premature death
-  if (likelihood < 0.15) return 0.15; // Raised floor from 0.03
-  if (likelihood < 0.35) return 0.30;
-  if (likelihood < 0.65) return 0.50; // True neutral
-  if (likelihood < 0.85) return 0.70;
-  return 0.85; // Lowered ceiling from 0.92 to prevent fake 100%
+  if (likelihood < 0.15) return 0.05;  // Strong mismatch — aggressive decay
+  if (likelihood < 0.35) return 0.20;  // Moderate mismatch
+  if (likelihood < 0.65) return 0.50;  // True neutral
+  if (likelihood < 0.85) return 0.80;  // Moderate match
+  return 0.95;                          // Strong match — strong boost
 }
 
 /**
