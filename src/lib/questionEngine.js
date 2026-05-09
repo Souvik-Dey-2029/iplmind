@@ -260,6 +260,12 @@ export function evaluateQuestionAnswer(candidates, questionMeta, answer) {
     return neutralScores(candidates, 0.5);
   }
 
+  // Guard: if no question metadata, return neutral
+  if (!questionMeta) {
+    console.warn("[questionEngine] Missing questionMeta in evaluateQuestionAnswer - cannot evaluate answer");
+    return neutralScores(candidates, 0.5);
+  }
+
   // "Maybe" — soft probabilistic nudge (leans toward "yes" but weakly)
   if (answerKind === "maybe") {
     const option = hydrateQuestion(questionMeta);
@@ -271,11 +277,6 @@ export function evaluateQuestionAnswer(candidates, questionMeta, answer) {
       scores[player.name] = yes ? 0.65 : 0.40;
     });
     return scores;
-  }
-
-  if (!questionMeta) {
-    console.warn("[questionEngine] Missing questionMeta in evaluateQuestionAnswer - cannot evaluate answer");
-    return neutralScores(candidates, 0.5);
   }
 
   const option = hydrateQuestion(questionMeta);

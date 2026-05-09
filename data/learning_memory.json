@@ -7,8 +7,176 @@
     "Kuldeep Yadav": 1
   },
   "playerDifficulty": {
-    "unknown player": 3
+    "unknown player": 4
   },
-  "questionEffectiveness": {},
-  "totalGames": 8
+  "questionEffectiveness": {
+    "pacer": {
+      "successes": 0,
+      "total": 1
+    },
+    "batsman": {
+      "successes": 0,
+      "total": 1
+    },
+    "left-handed": {
+      "successes": 0,
+      "total": 1
+    },
+    "indian": {
+      "successes": 0,
+      "total": 1
+    },
+    "opener": {
+      "successes": 0,
+      "total": 1
+    },
+    "playoffs-hero": {
+      "successes": 0,
+      "total": 1
+    },
+    "iconic": {
+      "successes": 0,
+      "total": 1
+    },
+    "fan-favorite": {
+      "successes": 0,
+      "total": 1
+    },
+    "anchor": {
+      "successes": 0,
+      "total": 1
+    },
+    "wicketkeeper": {
+      "successes": 0,
+      "total": 1
+    }
+  },
+  "confusionClusters": {
+    "Unknown Player|Yashasvi Jaiswal": 1
+  },
+  "failedSessions": [
+    {
+      "correctPlayer": "Unknown Player",
+      "guessedPlayer": "Yashasvi Jaiswal",
+      "questions": [
+        {
+          "questionId": "pacer",
+          "category": "bowling-style",
+          "answer": "No"
+        },
+        {
+          "questionId": "batsman",
+          "category": "role",
+          "answer": "Yes"
+        },
+        {
+          "questionId": "left-handed",
+          "category": "batting-style",
+          "answer": "Yes"
+        },
+        {
+          "questionId": "indian",
+          "category": "origin-class",
+          "answer": "Yes"
+        },
+        {
+          "questionId": "opener",
+          "category": "batting-role",
+          "answer": "Yes"
+        },
+        {
+          "questionId": "playoffs-hero",
+          "category": "achievement",
+          "answer": "Yes"
+        },
+        {
+          "questionId": "iconic",
+          "category": "profile",
+          "answer": "No"
+        },
+        {
+          "answer": "No"
+        },
+        {
+          "answer": "No"
+        },
+        {
+          "answer": "No"
+        },
+        {
+          "answer": "Yes"
+        },
+        {
+          "answer": "Don't Know"
+        },
+        {
+          "answer": "Don't Know"
+        },
+        {
+          "answer": "No"
+        },
+        {
+          "questionId": "fan-favorite",
+          "category": "profile",
+          "answer": "Yes"
+        },
+        {
+          "questionId": "anchor",
+          "category": "batting-style",
+          "answer": "Yes"
+        },
+        {
+          "questionId": "wicketkeeper",
+          "category": "role",
+          "answer": "No"
+        },
+        {
+          "answer": "No"
+        },
+        {
+          "answer": "Yes"
+        },
+        {
+          "answer": "Yes"
+        },
+        {
+          "answer": "Yes"
+        },
+        {
+          "answer": "Don't Know"
+        },
+        {
+          "answer": "No"
+        },
+        {
+          "answer": "Yes"
+        },
+        {
+          "answer": "No"
+        },
+        {
+          "answer": "No"
+        },
+        {
+          "answer": "Yes"
+        },
+        {
+          "answer": "Yes"
+        },
+        {
+          "answer": "Yes"
+        },
+        {
+          "answer": "Yes"
+        },
+        {
+          "answer": "No"
+        }
+      ],
+      "timestamp": "2026-05-09T15:59:59.047Z"
+    }
+  ],
+  "totalGames": 9,
+  "totalSuccesses": 0,
+  "totalFailures": 1
 }
