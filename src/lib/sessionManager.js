@@ -25,6 +25,7 @@ import { evaluateCandidates, generateGuessExplanation, generateAdaptiveQuestion 
 import { evaluateQuestionAnswer, selectBestQuestion } from "./questionEngine";
 import { sanitizePlayerForRender } from "./playerNormalizer";
 import { recordSuccess, recordFailure } from "./learningMemory";
+import { validateQuestion } from "./questionValidation";
 
 // In-memory session store shared across route module instances in the same server process.
 const sessions = globalThis.__IPLMIND_SESSIONS__ || new Map();
@@ -324,7 +325,7 @@ async function generateNextQuestion(session) {
   if (session.candidates.length <= 10 && session.candidates.length > 1) {
       try {
           const aiQuestion = await generateAdaptiveQuestion(session.candidates, session.questionHistory);
-          if (aiQuestion) {
+          if (aiQuestion && validateQuestion(aiQuestion)) {
              session.currentQuestion = aiQuestion;
              session.currentQuestionMeta = null; // Mark as dynamic AI question (evaluated via evaluateCandidates)
              
@@ -341,6 +342,8 @@ async function generateNextQuestion(session) {
                 debugReasoningPanel: buildDebugReasoningPanel(session),
                 commentary: generateCommentary(session),
               };
+          } else {
+             console.warn("[sessionManager] AI generated invalid or complex question. Falling back.");
           }
       } catch (error) {
           console.warn("[sessionManager] AI adaptive questioning failed, falling back to deterministic", error);

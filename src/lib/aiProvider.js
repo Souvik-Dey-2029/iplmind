@@ -299,9 +299,18 @@ ${candidateNames}
 PREVIOUS QUESTIONS AND ANSWERS:
 ${qaContext}
 
-Your goal: Generate ONE highly specific, creative, and yes/no question that perfectly splits this remaining candidate pool in half. 
-DO NOT ask a generic question like "Is he a batsman?". Ask something deep about their IPL history, iconic moments, specific franchise roles, specific bowling variations, or unique records. 
-Example: "Did this player ever captain a franchise that has won multiple IPL titles?" or "Is this player primarily known as a death-overs specialist?"
+CORE DESIGN RULES:
+1. Generate EXACTLY ONE simple yes/no question to split the remaining candidates.
+2. The question must be answerable within 1 second.
+3. Contain ONE simple idea only.
+4. Avoid historical/contextual complexity, long sentences, and controversy.
+5. MAXIMUM 16 words. Preferred 10-12 words.
+6. MUST NOT logically contradict any previous answers. If a player is a spinner, don't ask if they are a fast bowler.
+
+GOOD EXAMPLES:
+- Is this player mainly a bowler?
+- Has this player captained an IPL team?
+- Is this player a left-handed batter?
 
 Return ONLY the text of the question. Nothing else.`;
 

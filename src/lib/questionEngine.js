@@ -12,83 +12,94 @@ let staticQuestionCache = null;
 // Prevents asking "Is he a batsman?" after user already said "Yes" to "Is he a batter?"
 // Each group maps to a set of equivalent question IDs and inferred attributes.
 // ═══════════════════════════════════════════════
-const CONCEPT_GROUPS = {
+export const CONCEPT_GROUPS = {
   "role:batsman": {
     ids: ["batsman"],
     keywords: ["batter", "batsman", "batting"],
     infers_yes: { batsman: true },
-    infers_no: { bowler: false, allrounder: false },
-    suppresses: ["bowler", "allrounder", "spinner", "pacer", "death-bowler", "purple-cap"],
+    infers_no: { bowler: true },
+    suppresses_on_yes: ["bowler", "allrounder", "spinner", "pacer", "death-bowler", "purple-cap"],
+    suppresses_on_no: ["opener", "middle-order", "finisher", "power-hitter", "anchor", "wicketkeeper"],
   },
   "role:bowler": {
     ids: ["bowler"],
     keywords: ["bowler", "bowling"],
     infers_yes: { bowler: true },
-    infers_no: { batsman: false, allrounder: false },
-    suppresses: ["batsman", "allrounder", "opener", "middle-order", "finisher", "power-hitter", "anchor", "wicketkeeper"],
+    infers_no: { batsman: true },
+    suppresses_on_yes: ["batsman", "allrounder", "opener", "middle-order", "finisher", "power-hitter", "anchor", "wicketkeeper"],
+    suppresses_on_no: ["spinner", "pacer", "death-bowler", "purple-cap"],
   },
   "role:allrounder": {
     ids: ["allrounder"],
     keywords: ["all-rounder", "allrounder", "all rounder"],
     infers_yes: { allrounder: true },
     infers_no: {},
-    suppresses: [], // All-rounders can be asked both batting and bowling questions
+    suppresses_on_yes: [],
+    suppresses_on_no: [],
   },
   "role:wicketkeeper": {
     ids: ["wicketkeeper"],
     keywords: ["wicket-keeper", "wicketkeeper", "keeper"],
     infers_yes: { wicketkeeper: true },
     infers_no: {},
-    suppresses: ["bowler", "spinner", "pacer", "death-bowler"], // Keepers don't bowl
+    suppresses_on_yes: ["bowler", "spinner", "pacer", "death-bowler"],
+    suppresses_on_no: [],
   },
   "origin:overseas": {
     ids: ["overseas"],
     keywords: ["overseas", "foreign"],
     infers_yes: { overseas: true, indian: false },
     infers_no: { indian: true },
-    suppresses: ["indian"],
+    suppresses_on_yes: ["indian"],
+    suppresses_on_no: ["indian"],
   },
   "origin:indian": {
     ids: ["indian"],
     keywords: ["indian", "from india"],
     infers_yes: { indian: true, overseas: false },
     infers_no: { overseas: true },
-    suppresses: ["overseas"],
+    suppresses_on_yes: ["overseas"],
+    suppresses_on_no: ["overseas"],
   },
   "bowling:spinner": {
     ids: ["spinner"],
     keywords: ["spinner", "spin"],
     infers_yes: { spinner: true, pacer: false },
-    infers_no: {},
-    suppresses: ["pacer", "death-bowler"], // Spinners rarely death bowl
+    infers_no: { pacer: true },
+    suppresses_on_yes: ["pacer", "death-bowler"],
+    suppresses_on_no: ["pacer", "death-bowler"], // If no, it's a pacer, but don't need to ask if it's a pacer. Wait, if no, it is a pacer, so suppress 'pacer' to prevent redundant question.
   },
   "bowling:pacer": {
     ids: ["pacer"],
     keywords: ["pace", "fast", "pacer", "quick"],
     infers_yes: { pacer: true, spinner: false },
-    infers_no: {},
-    suppresses: ["spinner"],
+    infers_no: { spinner: true },
+    suppresses_on_yes: ["spinner"],
+    suppresses_on_no: ["spinner"], // If not a pacer, we assume spinner, so suppress redundant spinner questions
   },
   "batting:opener": {
     ids: ["opener"],
     keywords: ["opener", "opening"],
     infers_yes: { opener: true },
     infers_no: {},
-    suppresses: ["middle-order", "finisher"],
+    suppresses_on_yes: ["middle-order", "finisher"],
+    suppresses_on_no: [],
   },
   "batting:middle-order": {
     ids: ["middle-order"],
     keywords: ["middle order", "middle-order"],
     infers_yes: { "middle-order": true },
     infers_no: {},
-    suppresses: ["opener"],
+    suppresses_on_yes: ["opener"],
+    suppresses_on_no: [],
   },
   "batting:left-handed": {
     ids: ["left-handed"],
     keywords: ["left-handed", "lefty", "left hand"],
     infers_yes: { "left-handed": true },
     infers_no: {},
-    suppresses: [],
+    suppresses_on_yes: [],
+    suppresses_on_no: [],
   },
 };
 
@@ -199,9 +210,14 @@ function buildSuppressedConceptSet(history) {
     // Find which concept group this answered question belongs to
     for (const group of Object.values(CONCEPT_GROUPS)) {
       if (group.ids.includes(questionId)) {
-        if (answer === "yes") {
-          // Suppress contradictory questions
-          group.suppresses.forEach((id) => suppressed.add(id));
+        if (answer === "yes" && group.suppresses_on_yes) {
+          group.suppresses_on_yes.forEach((id) => suppressed.add(id));
+        } else if (answer === "no" && group.suppresses_on_no) {
+          group.suppresses_on_no.forEach((id) => suppressed.add(id));
+        }
+        // Legacy support if old fields exist
+        if (answer === "yes" && group.suppresses) {
+            group.suppresses.forEach((id) => suppressed.add(id));
         }
         break;
       }
