@@ -14,12 +14,22 @@ export default function LeaderboardClient() {
       .then(res => res.json())
       .then(d => {
         if (cancelled) return;
-        setData(d);
+        if (d.error) {
+          console.error("Leaderboard API returned error:", d.error);
+          setData({ fastestGuesses: [], aiDefeats: [], globalStats: null });
+        } else {
+          setData({
+            fastestGuesses: d.fastestGuesses || [],
+            aiDefeats: d.aiDefeats || [],
+            globalStats: d.globalStats || null
+          });
+        }
         setLoading(false);
       })
       .catch(e => {
         if (cancelled) return;
         console.error("Leaderboard fetch error:", e);
+        setData({ fastestGuesses: [], aiDefeats: [], globalStats: null });
         setLoading(false);
       });
 
