@@ -19,6 +19,7 @@ import {
   shouldGuess,
   getViableCandidates,
   calculateEntropy,
+  normalizeProbabilities,
 } from "./probabilityEngine";
 import { evaluateDeterministicAnswer } from "./answerEvaluator";
 import { evaluateCandidates, generateGuessExplanation, generateAdaptiveQuestion } from "./aiProvider";
@@ -28,6 +29,13 @@ import { recordSuccess, recordFailure, detectStagnation } from "./learningMemory
 import { validateQuestion } from "./questionValidation";
 import { determinePhase } from "./reasoningPhaseManager";
 import { buildInferredFacts, validateCandidateAgainstFacts } from "./semanticConstraints";
+import {
+  applySemanticReranking,
+  calculateSemanticConfidence,
+  evaluateSemanticAnswer,
+  getSemanticDifficulty,
+  validateFinalGuess,
+} from "./semanticInference";
 
 // In-memory session store shared across route module instances in the same server process.
 const sessions = globalThis.__IPLMIND_SESSIONS__ || new Map();
@@ -222,6 +230,7 @@ export async function processAnswer(sessionId, answer) {
   // fallback for older sessions or manually injected question text.
   let matchScores =
     evaluateQuestionAnswer(session.candidates, session.currentQuestionMeta, answer) ||
+    evaluateSemanticAnswer(session.candidates, session.currentQuestionMeta, answer) ||
     evaluateDeterministicAnswer(session.candidates, currentQuestion, answer);
 
   // AI fallback: only use if deterministic methods returned null
@@ -238,13 +247,18 @@ export async function processAnswer(sessionId, answer) {
 
   // Update probabilities using Bayesian updating
   session.probabilities = updateProbabilities(session.probabilities, matchScores);
+  session.probabilities = applySemanticReranking(session.probabilities, players, session.questionHistory);
 
   // Filter out very unlikely candidates (but respect excluded players)
   session.candidates = getViableCandidates(players, session.probabilities, 0.05, session.questionNumber)
     .filter((p) => !session.excludedPlayers.has(p.name));
 
   session.entropyHistory.push(calculateEntropy(session.probabilities));
-  session.confidenceHistory.push(getTopCandidate(session.probabilities, session.questionNumber)?.confidence || 0);
+  session.confidenceHistory.push(
+    calculateSemanticConfidence(session.probabilities, players, session.questionHistory, session.questionNumber)?.confidence ||
+    getTopCandidate(session.probabilities, session.questionNumber)?.confidence ||
+    0
+  );
 
   // Stagnation detection — flag session if reasoning is stuck
   session.isStagnating = detectStagnation(session.entropyHistory, session.confidenceHistory);
@@ -294,6 +308,23 @@ async function makeGuess(session) {
     return handleFailure(session);
   }
 
+  const rawPlayerData = players.find((p) => p.name === topCandidate.name);
+  const finalValidation = validateFinalGuess(
+    rawPlayerData,
+    session.probabilities,
+    players,
+    session.questionHistory,
+    session.questionNumber
+  );
+
+  if (!finalValidation.valid && session.questionNumber < session.maxTotalQuestions - 2 && (session.semanticGuessDeferrals || 0) < 2) {
+    session.status = "playing";
+    session.semanticGuessDeferrals = (session.semanticGuessDeferrals || 0) + 1;
+    session.probabilities[topCandidate.name] = (session.probabilities[topCandidate.name] || 0) * 0.72;
+    session.probabilities = normalizeProbabilities(session.probabilities);
+    return generateNextQuestion(session);
+  }
+
   // Get AI explanation for the guess
   let explanation = "";
   try {
@@ -305,7 +336,8 @@ async function makeGuess(session) {
 
   // Confidence smoothing: cap at 97% for realism, apply uncertainty penalty
   const rawConfidence = topCandidate.confidence;
-  const smoothedConfidence = Math.min(rawConfidence, 97);
+  const semanticConfidence = finalValidation.semantic?.confidence || rawConfidence;
+  const smoothedConfidence = Math.min(Math.min(rawConfidence, semanticConfidence) * finalValidation.confidencePenalty, 97);
 
   session.guess = {
     player: playerData,
@@ -313,6 +345,11 @@ async function makeGuess(session) {
     probability: topCandidate.probability,
     explanation: explanation || "",
     guessNumber: session.wrongGuessCount + 1,
+    semanticValidation: {
+      alignment: finalValidation.alignment,
+      contradictionPenalty: finalValidation.contradictionPenalty,
+      reasons: finalValidation.reasons,
+    },
   };
 
   // Track guess in history
@@ -649,6 +686,8 @@ export function recordFeedback(sessionId, correctPlayerName) {
     wasCorrect: false,
     wrongGuessCount: session.wrongGuessCount,
     questionsAsked: session.questionNumber,
+    semanticDifficulty: getSemanticDifficulty(players.find((p) => p.name === correctPlayerName), session.questionNumber),
+    rarity: players.find((p) => p.name === correctPlayerName)?.obscurityProfile?.rarity || "",
     timestamp: Date.now(),
   };
 }
@@ -677,6 +716,8 @@ export function confirmGuess(sessionId) {
     wasCorrect: true,
     wrongGuessCount: session.wrongGuessCount,
     questionsAsked: session.questionNumber,
+    semanticDifficulty: getSemanticDifficulty(players.find((p) => p.name === guessedPlayer), session.questionNumber),
+    rarity: players.find((p) => p.name === guessedPlayer)?.obscurityProfile?.rarity || "",
     timestamp: Date.now(),
   };
 }
@@ -707,6 +748,8 @@ export function recordFailureFeedback(sessionId, correctPlayerName) {
     failed: true,
     wrongGuessCount: session.wrongGuessCount,
     questionsAsked: session.questionNumber,
+    semanticDifficulty: getSemanticDifficulty(players.find((p) => p.name === correctPlayerName), session.questionNumber),
+    rarity: players.find((p) => p.name === correctPlayerName)?.obscurityProfile?.rarity || "",
     timestamp: Date.now(),
   };
 }
@@ -729,6 +772,7 @@ export function cleanupSessions() {
  * This prevents premature guessing while allowing late-game rescue guesses.
  */
 function shouldMakeFinalGuess(session) {
+  const semanticTop = calculateSemanticConfidence(session.probabilities, players, session.questionHistory, session.questionNumber);
   // Safety gate: never allow infinite questioning.
   if (session.questionNumber >= session.maxTotalQuestions) {
     return true;
@@ -741,12 +785,21 @@ function shouldMakeFinalGuess(session) {
   const progressiveThreshold = getProgressiveThreshold(session.questionNumber);
 
   // Primary: strong separation / confidence signal.
-  if (shouldGuess(session.probabilities, progressiveThreshold, MIN_CANDIDATES_TO_GUESS, session.questionNumber)) {
+  if (
+    semanticTop &&
+    semanticTop.confidence >= progressiveThreshold &&
+    semanticTop.separation >= 0.28 &&
+    semanticTop.semanticAlignment >= 0.42
+  ) {
+    return true;
+  }
+
+  if (shouldGuess(session.probabilities, progressiveThreshold + 4, MIN_CANDIDATES_TO_GUESS, session.questionNumber)) {
     return true;
   }
 
   // Secondary: very small candidate pool (≤2 players left).
-  const top = getTopCandidate(session.probabilities, session.questionNumber);
+  const top = semanticTop || getTopCandidate(session.probabilities, session.questionNumber);
   if (session.candidates.length <= MIN_CANDIDATES_TO_GUESS && (top?.confidence || 0) >= 50) {
     return true;
   }
@@ -820,6 +873,8 @@ function getDisplayCandidates(session) {
       id: player?.canonicalPlayerId || player?.id || candidate.name,
       name: player?.name || candidate.name,
       probability: candidate.probability,
+      rarity: player?.obscurityProfile?.rarity || player?.rarity || "",
+      archetype: player?.playerDNA?.tacticalIdentity || player?.archetype || "",
       player: player || null,
     };
   });
@@ -867,6 +922,7 @@ function buildDebugReasoningPanel(session) {
   const currentMeta = session.currentQuestionMeta || null;
   const latestEntropy = session.entropyHistory.at(-1) || 0;
   const previousEntropy = session.entropyHistory.at(-2) || latestEntropy;
+  const semanticTop = calculateSemanticConfidence(session.probabilities, players, session.questionHistory, session.questionNumber);
 
   return {
     canonicalCandidates: topCandidates.map(({ player, probability }) => ({
@@ -888,6 +944,11 @@ function buildDebugReasoningPanel(session) {
       excludedPlayers: [...session.excludedPlayers],
       phase: determinePhase(session.candidates.length, session.questionNumber),
       isStagnating: session.isStagnating || false,
+      semanticTopCandidate: semanticTop?.name || "",
+      semanticAlignment: semanticTop?.semanticAlignment || 0,
+      dnaSpread: semanticTop?.dnaSpread || 0,
+      contradictionDensity: semanticTop?.contradictionDensity || 0,
+      semanticGuessDeferrals: session.semanticGuessDeferrals || 0,
     },
     confidenceEvolution: session.confidenceHistory,
   };
