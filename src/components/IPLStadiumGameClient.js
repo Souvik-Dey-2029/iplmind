@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState, useEffect, useCallback } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeSwitcher from "./ThemeSwitcher";
 
@@ -342,7 +343,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
           </div>
           <div style={{ display: isMobile ? "none" : "flex", gap: 24, alignItems: "center" }}>
             <span className="ipl-nav-link active">Predict</span>
-            <span className="ipl-nav-link">Leaderboard</span>
+            <Link href="/leaderboard" className="ipl-nav-link">Leaderboard</Link>
             <span className="ipl-nav-link">History</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
@@ -595,10 +596,10 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
               <div className="ipl-bottom-icon" style={{ background: "rgba(100,80,255,0.15)", color: "#c084fc" }}>🎫</div>
               <div><strong>Play & Win Tickets</strong><br />Answer daily & earn</div>
             </div>
-            <div className="ipl-bottom-item" style={{ borderLeft: "1px solid rgba(100,80,255,0.15)", paddingLeft: 32 }}>
+            <Link href="/leaderboard" className="ipl-bottom-item" style={{ borderLeft: "1px solid rgba(100,80,255,0.15)", paddingLeft: 32, textDecoration: 'none', color: 'inherit' }}>
               <div className="ipl-bottom-icon" style={{ background: "rgba(0,180,255,0.15)", color: "#00d4ff" }}>📊</div>
               <div><strong>Climb Leaderboard</strong><br />Beat other cricket fans</div>
-            </div>
+            </Link>
             <div className="ipl-bottom-item" style={{ borderLeft: "1px solid rgba(100,80,255,0.15)", paddingLeft: 32 }}>
               <div className="ipl-bottom-icon" style={{ background: "rgba(255,140,0,0.15)", color: "#ff8c00" }}>🛡️</div>
               <div><strong>Unlock Achievements</strong><br />Show off your skills</div>

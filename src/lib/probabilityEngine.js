@@ -108,54 +108,52 @@ export function getRankedPlayers(probabilities) {
 }
 
 /**
- * Get the top candidate with REALISTIC confidence scoring.
- *
- * V2: Confidence is no longer just `probability * 100`.
- * Instead it factors in:
- * 1. Relative separation from runner-up (how far ahead the leader is)
- * 2. Absolute probability (raw Bayesian score)
- * 3. Entropy of the remaining distribution (how "decided" the distribution is)
- *
- * This prevents fake 100% after 2-3 questions.
+ * Get the top candidate with TRUE DYNAMIC confidence scoring.
+ * Prevents confidence from freezing by constantly evolving based on information gain.
  */
-export function getTopCandidate(probabilities, questionCount = 10) {
+export function getTopCandidate(probabilities, questionCount = 1) {
   const ranked = getRankedPlayers(probabilities);
   if (ranked.length === 0) return null;
 
   const top = ranked[0];
   const runnerUp = ranked[1];
 
-  // Factor 1: Raw Bayesian probability (0-100 range)
+  // 1. Absolute Bayesian Probability
   const rawScore = top.probability * 100;
 
-  // Factor 2: Separation from runner-up
-  const separation = runnerUp ? (top.probability - runnerUp.probability) / top.probability : 1;
+  // 2. Relative Separation (How dominant is #1 vs #2?)
+  // If runnerUp is negligible, separation is 1. If neck-and-neck, it's 0.
+  const separation = runnerUp ? Math.max(0, (top.probability - runnerUp.probability) / top.probability) : 1;
 
-  // Factor 3: Entropy-based scaling — high entropy = low confidence
+  // 3. System Entropy (How chaotic is the whole pool?)
   const entropy = calculateEntropy(probabilities);
-  const maxEntropy = Math.log2(Object.keys(probabilities).length);
+  const maxEntropy = Math.log2(Object.keys(probabilities).length || 1);
   const entropyRatio = maxEntropy > 0 ? entropy / maxEntropy : 0;
-  // entropyFactor: 0 (max entropy, total uncertainty) → 1 (zero entropy, total certainty)
   const entropyFactor = 1 - entropyRatio;
 
-  // Factor 4: Question Count Penalty (prevents early fake 100%)
-  const evidencePenalty = Math.min(1, questionCount / 12); // Max confidence requires at least 12 questions
+  // 4. Evolving Evidence Curve
+  // Confidence naturally builds over time to prevent stagnation, but logarithmically caps.
+  // Question 1 = ~25% max potential, Question 15 = ~95% max potential.
+  const evidenceMultiplier = Math.min(1, Math.log10(questionCount + 1) / Math.log10(16));
 
-  // Blended confidence: weighted combination of all factors
-  const blendedConfidence = (
-    rawScore * 0.4 +          // Raw probability matters
-    separation * 100 * 0.2 +  // How far ahead of #2
-    entropyFactor * 100 * 0.4 // Overall distribution certainty
-  ) * evidencePenalty;
+  // Blended Confidence Formula
+  let blendedConfidence = (
+    (rawScore * 0.3) +             // Core probability
+    (separation * 100 * 0.35) +    // Dominance
+    (entropyFactor * 100 * 0.35)   // Overall certainty
+  ) * evidenceMultiplier;
 
-  // Apply smoothing cap: never exceed 99% to acknowledge uncertainty
-  const confidence = Math.max(0, Math.min(99, blendedConfidence));
+  // Ensure it never freezes entirely by adding a tiny micro-progression tied to questionCount
+  blendedConfidence += (questionCount * 0.5);
+
+  // Soft cap at 98.9% until actual guess confirmation to avoid fake 100%
+  const confidence = Math.max(0, Math.min(98.9, blendedConfidence));
 
   return {
     name: top.name,
     confidence,
     probability: Math.max(0, Math.min(1, top.probability)),
-    separation: separation,
+    separation,
     entropy,
   };
 }

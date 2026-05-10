@@ -65,6 +65,11 @@ export function buildInferredFacts(history) {
       if (questionId === "opener") { facts.confirmedBattingPos = "opener"; }
       if (questionId === "middle-order") { facts.confirmedBattingPos = "middle-order"; }
       if (questionId === "finisher") { facts.confirmedBattingPos = "finisher"; }
+      
+      // Era confirmations
+      if (questionId === "veteran") { facts.isVeteran = true; }
+      if (questionId === "recent-debut") { facts.isRecentDebut = true; }
+      if (questionId === "founding-era") { facts.isFoundingEra = true; }
     }
 
     if (answer === "no") {
@@ -196,18 +201,23 @@ export function validateCandidateAgainstFacts(player, inferredFacts) {
   }
 
   // Role contradiction
-  if (inferredFacts.confirmedRole === "batsman" && player.role === "bowler") return 0.02;
-  if (inferredFacts.confirmedRole === "bowler" && player.role === "batsman") return 0.02;
-  if (inferredFacts.confirmedRole === "wicketkeeper" && !player.wicketKeeper && player.role !== "wicket-keeper") return 0.05;
+  if (inferredFacts.confirmedRole === "batsman" && player.role === "bowler") return 0.01;
+  if (inferredFacts.confirmedRole === "bowler" && player.role === "batsman") return 0.01;
+  if (inferredFacts.confirmedRole === "wicketkeeper" && !player.wicketKeeper && player.role !== "wicket-keeper") return 0.02;
 
   // Bowling type
-  if (inferredFacts.confirmedBowlingType === "spin" && player.pacer && !player.spinner) penalty *= 0.1;
-  if (inferredFacts.confirmedBowlingType === "pace" && player.spinner && !player.pacer) penalty *= 0.1;
+  if (inferredFacts.confirmedBowlingType === "spin" && player.pacer && !player.spinner) penalty *= 0.05;
+  if (inferredFacts.confirmedBowlingType === "pace" && player.spinner && !player.pacer) penalty *= 0.05;
 
   // Current team
   if (inferredFacts.confirmedCurrentTeam && player.currentTeam !== inferredFacts.confirmedCurrentTeam) {
-    penalty *= 0.15;
+    penalty *= 0.1;
   }
+
+  // Era constraints (NEW: Prevent anachronistic guesses)
+  if (inferredFacts.isVeteran && player.debutYear > 2015) penalty *= 0.01;
+  if (inferredFacts.isRecentDebut && player.debutYear < 2020) penalty *= 0.01;
+  if (inferredFacts.isFoundingEra && player.era !== "founding-era") penalty *= 0.05;
 
   return penalty;
 }

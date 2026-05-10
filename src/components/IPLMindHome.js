@@ -1,6 +1,7 @@
 "use client";
 
 import React from 'react';
+import Link from 'next/link';
 import ThemeSwitcher from './ThemeSwitcher';
 import { useTheme } from './ThemeProvider';
 
@@ -74,7 +75,7 @@ export default function IPLMindHome({ onStartGame }) {
               color: '#414942',
               textDecoration: 'none',
               fontSize: 16,
-            }}>Leaderboard</a>
+            }}><Link href="/leaderboard" style={{ textDecoration: 'none', color: 'inherit' }}>Leaderboard</Link></a>
             <a href="#" onClick={(e) => e.preventDefault()} style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 500,
@@ -438,6 +439,7 @@ export default function IPLMindHome({ onStartGame }) {
               }}>
                 Compete with cricket fans worldwide. Can you trick the AI more times than anyone else?
               </p>
+              <Link href="/leaderboard" style={{ display: 'inline-block', marginTop: 12, padding: '8px 16px', background: '#00361a', color: 'white', borderRadius: 8, textDecoration: 'none', fontSize: 14, fontWeight: 600 }}>View Rankings →</Link>
             </div>
 
             {/* Social Play Card */}

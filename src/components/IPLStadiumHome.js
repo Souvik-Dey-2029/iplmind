@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeSwitcher from "./ThemeSwitcher";
 
@@ -188,7 +189,7 @@ export default function IPLStadiumHome({ onStartGame }) {
           {!isMobile && (
             <div style={{ display: "flex", gap: 32, alignItems: "center" }}>
               <span className="ipl-nav-link active">Predict</span>
-              <span className="ipl-nav-link">Leaderboard</span>
+              <Link href="/leaderboard" className="ipl-nav-link">Leaderboard</Link>
               <span className="ipl-nav-link">History</span>
             </div>
           )}
