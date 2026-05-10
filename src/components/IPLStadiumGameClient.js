@@ -185,12 +185,16 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
 
       setQuestionNumber(data.questionNumber);
       setCandidatesRemaining(data.candidatesRemaining);
-      setConfidence(data.confidence ?? data.guess?.confidence ?? 0);
-      setAdaptiveQuestionLimit(data.adaptiveQuestionLimit || adaptiveQuestionLimit);
       setWrongGuessCount(data.wrongGuessCount || 0);
 
       if (data.status === "guessing") {
-        setGuess(data.guess);
+        // ATOMIC SNAPSHOT CONSUMPTION:
+        // All state is set from the SAME frozen server response.
+        // guess.confidence is the ONLY source of truth for confidence.
+        const frozenGuess = data.guess;
+        setGuess(frozenGuess);
+        setConfidence(frozenGuess?.confidence ?? data.confidence ?? 0);
+        if (Array.isArray(data.topCandidates)) setTopCandidates(data.topCandidates);
         setPhase("guessing");
         return;
       }
@@ -201,6 +205,9 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
         return;
       }
 
+      // Playing phase
+      setConfidence(data.confidence ?? 0);
+      setAdaptiveQuestionLimit(data.adaptiveQuestionLimit || adaptiveQuestionLimit);
       setQuestion(data.question);
       setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
       if (data.commentary) setCommentary(data.commentary);

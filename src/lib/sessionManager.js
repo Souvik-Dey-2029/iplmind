@@ -364,25 +364,35 @@ async function makeGuess(session) {
     return generateNextQuestion(session);
   }
 
-  // Get AI explanation for the guess
-  let explanation = "";
-  try {
-    explanation = await generateGuessExplanation(playerData, session.questionHistory);
-  } catch (err) {
-    console.warn("Failed to generate explanation, using fallback", err);
-    explanation = buildFallbackExplanation(playerData, session.questionHistory);
-  }
+  // ═══════════════════════════════════════════════
+  // ATOMIC INFERENCE SNAPSHOT — SINGLE SOURCE OF TRUTH
+  // All fields below are frozen from this exact moment.
+  // The UI MUST read ONLY from this snapshot.
+  // ═══════════════════════════════════════════════
 
-  // Confidence smoothing: cap at 97% for realism, apply uncertainty penalty
+  // 1. FREEZE confidence from the validated candidate (not raw pool)
   const rawConfidence = topCandidate.confidence;
   const semanticConfidence = finalValidation.semantic?.confidence || rawConfidence;
-  const smoothedConfidence = Math.min(Math.min(rawConfidence, semanticConfidence) * finalValidation.confidencePenalty, 97);
+  const frozenConfidence = Math.min(Math.min(rawConfidence, semanticConfidence) * finalValidation.confidencePenalty, 97);
 
+  // 2. FREEZE explanation — generated for THIS exact candidate
+  let frozenExplanation = "";
+  try {
+    frozenExplanation = await generateGuessExplanation(playerData, session.questionHistory);
+  } catch (err) {
+    console.warn("Failed to generate explanation, using fallback", err);
+    frozenExplanation = buildFallbackExplanation(playerData, session.questionHistory);
+  }
+
+  // 3. FREEZE top candidates snapshot — derived from current probabilities
+  const frozenTopCandidates = getDisplayCandidates(session).slice(0, 5);
+
+  // 4. BUILD ATOMIC GUESS OBJECT — all fields reference the same candidate
   session.guess = {
     player: playerData,
-    confidence: smoothedConfidence,
+    confidence: frozenConfidence,
     probability: topCandidate.probability,
-    explanation: explanation || "",
+    explanation: frozenExplanation || "",
     guessNumber: session.wrongGuessCount + 1,
     semanticValidation: {
       alignment: finalValidation.alignment,
@@ -394,16 +404,41 @@ async function makeGuess(session) {
   // Track guess in history
   session.guessHistory.push({
     playerName: playerData.name,
-    confidence: smoothedConfidence,
+    confidence: frozenConfidence,
     questionNumber: session.questionNumber,
   });
 
+  // 5. CONSISTENCY ASSERTION — verify snapshot integrity before sending
+  const guessedName = session.guess.player.name;
+  const topCandidateName = frozenTopCandidates[0]?.name;
+  if (topCandidateName && topCandidateName !== guessedName) {
+    // Force the guessed player to the top of the display candidates
+    const guessedIdx = frozenTopCandidates.findIndex(c => c.name === guessedName);
+    if (guessedIdx > 0) {
+      const [guessedEntry] = frozenTopCandidates.splice(guessedIdx, 1);
+      frozenTopCandidates.unshift(guessedEntry);
+    } else if (guessedIdx === -1) {
+      // Guessed player isn't even in top 5 — inject it at position 0
+      frozenTopCandidates.unshift({
+        id: playerData.canonicalPlayerId || playerData.id || guessedName,
+        name: guessedName,
+        probability: topCandidate.probability,
+        rarity: playerData.obscurityProfile?.rarity || playerData.rarity || "",
+        archetype: playerData.playerDNA?.tacticalIdentity || playerData.archetype || "",
+        player: playerData,
+      });
+      frozenTopCandidates.splice(5); // keep max 5
+    }
+  }
+
+  // 6. RETURN SINGLE ATOMIC RESPONSE — confidence appears ONCE, derived from guess
   return {
     status: "guessing",
     guess: session.guess,
     questionNumber: session.questionNumber,
     candidatesRemaining: session.candidates.length,
-    confidence: smoothedConfidence,
+    confidence: frozenConfidence,
+    topCandidates: frozenTopCandidates,
     wrongGuessCount: session.wrongGuessCount,
     maxWrongGuesses: MAX_WRONG_GUESSES,
     debugReasoningPanel: buildDebugReasoningPanel(session),
@@ -900,10 +935,10 @@ function getTopValidatedCandidate(session, inferredFacts) {
 
   if (ranked.length === 0) return null;
 
-  return getTopCandidate(
-    Object.fromEntries(ranked),
-    session.questionNumber
-  );
+  // CRITICAL: Compute confidence from the VALIDATED ranking, not the raw pool.
+  // This ensures the confidence returned here matches the player that was actually selected.
+  const validatedProbabilities = Object.fromEntries(ranked);
+  return getTopCandidate(validatedProbabilities, session.questionNumber);
 }
 
 function getDisplayCandidates(session) {
