@@ -5,9 +5,7 @@ const nextConfig = {
   reactStrictMode: true,
   // Disable powered by header for security
   poweredByHeader: false,
-  experimental: {
-    serverComponentsExternalPackages: ['firebase'],
-  },
+  serverExternalPackages: ['firebase'],
   async headers() {
     return [
       {
