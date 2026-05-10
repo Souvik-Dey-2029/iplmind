@@ -70,6 +70,15 @@ export function buildInferredFacts(history) {
       if (questionId === "veteran") { facts.isVeteran = true; }
       if (questionId === "recent-debut") { facts.isRecentDebut = true; }
       if (questionId === "founding-era") { facts.isFoundingEra = true; }
+      if (questionId === "dominated-2011-2015") { facts.peakEra = "2011-2015"; }
+      if (questionId === "post-2020-player") { facts.isRecentDebut = true; facts.peakEra = "2021-2026"; }
+      if (questionId === "ipl-specialist") { facts.iplSpecialist = true; }
+      if (questionId === "journeyman-player") { facts.journeyman = true; }
+      if (questionId === "obscure-short-career") { facts.obscureShortCareer = true; }
+      if (questionId.startsWith("semantic:")) {
+        if (!facts.confirmedSemanticTags) facts.confirmedSemanticTags = new Set();
+        facts.confirmedSemanticTags.add(questionId.replace("semantic:", ""));
+      }
     }
 
     if (answer === "no") {
@@ -99,6 +108,10 @@ export function buildInferredFacts(history) {
       if (questionId === "batsman") { facts.notBatsman = true; }
       if (questionId === "bowler") { facts.notBowler = true; }
       if (questionId === "allrounder") { facts.notAllrounder = true; }
+      if (questionId.startsWith("semantic:")) {
+        if (!facts.rejectedSemanticTags) facts.rejectedSemanticTags = new Set();
+        facts.rejectedSemanticTags.add(questionId.replace("semantic:", ""));
+      }
     }
   }
 
@@ -218,6 +231,30 @@ export function validateCandidateAgainstFacts(player, inferredFacts) {
   if (inferredFacts.isVeteran && player.debutYear > 2015) penalty *= 0.01;
   if (inferredFacts.isRecentDebut && player.debutYear < 2020) penalty *= 0.01;
   if (inferredFacts.isFoundingEra && player.era !== "founding-era") penalty *= 0.05;
+  if (inferredFacts.peakEra === "2011-2015" && player.dominantEra !== "2011-2015" && !player.historicalIPLLayer?.goldenEraPlayer) penalty *= 0.08;
+  if (inferredFacts.peakEra === "2021-2026" && player.dominantEra !== "2021-2026" && !player.historicalIPLLayer?.post2020Player) penalty *= 0.08;
+  if (inferredFacts.iplSpecialist && !player.questionAttributes?.IPLSpecialist) penalty *= 0.45;
+  if (inferredFacts.journeyman && player.franchiseLoyalty !== "journeyman" && (player.teams?.length || 0) < 4) penalty *= 0.35;
+  if (inferredFacts.obscureShortCareer && !["epic", "legendary", "legendary-obscure", "forgotten", "niche"].includes(player.obscurityProfile?.rarity || player.rarity)) penalty *= 0.5;
+
+  const semanticTags = new Set([
+    ...(player.dnaTags || []),
+    ...(player.tacticalTags || []),
+    ...(player.semanticVector || []),
+    ...(player.playerDNA?.historicalTags || []),
+    ...(player.playerDNA?.pressureTraits || []),
+  ].map(normalizeTag));
+
+  if (inferredFacts.confirmedSemanticTags instanceof Set) {
+    for (const tag of inferredFacts.confirmedSemanticTags) {
+      if (!semanticTags.has(normalizeTag(tag))) penalty *= 0.65;
+    }
+  }
+  if (inferredFacts.rejectedSemanticTags instanceof Set) {
+    for (const tag of inferredFacts.rejectedSemanticTags) {
+      if (semanticTags.has(normalizeTag(tag))) penalty *= 0.55;
+    }
+  }
 
   return penalty;
 }
@@ -227,4 +264,11 @@ function normalizeAnswer(answer) {
   if (normalized === "yes") return "yes";
   if (normalized === "no") return "no";
   return "neutral";
+}
+
+function normalizeTag(value) {
+  return String(value || "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
