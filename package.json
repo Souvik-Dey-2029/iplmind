@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "kg:dry-run": "node scripts/build-ai-knowledge-graph.mjs --dry-run",
+    "kg:build": "node scripts/build-ai-knowledge-graph.mjs --write",
+    "kg:build:ai": "node scripts/build-ai-knowledge-graph.mjs --write --ai"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
