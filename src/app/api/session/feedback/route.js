@@ -76,11 +76,6 @@ export async function POST(request) {
   } catch (error) {
     logError("session/feedback", "Failed to process feedback", error);
     return Response.json(
-
-    return Response.json({ status: "finished", feedback });
-  } catch (error) {
-    logError("session/feedback", "Failed to process feedback", error);
-    return Response.json(
       { error: error.message || "Internal server error" },
       { status: 500 }
     );
@@ -121,3 +116,4 @@ async function persistFeedback(feedback, sessionId) {
     }
   }
 }
+
