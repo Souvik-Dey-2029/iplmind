@@ -1,0 +1,55 @@
+{
+  "timestamp": "2026-05-10T11:54:52.262Z",
+  "totalPlayers": 302,
+  "accuracy": 99.3,
+  "avgQuestions": 8.6,
+  "rarityBreakdown": {
+    "epic": {
+      "accuracy": 100,
+      "total": 65,
+      "avgQuestions": 8.3
+    },
+    "common": {
+      "accuracy": 100,
+      "total": 68,
+      "avgQuestions": 8.6
+    },
+    "rare": {
+      "accuracy": 98.6,
+      "total": 142,
+      "avgQuestions": 8.9
+    },
+    "legendary": {
+      "accuracy": 100,
+      "total": 27,
+      "avgQuestions": 8
+    }
+  },
+  "famousPlayerOverguess": {},
+  "topConfusionClusters": [
+    {
+      "pair": "Anshul Kamboj ↔ Deepak Chahar",
+      "count": 1
+    },
+    {
+      "pair": "Anshul Kamboj ↔ Gurjapneet Singh",
+      "count": 1
+    }
+  ],
+  "unreachablePlayers": [],
+  "failures": [
+    {
+      "target": "Deepak Chahar",
+      "guessed": "Anshul Kamboj",
+      "questions": 25,
+      "rank": 2
+    },
+    {
+      "target": "Gurjapneet Singh",
+      "guessed": "Anshul Kamboj",
+      "questions": 25,
+      "rank": 3
+    }
+  ],
+  "entropyEfficiency": 0.7
+}
