@@ -194,10 +194,6 @@ export default function IPLStadiumHome({ onStartGame }) {
           )}
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
             <ThemeSwitcher />
-            <div style={{ display: "flex", alignItems: "center", gap: 8, background: "rgba(15,12,40,0.6)", padding: "6px 12px", borderRadius: "20px", border: "1px solid rgba(100,80,255,0.2)" }}>
-              <div style={{ width: 28, height: 28, borderRadius: "50%", background: "linear-gradient(135deg, #c084fc, #818cf8)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14 }}>👤</div>
-              <span style={{ color: "#fff", fontSize: 13, fontWeight: 600 }}>Guest</span>
-            </div>
           </div>
         </nav>
       </header>
