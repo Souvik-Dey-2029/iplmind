@@ -123,7 +123,40 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
   const [canUndo, setCanUndo] = useState(false);
 
   const inFlightRef = useRef(false);
-  const mascot = getMascotState(phase, confidence, questionNumber, lastAnswer, loading, finishedMessage);
+  const inferenceIdRef = useRef(0); // Transaction ID to reject stale responses
+
+  // ═══════════════════════════════════════════════
+  // DERIVED SINGLE SOURCE OF TRUTH
+  // During guessing phase, ALL UI reads from the guess object.
+  // During playing phase, reads from independent state.
+  // This eliminates any possibility of mismatch.
+  // ═══════════════════════════════════════════════
+  const activeConfidence = useMemo(() => {
+    if (phase === "guessing" && guess) return guess.confidence ?? 0;
+    return confidence;
+  }, [phase, guess, confidence]);
+
+  const activeTopCandidates = useMemo(() => {
+    if (phase === "guessing" && guess) {
+      // Ensure the guessed player is ALWAYS #1 in the panel
+      const guessedName = guess.player?.name;
+      if (topCandidates.length > 0 && topCandidates[0]?.name !== guessedName) {
+        const reordered = [...topCandidates];
+        const idx = reordered.findIndex(c => (c.player?.name || c.name) === guessedName);
+        if (idx > 0) {
+          const [entry] = reordered.splice(idx, 1);
+          reordered.unshift(entry);
+        } else if (idx === -1 && guessedName) {
+          reordered.unshift({ name: guessedName, probability: guess.probability || 1, player: guess.player });
+          reordered.splice(5);
+        }
+        return reordered;
+      }
+    }
+    return topCandidates;
+  }, [phase, guess, topCandidates]);
+
+  const mascot = getMascotState(phase, activeConfidence, questionNumber, lastAnswer, loading, finishedMessage);
 
   const getApiUrl = (endpoint) => {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
@@ -171,6 +204,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
   async function answerQuestion(answer) {
     if (!sessionId || inFlightRef.current) return;
     inFlightRef.current = true;
+    const txId = ++inferenceIdRef.current; // Mark this transaction
     setLoading(true);
     setError("");
     setLastAnswer(answer);
@@ -184,18 +218,21 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Could not submit answer");
 
+      // STALE RESPONSE GUARD: reject if a newer transaction has started
+      if (txId !== inferenceIdRef.current) return;
+
       setQuestionNumber(data.questionNumber);
       setCandidatesRemaining(data.candidatesRemaining);
       setWrongGuessCount(data.wrongGuessCount || 0);
 
       if (data.status === "guessing") {
-        // ATOMIC SNAPSHOT CONSUMPTION:
-        // All state is set from the SAME frozen server response.
-        // guess.confidence is the ONLY source of truth for confidence.
+        // ATOMIC SNAPSHOT: set guess FIRST, then derived fields.
+        // The useMemo-derived activeConfidence and activeTopCandidates
+        // will automatically read from this guess object.
         const frozenGuess = data.guess;
         setGuess(frozenGuess);
-        setConfidence(frozenGuess?.confidence ?? data.confidence ?? 0);
-        if (Array.isArray(data.topCandidates)) setTopCandidates(data.topCandidates);
+        setConfidence(frozenGuess?.confidence ?? 0);
+        setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
         setPhase("guessing");
         return;
       }
@@ -606,11 +643,11 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
                   <span>📊</span>
                 </h3>
                 <div style={{ color: "rgba(200,200,255,0.5)", fontSize: 12, marginBottom: 8 }}>Confidence</div>
-                <div className="ipl-confidence-value">{Math.round(confidence)}%</div>
+                <div className="ipl-confidence-value">{Math.round(activeConfidence)}%</div>
                 <div className="ipl-confidence-bar">
-                  <div className="ipl-confidence-fill" style={{ width: `${Math.min(Math.max(confidence, questionNumber * 4), 100)}%` }} />
+                  <div className="ipl-confidence-fill" style={{ width: `${Math.min(Math.max(activeConfidence, questionNumber * 4), 100)}%` }} />
                 </div>
-                <div className="ipl-confidence-hint">Keep answering to increase confidence!</div>
+                <div className="ipl-confidence-hint">{phase === "guessing" ? "Final inference locked!" : "Keep answering to increase confidence!"}</div>
               </div>
 
               <div className="ipl-side-panel">
@@ -619,7 +656,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
                   <span>🏆</span>
                 </h3>
                 <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
-                  {topCandidates.length > 0 ? topCandidates.slice(0, 5).map((c, i) => (
+                  {activeTopCandidates.length > 0 ? activeTopCandidates.slice(0, 5).map((c, i) => (
                     <div key={c.id || c.name || i} className="ipl-candidate-row">
                       <div className={`ipl-candidate-rank ipl-rank-${i + 1 > 3 ? "default" : i + 1}`}>{i + 1}</div>
                       <span>{cleanText(c?.player?.name || c?.name)}</span>
