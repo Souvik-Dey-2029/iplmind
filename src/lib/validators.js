@@ -4,6 +4,8 @@
  * Keeps validation fast and simple - no heavy libraries.
  */
 
+import { getCanonicalPlayerName } from "./playerNormalizer";
+
 /**
  * Validate session object has required fields.
  * Returns { valid: boolean, error?: string }
@@ -191,8 +193,11 @@ export function ensureQuestionId(meta) {
  * Safe fallback for missing player data.
  */
 export function ensurePlayerName(player) {
+    if (typeof player === "string") {
+        return getCanonicalPlayerName(player) || player;
+    }
     if (player?.name && typeof player.name === "string") {
-        return player.name;
+        return getCanonicalPlayerName(player.name) || player.name;
     }
     return "Unknown Player";
 }
