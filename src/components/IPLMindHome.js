@@ -494,7 +494,7 @@ export default function IPLMindHome({ onStartGame }) {
               <div className="bento-stats-grid" style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(4, 1fr)',
-                gap: 24,
+                gap: 16,
                 textAlign: 'center',
               }}>
                 <div>
@@ -563,10 +563,12 @@ function avatarStyle(bg) {
 function statNumberStyle(color) {
   return {
     fontFamily: "'Syne', sans-serif",
-    fontSize: 'clamp(32px, 4vw, 64px)',
+    fontSize: 'clamp(28px, 3.2vw, 54px)',
     fontWeight: 800,
     lineHeight: 1.1,
     letterSpacing: '-0.02em',
+    wordBreak: 'keep-all',
+    whiteSpace: 'nowrap',
     color,
   };
 }
