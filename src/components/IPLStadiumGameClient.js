@@ -383,24 +383,24 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
               </motion.div>
               
               <div style={{ 
+                height: 220,
                 display: 'flex', 
+                alignItems: 'flex-end',
                 justifyContent: 'center', 
-                marginBottom: mascot.id === 'thinking' ? -28 : -64, 
+                marginBottom: -8, 
                 position: 'relative', 
-                zIndex: 10,
-                transition: 'margin-bottom 0.3s ease'
+                zIndex: 10
               }}>
                 {/* Subtle glow connecting mascot and Mind Scan card */}
                 <div style={{
                   position: 'absolute',
-                  bottom: mascot.id === 'thinking' ? 20 : 50,
+                  bottom: 0,
                   width: 120,
                   height: 40,
                   background: 'rgba(129, 140, 248, 0.4)',
                   filter: 'blur(20px)',
                   borderRadius: '50%',
-                  zIndex: -1,
-                  transition: 'bottom 0.3s ease'
+                  zIndex: -1
                 }} />
                 
                 <AnimatePresence mode="wait">
@@ -415,7 +415,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
                     }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.25 }}
-                    style={{ width: 180, height: "auto", objectFit: 'contain' }}
+                    style={{ width: 180, height: "auto", maxHeight: 220, objectFit: 'contain' }}
                   />
                 </AnimatePresence>
               </div>
