@@ -70,7 +70,7 @@ const MASCOT_STATES = {
   thinking: { id: "thinking", image: "/Assets/thinking.png", text: "Hmm, let me think about this...", offsetY: 23, imgScale: 1 },
   confident: { id: "confident", image: "/Assets/confident.png", text: "I think I'm getting close now...", offsetY: 31, imgScale: 1.05 },
   sad: { id: "sad", image: "/Assets/sad.png", text: "Wait... that changes everything!", offsetY: 20, imgScale: 1 },
-  victory: { id: "confident", image: "/Assets/confident.png", text: "I knew it! The cricket brain never fails!", offsetY: 42, imgScale: 1.05 },
+  victory: { id: "confident", image: "/Assets/win.png", text: "I knew it! The cricket brain never fails!", offsetY: 42, imgScale: 1.05 },
   failed: { id: "sad", image: "/Assets/sad.png", text: "You've stumped me! Well played!", offsetY: 20, imgScale: 1 },
   wrong: { id: "sad", image: "/Assets/sad.png", text: "Oops! Let me try again...", offsetY: 20, imgScale: 1 },
 };
@@ -636,7 +636,9 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
                 {phase === "finished" && (
                   <motion.div key="finished" style={{ textAlign: "center", padding: "40px 0" }} initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 200 }}>
                     <motion.div initial={{ rotate: -20, scale: 0 }} animate={{ rotate: 0, scale: 1 }} transition={{ type: "spring", stiffness: 400, delay: 0.3 }}
-                      style={{ fontSize: 64, marginBottom: 16 }}>🏆</motion.div>
+                      style={{ marginBottom: 16 }}>
+                      <img src="/win.png" alt="Winner" style={{ width: 150, height: 150, objectFit: 'contain', margin: '0 auto' }} />
+                    </motion.div>
                     <h2 className="ipl-question-text">Round Complete</h2>
                     <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
                       style={{ color: "#fff", fontSize: 16, marginBottom: 8 }}>{finishedMessage}</motion.p>
