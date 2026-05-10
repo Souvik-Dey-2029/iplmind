@@ -67,15 +67,15 @@ function MindScanPanel({ hints, candidatesRemaining }) {
 // Per-state vertical offsets and scale to compensate for different PNG dimensions
 const MASCOT_STATES = {
   idle: { id: "idle", image: "/Assets/idle.png", text: "Think of any IPL player... I'll read your mind!", offsetY: 46, imgScale: 1.15 },
-  thinking: { id: "thinking", image: "/Assets/thinking.png", text: "Hmm, let me think about this...", offsetY: 23, imgScale: 1 },
+  thinking: { id: "thinking", image: "/Assets/thinking.png", text: "Hmm, let me think about this...", offsetY: 22, imgScale: 1 },
   confident: { id: "confident", image: "/Assets/confident.png", text: "I think I'm getting close now...", offsetY: 31, imgScale: 1.05 },
-  sad: { id: "sad", image: "/Assets/sad.png", text: "Wait... that changes everything!", offsetY: 20, imgScale: 1 },
+  sad: { id: "sad", image: "/Assets/sad.png", text: "Wait... that changes everything!", offsetY: 23, imgScale: 1.05 },
   victory: { id: "confident", image: "/Assets/win.png", text: "I knew it! The cricket brain never fails!", offsetY: 42, imgScale: 1.05 },
-  failed: { id: "sad", image: "/Assets/sad.png", text: "You've stumped me! Well played!", offsetY: 20, imgScale: 1 },
-  wrong: { id: "sad", image: "/Assets/sad.png", text: "Oops! Let me try again...", offsetY: 20, imgScale: 1 },
+  failed: { id: "sad", image: "/Assets/sad.png", text: "You've stumped me! Well played!", offsetY: 10, imgScale: 1.05 },
+  wrong: { id: "sad", image: "/Assets/sad.png", text: "Oops! Let me try again...", offsetY: 23, imgScale: 1.05 },
 };
 
-function getMascotState(phase, confidence, questionNumber, lastAnswer, loading, finishedMessage) {
+function getMascotState(phase, confidence, questionNumber, lastAnswer, loading, finishedMessage, wrongGuessCount = 0, lastWrongGuessAtQuestion = -1) {
   if (phase === "finished") {
     if (finishedMessage && finishedMessage.includes("Noted")) return MASCOT_STATES.failed;
     return MASCOT_STATES.victory;
@@ -85,6 +85,9 @@ function getMascotState(phase, confidence, questionNumber, lastAnswer, loading, 
   if (phase === "idle" || questionNumber === 0) return MASCOT_STATES.idle;
   
   if (loading) return MASCOT_STATES.thinking;
+  
+  // If it guessed wrong previously, show 'wrong' state ONLY for the immediate next question
+  if (wrongGuessCount > 0 && questionNumber === lastWrongGuessAtQuestion) return MASCOT_STATES.wrong;
   
   if (confidence > 55) return MASCOT_STATES.confident;
   
@@ -105,6 +108,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
   const [confidence, setConfidence] = useState(0);
   const [adaptiveQuestionLimit, setAdaptiveQuestionLimit] = useState(14);
   const [wrongGuessCount, setWrongGuessCount] = useState(0);
+  const [lastWrongGuessAtQuestion, setLastWrongGuessAtQuestion] = useState(-1);
   const [phase, setPhase] = useState("playing");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -180,7 +184,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
     return true;
   }, [phase, guess, activeTopCandidates]);
 
-  const mascot = getMascotState(phase, activeConfidence, questionNumber, lastAnswer, loading, finishedMessage);
+  const mascot = getMascotState(phase, activeConfidence, questionNumber, lastAnswer, loading, finishedMessage, wrongGuessCount, lastWrongGuessAtQuestion);
 
   const getApiUrl = (endpoint) => {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
@@ -201,6 +205,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
     setFinishedMessage("");
     setCorrectPlayer("");
     setWrongGuessCount(0);
+    setLastWrongGuessAtQuestion(-1);
     setCanUndo(false);
 
     try {
@@ -312,6 +317,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
       setConfidence(data.confidence || 0);
       setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
       setWrongGuessCount(data.wrongGuessCount || 0);
+      setLastWrongGuessAtQuestion(data.questionNumber || questionNumber);
       setGuess(null);
       setPhase("playing");
     } catch (err) {
