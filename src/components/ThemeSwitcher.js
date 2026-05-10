@@ -55,12 +55,12 @@ export default function ThemeSwitcher() {
                 transition={{ duration: 0.15 }}
               >
                 <span className="theme-option-emoji">{t.emoji}</span>
-                <span className="theme-option-label">{t.label}</span>
+                <span className="theme-option-label" style={{ flex: 1 }}>{t.label}</span>
                 {theme === t.id && (
                   <motion.span 
                     initial={{ scale: 0, rotate: -45 }}
                     animate={{ scale: 1, rotate: 0 }}
-                    style={{ marginLeft: "auto", color: "var(--primary, #c084fc)" }}
+                    style={{ color: "var(--primary, #c084fc)", fontWeight: 800, paddingLeft: 8 }}
                   >
                     ✓
                   </motion.span>
