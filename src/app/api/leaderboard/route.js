@@ -1,6 +1,8 @@
 import { db } from "@/lib/firebase";
 import { collection, query, where, orderBy, limit, getDocs, doc, getDoc } from "firebase/firestore";
 import { logError } from "@/lib/logger";
+import { players } from "@/data/players";
+import { getSemanticDifficulty } from "@/lib/semanticInference";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0; // Prevent Next.js from caching the leaderboard
@@ -41,22 +43,30 @@ export async function GET() {
     // Format Data
     const fastestGuesses = fastestGuessesSnapshot.docs.map(doc => {
       const data = doc.data();
+      const player = findPlayer(data.guessedPlayer);
+      const semanticDifficulty = data.semanticDifficulty || getSemanticDifficulty(player, data.questionsAsked || 0);
       return {
         id: doc.id,
         player: data.guessedPlayer || "Unknown",
         questions: data.questionsAsked || 0,
-        score: Math.max(10, 100 - (data.questionsAsked || 0) * 5),
+        score: Math.max(10, Math.round((120 - (data.questionsAsked || 0) * 5) * semanticDifficulty)),
+        rarity: data.rarity || player?.obscurityProfile?.rarity || "",
+        semanticDifficulty,
         timestamp: data.timestamp || Date.now(),
       };
     });
 
     const aiDefeats = aiDefeatsSnapshot.docs.map(doc => {
       const data = doc.data();
+      const player = findPlayer(data.correctPlayer);
+      const semanticDifficulty = data.semanticDifficulty || getSemanticDifficulty(player, data.questionsAsked || 0);
       return {
         id: doc.id,
         player: data.correctPlayer || "Unknown",
         questions: data.questionsAsked || 0,
-        difficultyScore: Math.min((data.questionsAsked || 0) * 10, 200),
+        difficultyScore: Math.min(Math.round((data.questionsAsked || 0) * 10 * semanticDifficulty), 350),
+        rarity: data.rarity || player?.obscurityProfile?.rarity || "",
+        semanticDifficulty,
         timestamp: data.timestamp || Date.now(),
       };
     });
@@ -86,4 +96,9 @@ export async function GET() {
     logError("api/leaderboard", "Failed to fetch leaderboard", error);
     return Response.json({ error: "Failed to fetch leaderboard data" }, { status: 500 });
   }
+}
+
+function findPlayer(name = "") {
+  const key = String(name || "").toLowerCase().trim();
+  return players.find((player) => player.name.toLowerCase() === key) || null;
 }

@@ -297,7 +297,12 @@ export async function generateAdaptiveQuestion(candidates, previousQA) {
         if (c.country) traits.push(c.country);
         if (c.currentTeam) traits.push(c.currentTeam);
         if (c.archetype) traits.push(c.archetype);
+        if (c.playerDNA?.tacticalIdentity) traits.push(c.playerDNA.tacticalIdentity);
         if (c.era) traits.push(c.era);
+        if (c.dominantEra) traits.push(`dominant-era:${c.dominantEra}`);
+        if (c.strongestFranchiseAssociation) traits.push(c.strongestFranchiseAssociation);
+        if (c.franchiseLoyalty) traits.push(c.franchiseLoyalty);
+        if (c.obscurityProfile?.rarity) traits.push(`rarity:${c.obscurityProfile.rarity}`);
         if (c.opener) traits.push("opener");
         if (c.finisher) traits.push("finisher");
         if (c.wicketKeeper) traits.push("wicketkeeper");
@@ -312,7 +317,9 @@ export async function generateAdaptiveQuestion(candidates, previousQA) {
         if (c.orangeCap) traits.push("orange-cap");
         if (c.purpleCap) traits.push("purple-cap");
         // Add top DNA tags for semantic differentiation
-        if (c.dnaTags?.length > 0) traits.push(...c.dnaTags.slice(0, 3));
+        if (c.dnaTags?.length > 0) traits.push(...c.dnaTags.slice(0, 6));
+        if (c.playerDNA?.pressureTraits?.length > 0) traits.push(...c.playerDNA.pressureTraits.slice(0, 3));
+        if (c.obscurityProfile?.nicheIdentifiers?.length > 0) traits.push(...c.obscurityProfile.nicheIdentifiers.slice(0, 3));
         return `• ${c.name}: ${traits.join(", ")}`;
     }).join("\n");
 
@@ -331,12 +338,15 @@ RULES:
 4. Do NOT ask about traits already confirmed/denied in previous Q&A
 5. Focus on DIFFERENTIATING traits — find what splits the group best
 6. Avoid controversy, drama, or overly specific season references
-7. If candidates differ by team, ask about team. If by role, ask about role. If by era, ask about era
+7. Prefer semantic differentiators: era, franchise identity, IPL specialist, cult hero, finisher, pressure role, rarity
+8. Use Gemini/OpenRouter only for phrasing; deterministic scoring will evaluate the answer
 
 GOOD SPLITTING QUESTIONS:
 - "Has this player played for Mumbai Indians?" (splits by team)
 - "Is this player currently active in IPL?" (splits by era)
 - "Is this player known for explosive batting?" (splits by play style)
+- "Is this player remembered more for IPL than internationals?" (splits by IPL identity)
+- "Was this player strongly tied to one franchise?" (splits by franchise identity)
 
 Return ONLY the question text. Nothing else.`;
 
