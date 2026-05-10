@@ -355,6 +355,8 @@ async function generateNextQuestion(session) {
                 wrongGuessCount: session.wrongGuessCount,
                 debugReasoningPanel: buildDebugReasoningPanel(session),
                 commentary: generateCommentary(session),
+                analysisHints: generateAnalysisHints(session),
+                suspectedTeam: detectSuspectedTeam(session),
               };
           } else {
              console.warn("[sessionManager] AI generated invalid or complex question. Falling back.");
@@ -397,6 +399,8 @@ async function generateNextQuestion(session) {
     wrongGuessCount: session.wrongGuessCount,
     debugReasoningPanel: buildDebugReasoningPanel(session),
     commentary: generateCommentary(session),
+    analysisHints: generateAnalysisHints(session),
+    suspectedTeam: detectSuspectedTeam(session),
   };
 }
 
@@ -450,6 +454,75 @@ function generateCommentary(session) {
     "Processing... connecting the dots. ⚡",
   ];
   return midFlavors[qNum % midFlavors.length];
+}
+
+/**
+ * Generate contextual "AI Mind Scan" analysis hints.
+ * Returns an array of 3 rotating messages that adapt to the current game state.
+ */
+function generateAnalysisHints(session) {
+  const hints = [];
+  const history = session.questionHistory;
+  const cands = session.candidates.length;
+  const lastQ = history.at(-1);
+  const lastAnswer = lastQ?.answer;
+  const lastCategory = lastQ?.category || "";
+  const lastId = lastQ?.questionId || "";
+
+  // Always show scanning count
+  hints.push(`Scanning ${cands} player profiles...`);
+
+  // Contextual hints based on last question answered
+  if (lastId === "batsman" && lastAnswer === "Yes") hints.push("Filtering batting specialists...");
+  else if (lastId === "batsman" && lastAnswer === "No") hints.push("Eliminating pure batsmen...");
+  else if (lastId === "bowler" && lastAnswer === "Yes") hints.push("Analyzing bowling attack data...");
+  else if (lastId === "bowler" && lastAnswer === "No") hints.push("Removing bowling-only candidates...");
+  else if (lastId === "allrounder" && lastAnswer === "Yes") hints.push("Checking all-rounder profiles...");
+  else if (lastId === "wicketkeeper" && lastAnswer === "Yes") hints.push("Filtering wicketkeeper legends...");
+  else if (lastId === "overseas" && lastAnswer === "Yes") hints.push("Scanning international registries...");
+  else if (lastId === "indian" && lastAnswer === "Yes") hints.push("Processing Indian player database...");
+  else if (lastId === "spinner" && lastAnswer === "Yes") hints.push("Evaluating spin bowling data...");
+  else if (lastId === "pacer" && lastAnswer === "Yes") hints.push("Analyzing pace bowling metrics...");
+  else if (lastId === "captain" && lastAnswer === "Yes") hints.push("Evaluating captaincy records...");
+  else if (lastId === "opener" && lastAnswer === "Yes") hints.push("Checking opening partnership stats...");
+  else if (lastId === "finisher" && lastAnswer === "Yes") hints.push("Analyzing death-over strike rates...");
+  else if (lastId === "orange-cap" && lastAnswer === "Yes") hints.push("Verifying Orange Cap winners...");
+  else if (lastId === "purple-cap" && lastAnswer === "Yes") hints.push("Verifying Purple Cap winners...");
+  else if (lastId === "left-handed" && lastAnswer === "Yes") hints.push("Filtering left-handed batsmen...");
+  else if (lastId.startsWith("current-team:")) hints.push(`Cross-referencing ${lastId.replace("current-team:", "")} roster...`);
+  else if (lastId.startsWith("country:")) hints.push(`Checking ${lastId.replace("country:", "")} player registry...`);
+  else if (lastCategory === "franchise-history") hints.push("Scanning franchise transfer history...");
+  else hints.push("Cross-referencing player attributes...");
+
+  // Third hint based on confidence/phase
+  const conf = session.confidenceHistory.at(-1) || 0;
+  if (conf > 75) hints.push("High confidence match detected ⚡");
+  else if (conf > 50) hints.push("Building candidate profile...");
+  else if (cands < 10) hints.push("Deep-analyzing remaining candidates...");
+  else if (cands < 30) hints.push("Narrowing search parameters...");
+  else hints.push("Running probability calculations...");
+
+  return hints.slice(0, 3);
+}
+
+/**
+ * Detect the dominant team among top candidates for atmosphere adaptation.
+ * Returns null if no team dominates (>50% of top candidates).
+ */
+function detectSuspectedTeam(session) {
+  const topNames = getDisplayCandidates(session).slice(0, 5);
+  if (topNames.length === 0) return null;
+
+  const teamCounts = {};
+  for (const c of topNames) {
+    const player = players.find(p => p.name === c.name);
+    const team = player?.currentTeam || player?.teams?.at?.(-1);
+    if (team) teamCounts[team] = (teamCounts[team] || 0) + 1;
+  }
+
+  const sorted = Object.entries(teamCounts).sort((a, b) => b[1] - a[1]);
+  if (sorted.length > 0 && sorted[0][1] >= 3) return sorted[0][0]; // 3+ of 5 = dominant
+  return null;
 }
 
 /**
