@@ -19,22 +19,19 @@ export async function GET() {
       getDocs(query(
         collection(db, "game_sessions"),
         where("wasCorrect", "==", true),
-        orderBy("questionsAsked", "asc"),
-        limit(10)
+        limit(50)
       )),
       // 2. AI Defeats (Longest games where AI failed)
       getDocs(query(
         collection(db, "game_sessions"),
         where("failed", "==", true),
-        orderBy("questionsAsked", "desc"),
-        limit(10)
+        limit(50)
       )),
       // 3. Recent rare/epic wins
       getDocs(query(
         collection(db, "game_sessions"),
         where("wasCorrect", "==", true),
-        orderBy("timestamp", "desc"),
-        limit(10)
+        limit(50)
       )),
       // 4. Global Stats
       getDoc(doc(db, "learning_memory", "global_state"))
@@ -54,7 +51,7 @@ export async function GET() {
         semanticDifficulty,
         timestamp: data.timestamp || Date.now(),
       };
-    });
+    }).sort((a, b) => a.questions - b.questions).slice(0, 10);
 
     const aiDefeats = aiDefeatsSnapshot.docs.map(doc => {
       const data = doc.data();
@@ -69,7 +66,7 @@ export async function GET() {
         semanticDifficulty,
         timestamp: data.timestamp || Date.now(),
       };
-    });
+    }).sort((a, b) => b.questions - a.questions).slice(0, 10);
 
     const globalStats = globalStatsDoc.exists() ? globalStatsDoc.data() : {
       totalGames: 0,
@@ -112,6 +109,17 @@ export async function GET() {
 
   } catch (error) {
     logError("api/leaderboard", "Failed to fetch leaderboard", error);
+    
+    // Graceful fallback for connectivity issues or missing indices
+    if (error.message?.includes("offline") || error.message?.includes("index")) {
+      return Response.json({
+        fastestGuesses: [],
+        aiDefeats: [],
+        recentWins: [],
+        globalStats: { totalGames: 0, aiWinRate: 0, mostDifficultPlayers: [] }
+      });
+    }
+
     return Response.json({ error: "Failed to fetch leaderboard data" }, { status: 500 });
   }
 }
