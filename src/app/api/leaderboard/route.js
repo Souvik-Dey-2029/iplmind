@@ -80,6 +80,18 @@ export async function GET() {
     return Response.json({
       fastestGuesses,
       aiDefeats,
+      recentWins: recentWinsSnapshot.docs.map(doc => {
+        const data = doc.data();
+        const player = findPlayer(data.guessedPlayer);
+        return {
+          id: doc.id,
+          player: data.guessedPlayer || "Unknown",
+          questions: data.questionsAsked || 0,
+          rarity: data.rarity || player?.obscurityProfile?.rarity || "",
+          semanticDifficulty: data.semanticDifficulty || getSemanticDifficulty(player, data.questionsAsked || 0),
+          timestamp: data.timestamp || Date.now(),
+        };
+      }),
       globalStats: {
         totalGames: globalStats.totalGames || 0,
         aiWinRate: globalStats.totalGames > 0 
@@ -90,6 +102,12 @@ export async function GET() {
           .slice(0, 5)
           .map(([name, misses]) => ({ name, misses }))
       }
+    }, {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
+        "Pragma": "no-cache",
+        "Expires": "0",
+      },
     });
 
   } catch (error) {

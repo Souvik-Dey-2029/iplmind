@@ -9,16 +9,26 @@ export default function LeaderboardClient() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/leaderboard")
+    let cancelled = false;
+    const loadLeaderboard = () => fetch("/api/leaderboard", { cache: "no-store" })
       .then(res => res.json())
       .then(d => {
+        if (cancelled) return;
         setData(d);
         setLoading(false);
       })
       .catch(e => {
+        if (cancelled) return;
         console.error("Leaderboard fetch error:", e);
         setLoading(false);
       });
+
+    loadLeaderboard();
+    const refreshTimer = setInterval(loadLeaderboard, 15000);
+    return () => {
+      cancelled = true;
+      clearInterval(refreshTimer);
+    };
   }, []);
 
   return (

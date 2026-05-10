@@ -1,4 +1,4 @@
-import { calculateEntropy, normalizeProbabilities } from "./probabilityEngine.js";
+import { calculateEntropy, normalizeProbabilities, updateProbabilities } from "./probabilityEngine.js";
 import { getQuestionBoost } from "./learningMemory.js";
 import { determinePhase, getAllowedCategories, applyHierarchicalPenalties } from "./reasoningPhaseManager.js";
 import { buildInferredFacts, isContradictory } from "./semanticConstraints.js";
@@ -400,7 +400,9 @@ function scoreQuestion(option, candidates, probabilities, baseEntropy, categoryC
   const yesEntropy = calculateEntropy(normalizeProbabilities(yesDistribution));
   const noEntropy = calculateEntropy(normalizeProbabilities(noDistribution));
   const expectedEntropy = yesProbability * yesEntropy + noProbability * noEntropy;
-  const informationGain = baseEntropy - expectedEntropy;
+  const splitInformationGain = baseEntropy - expectedEntropy;
+  const posteriorInformationGain = calculatePosteriorInformationGain(option, candidates, probabilities, baseEntropy);
+  const informationGain = Math.max(splitInformationGain, posteriorInformationGain);
   const balance = 1 - Math.abs(0.5 - yesProbability) * 2;
   const categoryPenalty = Math.pow(0.75, categoryCounts[option.category] || 0);
   const teamPenalty = isTeamCategory(option.category)
@@ -421,6 +423,29 @@ function scoreQuestion(option, candidates, probabilities, baseEntropy, categoryC
     informationGain,
     score: informationGain * (0.7 + balance * 0.3) * categoryPenalty * teamPenalty * historicTeamPenalty * lowInfoPenalty * learningBoost * hierarchicalPenalty * semanticUtility,
   };
+}
+
+function calculatePosteriorInformationGain(option, candidates, probabilities, baseEntropy) {
+  const yesLikelihoods = {};
+  const noLikelihoods = {};
+
+  candidates.forEach((player) => {
+    const yes = option.predicate(player);
+    yesLikelihoods[player.name] = yes ? 0.96 : 0.04;
+    noLikelihoods[player.name] = yes ? 0.04 : 0.96;
+  });
+
+  const yesPosterior = updateProbabilities(probabilities, yesLikelihoods);
+  const noPosterior = updateProbabilities(probabilities, noLikelihoods);
+  const yesMass = candidates.reduce((sum, player) => {
+    return sum + (option.predicate(player) ? probabilities[player.name] || 0 : 0);
+  }, 0);
+  const noMass = 1 - yesMass;
+  const expectedPosteriorEntropy =
+    yesMass * calculateEntropy(yesPosterior) +
+    noMass * calculateEntropy(noPosterior);
+
+  return Math.max(0, baseEntropy - expectedPosteriorEntropy);
 }
 
 function fallbackQuestion(candidates, history) {

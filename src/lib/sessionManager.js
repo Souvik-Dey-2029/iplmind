@@ -25,7 +25,7 @@ import { evaluateDeterministicAnswer } from "./answerEvaluator";
 import { evaluateCandidates, generateGuessExplanation, generateAdaptiveQuestion } from "./aiProvider";
 import { evaluateQuestionAnswer, selectBestQuestion } from "./questionEngine";
 import { sanitizePlayerForRender } from "./playerNormalizer";
-import { recordSuccess, recordFailure, detectStagnation } from "./learningMemory";
+import { recordSuccess, recordFailure, detectStagnation, recordQuestionEntropyImpact } from "./learningMemory";
 import { validateQuestion } from "./questionValidation";
 import { determinePhase } from "./reasoningPhaseManager";
 import { buildInferredFacts, validateCandidateAgainstFacts } from "./semanticConstraints";
@@ -253,7 +253,14 @@ export async function processAnswer(sessionId, answer) {
   session.candidates = getViableCandidates(players, session.probabilities, 0.05, session.questionNumber)
     .filter((p) => !session.excludedPlayers.has(p.name));
 
-  session.entropyHistory.push(calculateEntropy(session.probabilities));
+  const previousEntropy = session.entropyHistory.at(-1) || calculateEntropy(snapshot.probabilities);
+  const nextEntropy = calculateEntropy(session.probabilities);
+  session.entropyHistory.push(nextEntropy);
+  recordQuestionEntropyImpact(
+    session.currentQuestionMeta?.id,
+    previousEntropy - nextEntropy,
+    extractSemanticTraitsFromQuestionMeta(session.currentQuestionMeta)
+  );
   session.confidenceHistory.push(
     calculateSemanticConfidence(session.probabilities, players, session.questionHistory, session.questionNumber)?.confidence ||
     getTopCandidate(session.probabilities, session.questionNumber)?.confidence ||
@@ -657,6 +664,15 @@ export async function getFirstQuestion(sessionId) {
 function stripQuestionPredicate(questionMeta) {
   const { predicate, yesProbability, noProbability, informationGain, score, ...serializable } = questionMeta;
   return serializable;
+}
+
+function extractSemanticTraitsFromQuestionMeta(meta) {
+  if (!meta) return [];
+  return [
+    meta.id?.startsWith("semantic:") ? meta.id.replace("semantic:", "") : "",
+    meta.category,
+    meta.value,
+  ].filter(Boolean);
 }
 
 /**

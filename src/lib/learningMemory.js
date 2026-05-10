@@ -14,6 +14,8 @@ let memoryState = {
   playerPopularity: {},        // playerName -> count of times picked
   playerDifficulty: {},        // playerName -> count of times AI missed
   questionEffectiveness: {},   // questionId -> { successes, total }
+  questionEntropyImpact: {},   // questionId -> { totalDelta, count }
+  semanticTraitEffectiveness: {}, // trait -> { totalDelta, count }
   confusionClusters: {},       // "playerA|playerB" -> count of confusions
   totalGames: 0,
   totalSuccesses: 0,
@@ -173,11 +175,33 @@ export function getPlayerPriors(players) {
  */
 export function getQuestionBoost(questionId) {
   const entry = memoryState.questionEffectiveness[questionId];
-  if (!entry || entry.total === 0) return 1.0;
+  const entropyEntry = memoryState.questionEntropyImpact[questionId];
+  if (!entry && !entropyEntry) return 1.0;
 
-  const successRate = entry.successes / entry.total;
+  const successRate = entry?.total ? entry.successes / entry.total : 0.5;
+  const avgEntropyDelta = entropyEntry?.count ? entropyEntry.totalDelta / entropyEntry.count : 0;
   // Boost effective questions by up to 25%, penalize ineffective ones to 0.8
-  return 0.8 + (successRate * 0.45);
+  return Math.max(0.72, Math.min(1.42, 0.8 + (successRate * 0.35) + (avgEntropyDelta * 0.08)));
+}
+
+export function recordQuestionEntropyImpact(questionId, entropyDelta = 0, semanticTraits = []) {
+  if (!questionId) return;
+
+  const entry = memoryState.questionEntropyImpact[questionId] || { totalDelta: 0, count: 0 };
+  entry.totalDelta += Math.max(-2, Math.min(2, entropyDelta));
+  entry.count++;
+  memoryState.questionEntropyImpact[questionId] = entry;
+
+  semanticTraits.forEach((trait) => {
+    const key = String(trait || "").toLowerCase().trim();
+    if (!key) return;
+    const traitEntry = memoryState.semanticTraitEffectiveness[key] || { totalDelta: 0, count: 0 };
+    traitEntry.totalDelta += Math.max(-2, Math.min(2, entropyDelta));
+    traitEntry.count++;
+    memoryState.semanticTraitEffectiveness[key] = traitEntry;
+  });
+
+  syncToFirestore();
 }
 
 /**

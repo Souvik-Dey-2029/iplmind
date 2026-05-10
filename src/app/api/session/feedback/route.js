@@ -47,7 +47,7 @@ export async function POST(request) {
     if (action === "reveal") {
       const feedback = recordFailureFeedback(sessionId, ensurePlayerName(correctPlayerName));
       if (feedback) {
-        persistFeedback(feedback, sessionId);
+        await persistFeedback(feedback, sessionId);
       }
       return Response.json({ status: "finished", feedback });
     }
@@ -70,7 +70,7 @@ export async function POST(request) {
     }
 
     // Persist feedback to Firestore
-    persistFeedback(feedback, sessionId);
+    await persistFeedback(feedback, sessionId);
 
     return Response.json({ status: "finished", feedback });
   } catch (error) {
@@ -88,6 +88,10 @@ export async function POST(request) {
  */
 async function persistFeedback(feedback, sessionId) {
   try {
+    if (!db) {
+      logWarn("session/feedback", "Firestore unavailable, skipping persistence", { sessionId });
+      return;
+    }
     await Promise.race([
       addDoc(collection(db, "game_sessions"), feedback),
       new Promise((_, reject) =>

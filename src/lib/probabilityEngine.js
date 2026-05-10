@@ -30,19 +30,44 @@ function adjustLikelihood(likelihood) {
  * Initialize probabilities for all players using historical priors.
  * Returns a Map of player name -> probability score.
  */
+function calibrateBayesianLikelihood(adjustedLikelihood, rawLikelihood) {
+  if (rawLikelihood < 0.10) return 0.015;
+  if (rawLikelihood < 0.25) return Math.min(adjustedLikelihood, 0.08);
+  if (rawLikelihood < 0.42) return Math.min(adjustedLikelihood, 0.24);
+  if (rawLikelihood < 0.58) return 0.50;
+  if (rawLikelihood < 0.75) return Math.max(adjustedLikelihood, 0.76);
+  if (rawLikelihood < 0.90) return Math.max(adjustedLikelihood, 0.92);
+  return 0.985;
+}
+
 export function initializeProbabilities(players) {
   const priors = getPlayerPriors(players);
   let totalPrior = 0;
   
   players.forEach(p => {
-    totalPrior += priors[p.name] || 1.0;
+    totalPrior += (priors[p.name] || 1.0) * getSemanticPriorMultiplier(p);
   });
 
   const probabilities = {};
   players.forEach((player) => {
-    probabilities[player.name] = (priors[player.name] || 1.0) / totalPrior;
+    probabilities[player.name] = ((priors[player.name] || 1.0) * getSemanticPriorMultiplier(player)) / totalPrior;
   });
   return probabilities;
+}
+
+function getSemanticPriorMultiplier(player) {
+  const rarity = player.obscurityProfile?.rarity || player.rarity || "rare";
+  const rarityLift = {
+    common: 0.98,
+    rare: 1.0,
+    epic: 1.06,
+    legendary: 1.1,
+    "legendary-obscure": 1.14,
+    forgotten: 1.12,
+    niche: 1.08,
+  }[rarity] || 1;
+  const weakRecallLift = player.questionAttributes?.underdog || player.questionAttributes?.domesticSpecialist ? 1.04 : 1;
+  return rarityLift * weakRecallLift;
 }
 
 /**
@@ -63,9 +88,10 @@ export function updateProbabilities(currentProbabilities, matchScores) {
     likelihood = Math.max(0, Math.min(1, likelihood));
     // Apply smooth likelihood adjustment for stable confidence scaling
     const adjustedLikelihood = adjustLikelihood(likelihood);
+    const bayesianLikelihood = calibrateBayesianLikelihood(adjustedLikelihood, likelihood);
 
     // Keep a tiny floor so contradictions do not crash
-    const finalLikelihood = Math.max(adjustedLikelihood, 0.001);
+    const finalLikelihood = Math.max(bayesianLikelihood, 0.0005);
     updated[playerName] = prior * finalLikelihood;
     totalScore += updated[playerName];
   }

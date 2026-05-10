@@ -9,24 +9,23 @@
  */
 
 export function determinePhase(candidatesLength, questionNumber) {
-  // Broad phase: early game, many candidates
-  if (questionNumber < 4 && candidatesLength > 15) {
-    return "broad";
-  }
-  
-  // Precision phase: late game or very few candidates
-  if (questionNumber >= 9 || candidatesLength <= 5) {
-    return "precision";
-  }
-
-  // Refinement phase: middle game
-  return "refinement";
+  if (questionNumber < 3 && candidatesLength > 30) return "broad";
+  if (questionNumber < 7 && candidatesLength > 12) return "tactical";
+  if (questionNumber < 11 && candidatesLength > 6) return "franchise";
+  if (questionNumber < 16 && candidatesLength > 3) return "semantic";
+  return "precision";
 }
 
 export function getAllowedCategories(phase) {
   switch (phase) {
     case "broad":
       return ["role", "origin-class", "bowling-style", "batting-style", "era"];
+    case "tactical":
+      return ["role", "origin-class", "bowling-style", "batting-style", "era", "batting-role", "bowling-role", "leadership", "profile", "semantic-dna"];
+    case "franchise":
+      return ["role", "origin-class", "era", "leadership", "batting-role", "bowling-role", "achievement", "profile", "semantic-dna", "current-team", "franchise-history"];
+    case "semantic":
+      return ["role", "origin-class", "bowling-style", "batting-style", "era", "leadership", "batting-role", "bowling-role", "achievement", "origin", "profile", "semantic-dna", "current-team", "franchise-history"];
     case "refinement":
       // Includes broad as fallback
       return ["role", "origin-class", "bowling-style", "batting-style", "era", "leadership", "batting-role", "bowling-role", "achievement", "profile", "semantic-dna"];
@@ -44,9 +43,11 @@ export function applyHierarchicalPenalties(option, phase, candidatesLength, hist
   // 1. Team Question Rules (Phase 3 & 7)
   const isTeam = option.category === "current-team" || option.category === "franchise-history";
   if (isTeam) {
-    if (phase !== "precision") {
+    if (phase !== "precision" && phase !== "franchise" && phase !== "semantic") {
       penalty *= 0.001; // Hard suppress team questions outside precision phase
-    } else if (candidatesLength > 5) {
+    } else if (phase === "franchise" && candidatesLength <= 14) {
+      penalty *= 1.35;
+    } else if (candidatesLength > 5 && phase === "precision") {
       penalty *= 0.05; // Heavy penalty if still too many candidates
     }
   }
@@ -74,6 +75,7 @@ export function applyHierarchicalPenalties(option, phase, candidatesLength, hist
 
   if (option.category === "semantic-dna") {
     if (phase === "broad") penalty *= 0.05;
+    if (phase === "semantic" || phase === "precision") penalty *= 1.25;
     const recentSemanticQuestions = history.slice(-3).filter(h => h.category === "semantic-dna").length;
     if (recentSemanticQuestions > 0) penalty *= 0.45;
   }

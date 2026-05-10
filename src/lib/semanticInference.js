@@ -52,6 +52,25 @@ const TAG_CONTRADICTIONS = new Map([
   ["post-2020-player", ["early-ipl-player", "oldSchoolLegend"]],
 ]);
 
+const TAG_WEIGHTS = new Map([
+  ["captain", 1.25],
+  ["wicketkeeper", 1.2],
+  ["finisher", 1.2],
+  ["death-over-batter", 1.25],
+  ["death-over-bowler", 1.25],
+  ["csk-icon", 1.45],
+  ["mi-icon", 1.45],
+  ["rcb-icon", 1.45],
+  ["kkr-icon", 1.45],
+  ["one-franchise-player", 1.25],
+  ["mystery-spinner", 1.25],
+  ["short-career-player", 1.3],
+  ["very-short-ipl-career", 1.35],
+  ["oldschoollegend", 1.25],
+  ["post-2020-player", 1.15],
+  ["goldeneraplayer", 1.2],
+]);
+
 export function buildSemanticProfile(history = []) {
   const positiveTags = new Set();
   const negativeTags = new Set();
@@ -151,6 +170,46 @@ export function getPlayerSemanticTags(player) {
   );
 }
 
+export function getWeightedPlayerVector(player) {
+  const vector = new Map();
+  for (const tag of getPlayerSemanticTags(player)) {
+    vector.set(tag, (vector.get(tag) || 0) + getTagWeight(tag));
+  }
+  return vector;
+}
+
+export function getInferredProfileVector(profile) {
+  const vector = new Map();
+  for (const tag of profile.positiveTags) {
+    const clean = normalizeTag(tag.replace(/:soft$/, ""));
+    const weight = getTagWeight(clean) * (tag.endsWith(":soft") ? 0.45 : 1);
+    vector.set(clean, (vector.get(clean) || 0) + weight);
+  }
+  for (const tag of profile.negativeTags) {
+    const clean = normalizeTag(tag);
+    vector.set(`not-${clean}`, (vector.get(`not-${clean}`) || 0) + 0.55);
+  }
+  if (profile.confirmed.country) vector.set(normalizeTag(profile.confirmed.country), 1.15);
+  if (profile.confirmed.currentTeam) vector.set(normalizeTag(profile.confirmed.currentTeam), 1.25);
+  if (profile.confirmed.team) vector.set(normalizeTag(profile.confirmed.team), 1.1);
+  return vector;
+}
+
+export function cosineSimilarity(left, right) {
+  let dot = 0;
+  let leftNorm = 0;
+  let rightNorm = 0;
+
+  for (const value of left.values()) leftNorm += value * value;
+  for (const value of right.values()) rightNorm += value * value;
+  for (const [key, value] of left.entries()) {
+    dot += value * (right.get(key) || 0);
+  }
+
+  if (!leftNorm || !rightNorm) return 0;
+  return dot / (Math.sqrt(leftNorm) * Math.sqrt(rightNorm));
+}
+
 export function evaluateSemanticAnswer(candidates, questionMeta, answer) {
   const answerKind = normalizeAnswer(answer);
   if (!questionMeta || answerKind === "neutral") return null;
@@ -198,6 +257,9 @@ export function applySemanticReranking(probabilities, allPlayers, history = []) 
 
 export function calculateSemanticAlignment(player, profile) {
   const playerTags = getPlayerSemanticTags(player);
+  const profileVector = getInferredProfileVector(profile);
+  const playerVector = getWeightedPlayerVector(player);
+  const vectorSimilarity = cosineSimilarity(profileVector, playerVector);
   let positive = 0;
   let possiblePositive = 0;
   let negativeConflict = 0;
@@ -213,9 +275,10 @@ export function calculateSemanticAlignment(player, profile) {
   }
 
   const positiveRatio = possiblePositive ? positive / possiblePositive : 0.5;
-  const base = 0.55 + positiveRatio * 1.55;
+  const blendedSimilarity = possiblePositive ? (positiveRatio * 0.58 + vectorSimilarity * 0.42) : vectorSimilarity;
+  const base = 0.55 + blendedSimilarity * 1.75;
   const penalty = Math.pow(0.58, negativeConflict);
-  return clamp(base * penalty, 0.08, 2.4);
+  return clamp(base * penalty, 0.08, 2.55);
 }
 
 export function calculateContradictionPenalty(player, profile) {
@@ -249,7 +312,7 @@ export function calculateSemanticConfidence(probabilities, players, history, que
   const separation = runnerUp ? clamp((top.probability - runnerUp.probability) / Math.max(top.probability, 0.0001), 0, 1) : 1;
 
   const topPlayer = players.find((p) => p.name === top.name);
-  const topAlignment = topPlayer ? calculateSemanticAlignment(topPlayer, profile) / 2.4 : 0.5;
+  const topAlignment = topPlayer ? calculateSemanticAlignment(topPlayer, profile) / 2.55 : 0.5;
   const spread = calculateDnaSimilaritySpread(ranked.slice(0, 5), players, profile);
   const evidence = Math.min(1, Math.log10(questionCount + 1) / Math.log10(18));
   const contradictionDensity = estimateContradictionDensity(players, profile);
@@ -409,6 +472,10 @@ function getRarityMultiplier(player, profile) {
   if (["epic", "legendary", "legendary-obscure", "forgotten", "niche"].includes(rarity)) return 1.25;
   if (rarity === "common") return 0.82;
   return 1.05;
+}
+
+function getTagWeight(tag) {
+  return TAG_WEIGHTS.get(tag) || TAG_WEIGHTS.get(normalizeTag(tag)) || 1;
 }
 
 function expandTag(value) {
