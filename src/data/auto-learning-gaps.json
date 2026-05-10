@@ -1,0 +1,1881 @@
+{
+  "hiddenMetadataGaps": {
+    "missingCountry": 0,
+    "missingSeasonHistory": 184,
+    "missingAuctionHistory": 236,
+    "weakSemanticDNA": 5
+  },
+  "playersNeedingEnrichment": [
+    {
+      "id": "abdul-samad",
+      "name": "Abdul Samad",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "abhijeet-tomar",
+      "name": "Abhijeet Tomar",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "abhinav-manohar",
+      "name": "Abhinav Manohar",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "abhishek-sharma",
+      "name": "Abhishek Sharma",
+      "gaps": [
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "abishek-porel",
+      "name": "Abishek Porel",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "adam-milne",
+      "name": "Adam Milne",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "aiden-markram",
+      "name": "Aiden Markram",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ajinkya-rahane",
+      "name": "Ajinkya Rahane",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "akash-deep",
+      "name": "Akash Deep",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "allah-ghazanfar",
+      "name": "Allah Ghazanfar",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "alzarri-joseph",
+      "name": "Alzarri Joseph",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ambati-rayudu",
+      "name": "Ambati Rayudu",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "andre-russell",
+      "name": "Andre Russell",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "andrew-tye",
+      "name": "Andrew Tye",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "angkrish-raghuvanshi",
+      "name": "Angkrish Raghuvanshi",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "anmolpreet-singh",
+      "name": "Anmolpreet Singh",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "anrich-nortje",
+      "name": "Anrich Nortje",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "anshul-kamboj",
+      "name": "Anshul Kamboj",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "anuj-rawat",
+      "name": "Anuj Rawat",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "anukul-roy",
+      "name": "Anukul Roy",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "arshdeep-singh",
+      "name": "Arshdeep Singh",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "avesh-khan",
+      "name": "Avesh Khan",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "axar-patel",
+      "name": "Axar Patel",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ayush-badoni",
+      "name": "Ayush Badoni",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "azmatullah-omarzai",
+      "name": "Azmatullah Omarzai",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "b-indrajith",
+      "name": "B Indrajith",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "basil-thampi",
+      "name": "Basil Thampi",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "bhanuka-rajapaksa",
+      "name": "Bhanuka Rajapaksa",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "bhuvneshwar-kumar",
+      "name": "Bhuvneshwar Kumar",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "brydon-carse",
+      "name": "Brydon Carse",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "cameron-green",
+      "name": "Cameron Green",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "chetan-sakariya",
+      "name": "Chetan Sakariya",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "chris-jordan",
+      "name": "Chris Jordan",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "corbin-bosch",
+      "name": "Corbin Bosch",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "daniel-sams",
+      "name": "Daniel Sams",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "darshan-nalkande",
+      "name": "Darshan Nalkande",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "daryl-mitchell",
+      "name": "Daryl Mitchell",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "david-miller",
+      "name": "David Miller",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "david-warner",
+      "name": "David Warner",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "david-willey",
+      "name": "David Willey",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "deepak-chahar",
+      "name": "Deepak Chahar",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "deepak-hooda",
+      "name": "Deepak Hooda",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "devdutt-padikkal",
+      "name": "Devdutt Padikkal",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "devon-conway",
+      "name": "Devon Conway",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "dewald-brevis",
+      "name": "Dewald Brevis",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "dhruv-jurel",
+      "name": "Dhruv Jurel",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "dinesh-karthik",
+      "name": "Dinesh Karthik",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "donovan-ferreira",
+      "name": "Donovan Ferreira",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "dushmantha-chameera",
+      "name": "Dushmantha Chameera",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "dwaine-pretorius",
+      "name": "Dwaine Pretorius",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "dwayne-bravo",
+      "name": "Dwayne Bravo",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "evin-lewis",
+      "name": "Evin Lewis",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "fabian-allen",
+      "name": "Fabian Allen",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "faf-du-plessis",
+      "name": "Faf Du Plessis",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "fazalhaq-farooqi",
+      "name": "Fazalhaq Farooqi",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "glenn-maxwell",
+      "name": "Glenn Maxwell",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "glenn-phillips",
+      "name": "Glenn Phillips",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "gurjapneet-singh",
+      "name": "Gurjapneet Singh",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "hardik-pandya",
+      "name": "Hardik Pandya",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "harpreet-brar",
+      "name": "Harpreet Brar",
+      "gaps": [
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "harshal-patel",
+      "name": "Harshal Patel",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "harshit-rana",
+      "name": "Harshit Rana",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "heinrich-klaasen",
+      "name": "Heinrich Klaasen",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "hrithik-shokeen",
+      "name": "Hrithik Shokeen",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ishan-kishan",
+      "name": "Ishan Kishan",
+      "gaps": [
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "ishant-sharma",
+      "name": "Ishant Sharma",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "jacob-bethell",
+      "name": "Jacob Bethell",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "jagadeesan-narayan",
+      "name": "Jagadeesan Narayan",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "semantic-dna"
+      ]
+    },
+    {
+      "id": "jagadeesha-suchith",
+      "name": "Jagadeesha Suchith",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "james-neesham",
+      "name": "James Neesham",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "jamie-overton",
+      "name": "Jamie Overton",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "jason-holder",
+      "name": "Jason Holder",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "jasprit-bumrah",
+      "name": "Jasprit Bumrah",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "jaydev-unadkat",
+      "name": "Jaydev Unadkat",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "jitesh-sharma",
+      "name": "Jitesh Sharma",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "jofra-archer",
+      "name": "Jofra Archer",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "jonny-bairstow",
+      "name": "Jonny Bairstow",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "jos-buttler",
+      "name": "Jos Buttler",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "josh-hazlewood",
+      "name": "Josh Hazlewood",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "k-l-rahul",
+      "name": "K L Rahul",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "kagiso-rabada",
+      "name": "Kagiso Rabada",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "kamindu-mendis",
+      "name": "Kamindu Mendis",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "kane-williamson",
+      "name": "Kane Williamson",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "karan-sharma",
+      "name": "Karan Sharma",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "kartik-sharma",
+      "name": "Kartik Sharma",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "kartik-tyagi",
+      "name": "Kartik Tyagi",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "karun-nair",
+      "name": "Karun Nair",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "khaleel-ahmed",
+      "name": "Khaleel Ahmed",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "semantic-dna"
+      ]
+    },
+    {
+      "id": "krishnappa-gowtham",
+      "name": "Krishnappa Gowtham",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "krunal-pandya",
+      "name": "Krunal Pandya",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "kuldeep-sen",
+      "name": "Kuldeep Sen",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "kuldeep-yadav",
+      "name": "Kuldeep Yadav",
+      "gaps": [
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "kumar-kartikeya-singh",
+      "name": "Kumar Kartikeya Singh",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "kwena-maphaka",
+      "name": "Kwena Maphaka",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "kyle-jamieson",
+      "name": "Kyle Jamieson",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "lalit-yadav",
+      "name": "Lalit Yadav",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "liam-livingstone",
+      "name": "Liam Livingstone",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "lockie-ferguson",
+      "name": "Lockie Ferguson",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "lungisani-ngidi",
+      "name": "Lungisani Ngidi",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "maheesh-theekshana",
+      "name": "Maheesh Theekshana",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mahipal-lomror",
+      "name": "Mahipal Lomror",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "manan-vohra",
+      "name": "Manan Vohra",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "manav-suthar",
+      "name": "Manav Suthar",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mandeep-singh",
+      "name": "Mandeep Singh",
+      "gaps": [
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "manish-pandey",
+      "name": "Manish Pandey",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "marco-jansen",
+      "name": "Marco Jansen",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "marcus-stoinis",
+      "name": "Marcus Stoinis",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "matheesha-pathirana",
+      "name": "Matheesha Pathirana",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "matthew-wade",
+      "name": "Matthew Wade",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mayank-agarwal",
+      "name": "Mayank Agarwal",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mayank-markande",
+      "name": "Mayank Markande",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mayank-yadav",
+      "name": "Mayank Yadav",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mitchell-marsh",
+      "name": "Mitchell Marsh",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "mitchell-santner",
+      "name": "Mitchell Santner",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mitchell-starc",
+      "name": "Mitchell Starc",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "moeen-ali",
+      "name": "Moeen Ali",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mohammad-shami",
+      "name": "Mohammad Shami",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "mohammed-siraj",
+      "name": "Mohammed Siraj",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mohsin-khan",
+      "name": "Mohsin Khan",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ms-dhoni",
+      "name": "MS Dhoni",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mukesh-choudhary",
+      "name": "Mukesh Choudhary",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mukesh-kumar",
+      "name": "Mukesh Kumar",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "murugan-ashwin",
+      "name": "Murugan Ashwin",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "musheer-khan",
+      "name": "Musheer Khan",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "mustafizur-rahman",
+      "name": "Mustafizur Rahman",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "naman-dhir",
+      "name": "Naman Dhir",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "nathan-coulter-nile",
+      "name": "Nathan Coulter-Nile",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "nathan-ellis",
+      "name": "Nathan Ellis",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "navdeep-saini",
+      "name": "Navdeep Saini",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "nehal-wadhera",
+      "name": "Nehal Wadhera",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "nicholas-pooran",
+      "name": "Nicholas Pooran",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "nitish-kumar-reddy",
+      "name": "Nitish Kumar Reddy",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "nitish-rana",
+      "name": "Nitish Rana",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "noor-ahmad",
+      "name": "Noor Ahmad",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "nuwan-thushara",
+      "name": "Nuwan Thushara",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "obed-mccoy",
+      "name": "Obed McCoy",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "odean-smith",
+      "name": "Odean Smith",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "pat-cummins",
+      "name": "Pat Cummins",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "pathum-nissanka",
+      "name": "Pathum Nissanka",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "phil-salt",
+      "name": "Phil Salt",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "prabhsimran-singh",
+      "name": "Prabhsimran Singh",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "pradeep-sangwan",
+      "name": "Pradeep Sangwan",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "prashant-solanki",
+      "name": "Prashant Solanki",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "prashant-veer",
+      "name": "Prashant Veer",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "prasidh-krishna",
+      "name": "Prasidh Krishna",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "prerak-mankad",
+      "name": "Prerak Mankad",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "prithvi-shaw",
+      "name": "Prithvi Shaw",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "priyam-garg",
+      "name": "Priyam Garg",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "quinton-de-kock",
+      "name": "Quinton De Kock",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "rachin-ravindra",
+      "name": "Rachin Ravindra",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rahul-chahar",
+      "name": "Rahul Chahar",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "rahul-tewatia",
+      "name": "Rahul Tewatia",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "rahul-tripathi",
+      "name": "Rahul Tripathi",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "raj-bawa",
+      "name": "Raj Bawa",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rajangad-bawa",
+      "name": "Rajangad Bawa",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rajat-patidar",
+      "name": "Rajat Patidar",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ramakrishna-ghosh",
+      "name": "Ramakrishna Ghosh",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ramandeep-singh",
+      "name": "Ramandeep Singh",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rashid-khan",
+      "name": "Rashid Khan",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rasikh-salam",
+      "name": "Rasikh Salam",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rassie-van-der-dussen",
+      "name": "Rassie van der Dussen",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ravi-bishnoi",
+      "name": "Ravi Bishnoi",
+      "gaps": [
+        "auction-history",
+        "semantic-dna"
+      ]
+    },
+    {
+      "id": "ravichandran-ashwin",
+      "name": "Ravichandran Ashwin",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ravindra-jadeja",
+      "name": "Ravindra Jadeja",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rehan-ahmed",
+      "name": "Rehan Ahmed",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "riley-meredith",
+      "name": "Riley Meredith",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rinku-singh",
+      "name": "Rinku Singh",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "ripal-patel",
+      "name": "Ripal Patel",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rishabh-pant",
+      "name": "Rishabh Pant",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rishi-dhawan",
+      "name": "Rishi Dhawan",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "riyan-parag",
+      "name": "Riyan Parag",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "robin-minz",
+      "name": "Robin Minz",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rohit-sharma",
+      "name": "Rohit Sharma",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "romario-shepherd",
+      "name": "Romario Shepherd",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "rovman-powell",
+      "name": "Rovman Powell",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ruturaj-gaikwad",
+      "name": "Ruturaj Gaikwad",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "ryan-rickelton",
+      "name": "Ryan Rickelton",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sai-kishore",
+      "name": "Sai Kishore",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sai-sudharsan",
+      "name": "Sai Sudharsan",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sam-billings",
+      "name": "Sam Billings",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sam-curran",
+      "name": "Sam Curran",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sameer-rizvi",
+      "name": "Sameer Rizvi",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sandeep-sharma",
+      "name": "Sandeep Sharma",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sanju-samson",
+      "name": "Sanju Samson",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sarfaraz-khan",
+      "name": "Sarfaraz Khan",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sean-abbott",
+      "name": "Sean Abbott",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shahbaz-ahmed",
+      "name": "Shahbaz Ahmed",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shahrukh-khan",
+      "name": "Shahrukh Khan",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shardul-thakur",
+      "name": "Shardul Thakur",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shashank-singh",
+      "name": "Shashank Singh",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sheldon-jackson",
+      "name": "Sheldon Jackson",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sherfane-rutherford",
+      "name": "Sherfane Rutherford",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shikhar-dhawan",
+      "name": "Shikhar Dhawan",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shimron-hetmyer",
+      "name": "Shimron Hetmyer",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shivam-dube",
+      "name": "Shivam Dube",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shivam-mavi",
+      "name": "Shivam Mavi",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shreyas-gopal",
+      "name": "Shreyas Gopal",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shreyas-iyer",
+      "name": "Shreyas Iyer",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "shubman-gill",
+      "name": "Shubman Gill",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "simarjeet-singh",
+      "name": "Simarjeet Singh",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "srikar-bharat",
+      "name": "Srikar Bharat",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "sunil-narine",
+      "name": "Sunil Narine",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "suryakumar-yadav",
+      "name": "Suryakumar Yadav",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "suryansh-shedge",
+      "name": "Suryansh Shedge",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "suyash-s-prabhudessai",
+      "name": "Suyash S Prabhudessai",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "swapnil-singh",
+      "name": "Swapnil Singh",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "t-natarajan",
+      "name": "T Natarajan",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "tilak-varma",
+      "name": "Tilak Varma",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "tim-david",
+      "name": "Tim David",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "tim-seifert",
+      "name": "Tim Seifert",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "tim-southee",
+      "name": "Tim Southee",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "travis-head",
+      "name": "Travis Head",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "trent-boult",
+      "name": "Trent Boult",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "tristan-stubbs",
+      "name": "Tristan Stubbs",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "tushar-deshpande",
+      "name": "Tushar Deshpande",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "semantic-dna"
+      ]
+    },
+    {
+      "id": "tymal-mills",
+      "name": "Tymal Mills",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "umesh-yadav",
+      "name": "Umesh Yadav",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "umran-malik",
+      "name": "Umran Malik",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "urvil-patel",
+      "name": "Urvil Patel",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "vaibhav-arora",
+      "name": "Vaibhav Arora",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "semantic-dna"
+      ]
+    },
+    {
+      "id": "vaibhav-suryavanshi",
+      "name": "Vaibhav Suryavanshi",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "varun-aaron",
+      "name": "Varun Aaron",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "varun-chakaravarthy",
+      "name": "Varun Chakaravarthy",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "venkatesh-iyer",
+      "name": "Venkatesh Iyer",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "vijay-shankar",
+      "name": "Vijay Shankar",
+      "gaps": [
+        "season-history",
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "vijaykumar-vyshak",
+      "name": "Vijaykumar Vyshak",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "vipraj-nigam",
+      "name": "Vipraj Nigam",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "virat-kohli",
+      "name": "Virat Kohli",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "wanindu-hasaranga",
+      "name": "Wanindu Hasaranga",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "washington-sundar",
+      "name": "Washington Sundar",
+      "gaps": [
+        "auction-history",
+        "iconic-moments"
+      ]
+    },
+    {
+      "id": "will-jacks",
+      "name": "Will Jacks",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "wriddhiman-saha",
+      "name": "Wriddhiman Saha",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "xavier-bartlett",
+      "name": "Xavier Bartlett",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "yash-dayal",
+      "name": "Yash Dayal",
+      "gaps": [
+        "auction-history"
+      ]
+    },
+    {
+      "id": "yashasvi-jaiswal",
+      "name": "Yashasvi Jaiswal",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    },
+    {
+      "id": "yuzvendra-chahal",
+      "name": "Yuzvendra Chahal",
+      "gaps": [
+        "season-history",
+        "auction-history"
+      ]
+    }
+  ]
+}
