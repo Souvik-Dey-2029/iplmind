@@ -371,11 +371,23 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
           <div className="ipl-ai-section">
               <motion.div className="ipl-ai-bubble" key={commentary || mascot.text}
                 initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}
-                style={{ marginBottom: 16 }}>
+                style={{ marginBottom: 8, zIndex: 11, position: 'relative' }}>
                 {commentary || mascot.text}
               </motion.div>
               
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 4 }}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: -32, position: 'relative', zIndex: 10 }}>
+                {/* Subtle glow connecting mascot and Mind Scan card */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: 20,
+                  width: 120,
+                  height: 40,
+                  background: 'rgba(129, 140, 248, 0.4)',
+                  filter: 'blur(20px)',
+                  borderRadius: '50%',
+                  zIndex: -1
+                }} />
+                
                 <AnimatePresence mode="wait">
                   <motion.img 
                     key={mascot.id}
