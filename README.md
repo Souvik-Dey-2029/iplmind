@@ -61,7 +61,7 @@ npm run dev
 Open [http://localhost:3000](http://localhost:3000) to see the magic.
 
 ## 👥 Meet 'The Lazy Four'
-* **Souvik Dey** – Full backend architecture, core game logic, Bayesian probability engine, AI integrations, and UI fixes.
+* **Souvik Dey** – Full backend architecture, core game logic, Bayesian probability engine, AI integrations, and Player Database Enhancement.
 * **Partha Sarthi Sarkar** – Project structure, premium UI/UX design, and database integration.
 * **Snehasis Chakraborty** – QA testing, performance evaluation, and website runner.
 
