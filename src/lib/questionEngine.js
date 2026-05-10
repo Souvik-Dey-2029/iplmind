@@ -2,6 +2,7 @@ import { calculateEntropy, normalizeProbabilities } from "./probabilityEngine.js
 import { getQuestionBoost } from "./learningMemory.js";
 import { determinePhase, getAllowedCategories, applyHierarchicalPenalties } from "./reasoningPhaseManager.js";
 import { buildInferredFacts, isContradictory } from "./semanticConstraints.js";
+import { scoreQuestionSemanticUtility } from "./semanticInference.js";
 
 const MIN_SPLIT = 0.08;
 const FRANCHISE_HISTORY_COOLDOWN = 3;
@@ -408,6 +409,7 @@ function scoreQuestion(option, candidates, probabilities, baseEntropy, categoryC
   const historicTeamPenalty = option.category === "franchise-history" ? 0.06 : 1;
   const lowInfoPenalty = yesProbability < 0.15 || noProbability < 0.15 ? 0.08 : 1;
   const learningBoost = getQuestionBoost(option.id);
+  const semanticUtility = scoreQuestionSemanticUtility(option, candidates, history);
   
   // Apply Hierarchical Penalty
   const hierarchicalPenalty = applyHierarchicalPenalties(option, phase, candidates.length, history);
@@ -417,7 +419,7 @@ function scoreQuestion(option, candidates, probabilities, baseEntropy, categoryC
     yesProbability,
     noProbability,
     informationGain,
-    score: informationGain * (0.7 + balance * 0.3) * categoryPenalty * teamPenalty * historicTeamPenalty * lowInfoPenalty * learningBoost * hierarchicalPenalty,
+    score: informationGain * (0.7 + balance * 0.3) * categoryPenalty * teamPenalty * historicTeamPenalty * lowInfoPenalty * learningBoost * hierarchicalPenalty * semanticUtility,
   };
 }
 

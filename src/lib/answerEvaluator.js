@@ -77,6 +77,11 @@ const traitQuestions = [
   { patterns: ["yorker", "yorkers", "famous for yorkers"], trait: "famousForYorkers" },
   { patterns: ["title winning captain", "won ipl as captain", "ipl winning captain"], trait: "titleWinningCaptain" },
   { patterns: ["aggressive", "aggressive bat", "aggressive player", "attacking"], trait: "aggressive" },
+  { patterns: ["cult ipl hero", "cult hero", "cult player"], check: (p) => Boolean(p.questionAttributes?.cultPlayer || p.dnaTags?.includes("cult-player")) },
+  { patterns: ["ipl specialist", "more famous for ipl", "remembered more for ipl"], check: (p) => Boolean(p.questionAttributes?.IPLSpecialist) },
+  { patterns: ["one franchise", "one-franchise", "strongly associated with one franchise", "loyal to one"], check: (p) => p.franchiseLoyalty === "one-franchise" || (p.teams?.length === 1) },
+  { patterns: ["journeyman", "several franchises", "many franchises", "multiple franchises"], check: (p) => p.franchiseLoyalty === "journeyman" || (p.teams?.length || 0) >= 4 },
+  { patterns: ["obscure", "lesser known", "forgotten", "short career", "one season"], check: (p) => ["epic", "legendary", "legendary-obscure", "forgotten", "niche"].includes(p.obscurityProfile?.rarity || p.rarity) },
 ];
 
 // Role patterns
@@ -221,7 +226,7 @@ function evaluateTraitQuestion(candidates, question, answerKind) {
   if (!match) return null;
 
   return scoreCandidates(candidates, answerKind, (player) =>
-    Boolean(player[match.trait])
+    match.check ? match.check(player) : Boolean(player[match.trait])
   );
 }
 
