@@ -53,11 +53,7 @@
       "power-hitter",
       "spinner",
       "aggressive",
-      "domestic",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "lowerOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -352,10 +348,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "left-hander",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -607,12 +600,7 @@
       "power-hitter",
       "pacer",
       "aggressive",
-      "domestic",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -877,19 +865,16 @@
       "name": 1
     },
     "era": "mega-auction-era",
-    "archetype": "batting-allrounder",
+    "archetype": "spin-allrounder",
     "dnaTags": [
       "opener",
+      "power-hitter",
       "spinner",
       "left-hander",
+      "aggressive",
       "iconic",
       "fan-favorite",
-      "domestic",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "ipl-icon",
-      "topOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 75,
@@ -1195,11 +1180,7 @@
     "dnaTags": [
       "wicketkeeper",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -1471,11 +1452,7 @@
     "dnaTags": [
       "pacer",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -1741,12 +1718,7 @@
     "dnaTags": [
       "anchor",
       "spinner",
-      "overseas",
-      "accumulator",
-      "active-player",
-      "middleOrder",
-      "overseas-player",
-      "post-2020-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -2043,18 +2015,9 @@
       "playoffs-hero",
       "domestic",
       "journeyman",
-      "title-winner",
-      "accumulator",
-      "active-player",
-      "early-ipl-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player",
-      "topOrder"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 93,
     "rarity": "common",
     "fullName": "Ajinkya Rahane",
@@ -2373,10 +2336,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "pacer",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "post-2020-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -2653,11 +2613,7 @@
     "dnaTags": [
       "spinner",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -2924,11 +2880,7 @@
     "dnaTags": [
       "pacer",
       "death-bowler",
-      "overseas",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -3210,17 +3162,9 @@
       "IPL-veteran",
       "early-era-player",
       "domestic",
-      "serial-winner",
-      "accumulator",
-      "active-player",
-      "early-ipl-player",
-      "indian-player",
-      "ipl-icon",
-      "middleOrder"
+      "serial-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 90,
     "rarity": "common",
     "fullName": "Ambati Rayudu",
@@ -3520,24 +3464,11 @@
       "six-machine",
       "all-rounder",
       "destructive",
-      "pace-bowling-allrounder",
-      "active-player",
-      "aggressor",
-      "chaos-finisher",
-      "deathBowler",
-      "fan-favorite",
-      "impact-allrounder",
-      "ipl-icon",
-      "kkr-icon",
-      "lowerOrder",
-      "overseas-player",
-      "pacer"
+      "pace-bowling-allrounder"
     ],
     "iconicMoments": [
-      "2019-MVP",
-      "2019-mvp-season",
       "KKR-impossible-chases",
-      "impossible-kkr-chases",
+      "2019-MVP",
       "six-hitting-records"
     ],
     "popularityScore": 88,
@@ -3846,11 +3777,7 @@
       "death-bowler",
       "retired-legend",
       "overseas",
-      "journeyman",
-      "deathBowler",
-      "journeyman-player",
-      "overseas-player",
-      "retired-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -4128,11 +4055,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -4391,11 +4314,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "pacer",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "post-2020-player",
-      "short-career-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -4684,16 +4603,9 @@
       "yorker-specialist",
       "fan-favorite",
       "playoffs-hero",
-      "overseas",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "overseas-player",
-      "yorkerSpecialist"
+      "overseas"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 50,
     "rarity": "rare",
     "fullName": "Anrich Nortje",
@@ -4977,11 +4889,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -5251,12 +5159,7 @@
       "wicketkeeper",
       "left-hander",
       "defensive",
-      "domestic",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "post-2020-player",
-      "topOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -5554,10 +5457,7 @@
       "spinner",
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -5822,12 +5722,7 @@
       "death-bowler",
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "deathBowler",
-      "elite-wicket-taker",
-      "indian-player",
-      "one-franchise-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -6135,15 +6030,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "journeyman-player"
+      "journeyman"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 50,
     "rarity": "rare",
     "fullName": "Avesh Khan",
@@ -6463,15 +6352,9 @@
       "iconic",
       "fan-favorite",
       "playoffs-hero",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "ipl-icon",
-      "lowerOrder"
+      "domestic"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 90,
     "rarity": "common",
     "fullName": "Axar Patel",
@@ -6750,17 +6633,12 @@
       "name": 1
     },
     "era": "modern-era",
-    "archetype": "middle-order-bat",
+    "archetype": "clutch-finisher",
     "dnaTags": [
+      "finisher",
       "spinner",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "finisher",
-      "indian-player",
-      "lowerOrder",
-      "middleOrder",
-      "one-franchise-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -7034,11 +6912,7 @@
     "dnaTags": [
       "pacer",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -7309,12 +7183,7 @@
       "wicketkeeper",
       "spinner",
       "retired-legend",
-      "domestic",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player",
-      "retired-player",
-      "short-career-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -7601,11 +7470,7 @@
       "pacer",
       "death-bowler",
       "retired-legend",
-      "domestic",
-      "journeyman",
-      "deathBowler",
-      "indian-player",
-      "retired-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -7900,12 +7765,7 @@
       "spinner",
       "left-hander",
       "aggressive",
-      "overseas",
-      "active-player",
-      "aggressor",
-      "middleOrder",
-      "overseas-player",
-      "post-2020-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -8191,16 +8051,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "title-winner",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "ipl-icon",
-      "yorkerSpecialist"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 96,
     "rarity": "common",
     "fullName": "Bhuvneshwar Kumar",
@@ -8494,11 +8347,7 @@
     "dnaTags": [
       "pacer",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -8759,11 +8608,7 @@
     "dnaTags": [
       "pacer",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -9024,10 +8869,7 @@
     "dnaTags": [
       "pacer",
       "left-hander",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -9297,15 +9139,9 @@
       "death-bowler",
       "playoffs-hero",
       "overseas",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "journeyman-player",
-      "overseas-player"
+      "journeyman"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 25,
     "rarity": "epic",
     "fullName": "Chris Jordan",
@@ -9585,11 +9421,7 @@
     "dnaTags": [
       "pacer",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -9849,10 +9681,7 @@
     "archetype": "batting-allrounder",
     "dnaTags": [
       "pacer",
-      "overseas",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -10105,10 +9934,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "pacer",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -10362,10 +10188,7 @@
     "archetype": "batting-allrounder",
     "dnaTags": [
       "pacer",
-      "overseas",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -10635,17 +10458,9 @@
       "playoffs-hero",
       "overseas",
       "journeyman",
-      "title-winner",
-      "active-player",
-      "ipl-icon",
-      "journeyman-player",
-      "lowerOrder",
-      "middleOrder",
-      "overseas-player"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 93,
     "rarity": "common",
     "fullName": "David Miller",
@@ -10963,23 +10778,12 @@
       "explosive",
       "overseas-run-machine",
       "left-hander",
-      "consistent",
-      "active-player",
-      "aggressor",
-      "captain",
-      "early-ipl-player",
-      "fan-favorite",
-      "ipl-icon",
-      "opener",
-      "overseas-player",
-      "spinner",
-      "topOrder"
+      "consistent"
     ],
     "iconicMoments": [
-      "3-orange-caps",
-      "DC-comeback",
       "SRH-2016-title",
-      "playoff-impact"
+      "3-orange-caps",
+      "DC-comeback"
     ],
     "popularityScore": 85,
     "rarity": "common",
@@ -11284,9 +11088,7 @@
     "dnaTags": [
       "pacer",
       "left-hander",
-      "overseas",
-      "active-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -11545,11 +11347,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -11825,16 +11623,9 @@
       "playoffs-hero",
       "domestic",
       "journeyman",
-      "title-winner",
-      "active-player",
-      "indian-player",
-      "journeyman-player",
-      "lowerOrder",
-      "middleOrder"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 53,
     "rarity": "rare",
     "fullName": "Deepak Hooda",
@@ -12136,11 +11927,7 @@
       "opener",
       "anchor",
       "left-hander",
-      "domestic",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "topOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -12423,13 +12210,8 @@
       "aggressive",
       "fan-favorite",
       "overseas",
-      "title-winner",
-      "active-player",
-      "aggressor",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player",
-      "topOrder"
+      "one-team-loyalist",
+      "title-winner"
     ],
     "iconicMoments": [],
     "popularityScore": 48,
@@ -12720,12 +12502,7 @@
       "power-hitter",
       "spinner",
       "aggressive",
-      "overseas",
-      "active-player",
-      "aggressor",
-      "middleOrder",
-      "overseas-player",
-      "post-2020-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -12999,12 +12776,7 @@
     "dnaTags": [
       "wicketkeeper",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -13300,18 +13072,9 @@
       "playoffs-hero",
       "domestic",
       "journeyman",
-      "title-winner",
-      "active-player",
-      "early-ipl-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player",
-      "lowerOrder",
-      "middleOrder"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 93,
     "rarity": "common",
     "fullName": "Dinesh Karthik",
@@ -13624,11 +13387,7 @@
     "dnaTags": [
       "wicketkeeper",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -13894,11 +13653,7 @@
     "dnaTags": [
       "pacer",
       "death-bowler",
-      "overseas",
-      "active-player",
-      "deathBowler",
-      "overseas-player",
-      "post-2020-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -14174,12 +13929,7 @@
     "dnaTags": [
       "pacer",
       "death-bowler",
-      "overseas",
-      "active-player",
-      "deathBowler",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -14459,18 +14209,9 @@
       "retired-legend",
       "early-era-player",
       "overseas",
-      "journeyman",
-      "title-winner",
-      "deathBowler",
-      "early-ipl-player",
-      "ipl-icon",
-      "middleOrder",
-      "overseas-player",
-      "retired-player"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 78,
     "rarity": "common",
     "fullName": "Dwayne Bravo",
@@ -14776,11 +14517,7 @@
       "pacer",
       "left-hander",
       "retired-legend",
-      "overseas",
-      "journeyman",
-      "overseas-player",
-      "retired-player",
-      "topOrder"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -15055,10 +14792,7 @@
     "dnaTags": [
       "spinner",
       "left-hander",
-      "overseas",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -15328,17 +15062,9 @@
       "playoffs-hero",
       "overseas",
       "journeyman",
-      "title-winner",
-      "accumulator",
-      "active-player",
-      "ipl-icon",
-      "journeyman-player",
-      "overseas-player",
-      "topOrder"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 86,
     "rarity": "common",
     "fullName": "Faf Du Plessis",
@@ -15642,10 +15368,7 @@
     "dnaTags": [
       "pacer",
       "left-hander",
-      "overseas",
-      "active-player",
-      "overseas-player",
-      "post-2020-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -15932,13 +15655,7 @@
       "iconic",
       "fan-favorite",
       "overseas",
-      "journeyman",
-      "active-player",
-      "aggressor",
-      "ipl-icon",
-      "journeyman-player",
-      "middleOrder",
-      "overseas-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 85,
@@ -16238,13 +15955,7 @@
       "power-hitter",
       "wicketkeeper",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "middleOrder",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -16514,13 +16225,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player",
-      "short-career-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -16803,22 +16508,12 @@
       "power-hitter",
       "match-winner",
       "finisher",
-      "pace-bowling-allrounder",
-      "active-player",
-      "aggressor",
-      "captain",
-      "fan-favorite",
-      "indian-player",
-      "ipl-icon",
-      "lowerOrder",
-      "middleOrder",
-      "pacer"
+      "pace-bowling-allrounder"
     ],
     "iconicMoments": [
       "GT-2022-title-captain",
-      "India-WC-hero",
       "MI-return-2024",
-      "playoff-impact"
+      "India-WC-hero"
     ],
     "popularityScore": 85,
     "rarity": "common",
@@ -17121,11 +16816,7 @@
       "defensive",
       "fan-favorite",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "lowerOrder",
-      "one-franchise-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 45,
@@ -17427,16 +17118,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player"
+      "journeyman"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 80,
     "rarity": "common",
     "fullName": "Harshal Patel",
@@ -17726,12 +17410,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -18014,13 +17693,7 @@
       "wicketkeeper",
       "aggressive",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "middleOrder",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -18292,10 +17965,7 @@
     "dnaTags": [
       "spinner",
       "left-hander",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -18551,22 +18221,16 @@
       "role": 0.95,
       "name": 1
     },
-    "era": "modern-era",
+    "era": "expansion-era",
     "archetype": "gloveman",
     "dnaTags": [
       "opener",
       "anchor",
       "wicketkeeper",
       "left-hander",
+      "aggressive",
       "fan-favorite",
-      "domestic",
-      "accumulator",
-      "active-player",
-      "aggressor",
-      "deathBowler",
-      "indian-player",
-      "middleOrder",
-      "topOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 45,
@@ -18888,11 +18552,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -19158,14 +18818,7 @@
       "left-hander",
       "aggressive",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "middleOrder",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -19451,9 +19104,7 @@
     "archetype": "gloveman",
     "dnaTags": [
       "wicketkeeper",
-      "domestic",
-      "active-player",
-      "indian-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -19716,11 +19367,7 @@
       "spinner",
       "left-hander",
       "retired-legend",
-      "domestic",
-      "journeyman",
-      "indian-player",
-      "lowerOrder",
-      "retired-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -20004,11 +19651,7 @@
       "retired-legend",
       "early-era-player",
       "overseas",
-      "journeyman",
-      "journeyman-player",
-      "lowerOrder",
-      "overseas-player",
-      "retired-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -20289,11 +19932,7 @@
     "dnaTags": [
       "pacer",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -20566,12 +20205,7 @@
       "death-bowler",
       "early-era-player",
       "overseas",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "journeyman-player",
-      "lowerOrder",
-      "overseas-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -20858,20 +20492,11 @@
       "unique-action",
       "pace-ace",
       "clutch-bowler",
-      "match-winner",
-      "active-player",
-      "deathBowler",
-      "fan-favorite",
-      "indian-player",
-      "ipl-icon",
-      "one-franchise-player",
-      "pacer",
-      "yorkerSpecialist"
+      "match-winner"
     ],
     "iconicMoments": [
-      "2019-MI-final",
       "death-over-mastery",
-      "playoff-impact"
+      "2019-MI-final"
     ],
     "popularityScore": 92,
     "rarity": "common",
@@ -21177,13 +20802,7 @@
       "iconic",
       "fan-favorite",
       "domestic",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "early-ipl-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 75,
@@ -21490,18 +21109,13 @@
       "name": 1
     },
     "era": "modern-era",
-    "archetype": "gloveman",
+    "archetype": "keeper-finisher",
     "dnaTags": [
+      "finisher",
       "power-hitter",
       "wicketkeeper",
       "aggressive",
-      "domestic",
-      "active-player",
-      "aggressor",
-      "finisher",
-      "indian-player",
-      "lowerOrder",
-      "middleOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -21782,13 +21396,7 @@
       "death-bowler",
       "iconic",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "deathBowler",
-      "ipl-icon",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 55,
@@ -22076,13 +21684,7 @@
       "aggressive",
       "iconic",
       "fan-favorite",
-      "overseas",
-      "journeyman",
-      "active-player",
-      "aggressor",
-      "ipl-icon",
-      "overseas-player",
-      "topOrder"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 75,
@@ -22385,16 +21987,9 @@
       "iconic",
       "fan-favorite",
       "playoffs-hero",
-      "overseas",
-      "active-player",
-      "aggressor",
-      "ipl-icon",
-      "overseas-player",
-      "topOrder"
+      "overseas"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 80,
     "rarity": "common",
     "fullName": "Jos Buttler",
@@ -22687,14 +22282,9 @@
       "left-hander",
       "fan-favorite",
       "playoffs-hero",
-      "overseas",
-      "active-player",
-      "deathBowler",
-      "overseas-player"
+      "overseas"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 50,
     "rarity": "rare",
     "fullName": "Josh Hazlewood",
@@ -22979,20 +22569,14 @@
     "archetype": "keeper-captain",
     "dnaTags": [
       "opener",
+      "anchor",
       "wicketkeeper",
       "captain",
       "pacer",
       "iconic",
       "fan-favorite",
       "domestic",
-      "journeyman",
-      "accumulator",
-      "active-player",
-      "anchor",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player",
-      "topOrder"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 85,
@@ -23311,14 +22895,9 @@
       "left-hander",
       "fan-favorite",
       "playoffs-hero",
-      "overseas",
-      "active-player",
-      "deathBowler",
-      "overseas-player"
+      "overseas"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 50,
     "rarity": "rare",
     "fullName": "Kagiso Rabada",
@@ -23599,11 +23178,7 @@
       "spinner",
       "left-hander",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -23874,16 +23449,9 @@
       "iconic",
       "fan-favorite",
       "playoffs-hero",
-      "overseas",
-      "accumulator",
-      "active-player",
-      "ipl-icon",
-      "middleOrder",
-      "overseas-player"
+      "overseas"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 90,
     "rarity": "common",
     "fullName": "Kane Williamson",
@@ -24171,10 +23739,7 @@
     "archetype": "batting-allrounder",
     "dnaTags": [
       "spinner",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -24430,12 +23995,7 @@
       "spinner",
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player",
-      "short-career-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -24719,11 +24279,7 @@
       "pacer",
       "death-bowler",
       "domestic",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "journeyman-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -25021,11 +24577,7 @@
       "anchor",
       "spinner",
       "fan-favorite",
-      "domestic",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "middleOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 45,
@@ -25304,9 +24856,7 @@
     "archetype": "pace-spearhead",
     "dnaTags": [
       "pacer",
-      "domestic",
-      "active-player",
-      "indian-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -25573,12 +25123,7 @@
       "power-hitter",
       "spinner",
       "aggressive",
-      "domestic",
-      "journeyman",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "lowerOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -25870,16 +25415,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "serial-winner",
-      "active-player",
-      "indian-player",
-      "ipl-icon",
-      "lowerOrder",
-      "middleOrder"
+      "serial-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 92,
     "rarity": "common",
     "fullName": "Krunal Pandya",
@@ -26171,10 +25709,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -26439,11 +25974,7 @@
       "left-hander",
       "iconic",
       "fan-favorite",
-      "domestic",
-      "active-player",
-      "elite-wicket-taker",
-      "indian-player",
-      "ipl-icon"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 75,
@@ -26743,10 +26274,7 @@
     "archetype": "batting-allrounder",
     "dnaTags": [
       "spinner",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -27002,11 +26530,7 @@
       "pacer",
       "left-hander",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -27269,11 +26793,7 @@
     "dnaTags": [
       "pacer",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -27529,17 +27049,12 @@
       "role": 0.95,
       "name": 1
     },
-    "era": "unknown-era",
+    "era": "mega-auction-era",
     "archetype": "batting-allrounder",
     "dnaTags": [
       "spinner",
       "defensive",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player",
-      "post-2020-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -27827,12 +27342,7 @@
       "aggressive",
       "overseas",
       "journeyman",
-      "title-winner",
-      "active-player",
-      "aggressor",
-      "journeyman-player",
-      "middleOrder",
-      "overseas-player"
+      "title-winner"
     ],
     "iconicMoments": [],
     "popularityScore": 28,
@@ -28127,15 +27637,9 @@
       "fan-favorite",
       "playoffs-hero",
       "overseas",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "journeyman-player",
-      "overseas-player"
+      "journeyman"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 50,
     "rarity": "rare",
     "fullName": "Lockie Ferguson",
@@ -28423,11 +27927,7 @@
     "dnaTags": [
       "pacer",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -28693,10 +28193,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "spinner",
-      "overseas",
-      "active-player",
-      "overseas-player",
-      "post-2020-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -28959,11 +28456,7 @@
     "dnaTags": [
       "spinner",
       "left-hander",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -29226,12 +28719,7 @@
       "anchor",
       "spinner",
       "fan-favorite",
-      "domestic",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 40,
@@ -29506,11 +28994,7 @@
       "spinner",
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -29788,14 +29272,7 @@
       "IPL-veteran",
       "early-era-player",
       "domestic",
-      "journeyman",
-      "accumulator",
-      "active-player",
-      "early-ipl-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player",
-      "topOrder"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 70,
@@ -30134,12 +29611,7 @@
       "pacer",
       "iconic",
       "fan-favorite",
-      "domestic",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "ipl-icon",
-      "middleOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 75,
@@ -30425,10 +29897,7 @@
     "dnaTags": [
       "pacer",
       "left-hander",
-      "overseas",
-      "active-player",
-      "overseas-player",
-      "post-2020-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -30708,17 +30177,9 @@
       "fan-favorite",
       "playoffs-hero",
       "overseas",
-      "journeyman",
-      "active-player",
-      "ipl-icon",
-      "journeyman-player",
-      "lowerOrder",
-      "middleOrder",
-      "overseas-player"
+      "journeyman"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 80,
     "rarity": "common",
     "fullName": "Marcus Stoinis",
@@ -31013,14 +30474,11 @@
       "name": 1
     },
     "era": "modern-era",
-    "archetype": "pace-spearhead",
+    "archetype": "death-overs-pacer",
     "dnaTags": [
       "pacer",
-      "overseas",
-      "active-player",
-      "deathBowler",
-      "overseas-player",
-      "post-2020-player"
+      "death-bowler",
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -31295,10 +30753,7 @@
       "left-hander",
       "defensive",
       "overseas",
-      "title-winner",
-      "active-player",
-      "middleOrder",
-      "overseas-player"
+      "title-winner"
     ],
     "iconicMoments": [],
     "popularityScore": 28,
@@ -31584,17 +31039,9 @@
       "playoffs-hero",
       "domestic",
       "journeyman",
-      "title-winner",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player",
-      "topOrder"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 93,
     "rarity": "common",
     "fullName": "Mayank Agarwal",
@@ -31903,10 +31350,7 @@
     "dnaTags": [
       "spinner",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -32166,11 +31610,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -32446,14 +31886,7 @@
       "pacer",
       "fan-favorite",
       "overseas",
-      "journeyman",
-      "accumulator",
-      "active-player",
-      "early-ipl-player",
-      "journeyman-player",
-      "middleOrder",
-      "overseas-player",
-      "topOrder"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 45,
@@ -32762,9 +32195,7 @@
     "dnaTags": [
       "spinner",
       "left-hander",
-      "overseas",
-      "active-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -33029,13 +32460,7 @@
       "left-hander",
       "iconic",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "deathBowler",
-      "ipl-icon",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 55,
@@ -33323,12 +32748,7 @@
       "left-hander",
       "aggressive",
       "overseas",
-      "journeyman",
-      "title-winner",
-      "active-player",
-      "aggressor",
-      "middleOrder",
-      "overseas-player"
+      "title-winner"
     ],
     "iconicMoments": [],
     "popularityScore": 28,
@@ -33611,9 +33031,7 @@
     "dnaTags": [
       "pacer",
       "fan-favorite",
-      "domestic",
-      "active-player",
-      "indian-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 45,
@@ -33885,16 +33303,9 @@
       "iconic",
       "fan-favorite",
       "playoffs-hero",
-      "domestic",
-      "active-player",
-      "deathBowler",
-      "elite-wicket-taker",
-      "indian-player",
-      "ipl-icon"
+      "domestic"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 80,
     "rarity": "common",
     "fullName": "Mohammed Siraj",
@@ -34208,11 +33619,7 @@
       "pacer",
       "death-bowler",
       "domestic",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -34508,30 +33915,13 @@
       "wicketkeeper",
       "title-winning-captain",
       "IPL-icon",
-      "veteran-legend",
-      "active-player",
-      "captain",
-      "csk-icon",
-      "early-ipl-player",
-      "elite-run-scorer",
-      "fan-favorite",
-      "indian-player",
-      "ipl-icon",
-      "long-career-player",
-      "lowerOrder",
-      "match-winner",
-      "middleOrder"
+      "veteran-legend"
     ],
     "iconicMoments": [
       "2010-final-finish",
-      "2010-final-finisher",
       "2011-WC-six",
-      "2018-csk-comeback-title",
-      "2023-comeback",
-      "2023-csk-title",
-      "5000-plus-ipl-runs",
       "CSK-5-titles",
-      "playoff-impact"
+      "2023-comeback"
     ],
     "popularityScore": 100,
     "rarity": "common",
@@ -34890,11 +34280,7 @@
       "pacer",
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -35171,12 +34557,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -35467,10 +34848,7 @@
     "dnaTags": [
       "spinner",
       "domestic",
-      "journeyman",
-      "active-player",
-      "indian-player",
-      "journeyman-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -35741,12 +35119,7 @@
     "dnaTags": [
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player",
-      "short-career-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -36027,11 +35400,7 @@
       "death-bowler",
       "left-hander",
       "overseas",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "journeyman-player",
-      "overseas-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -36336,12 +35705,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -36626,16 +35990,9 @@
       "retired-legend",
       "early-era-player",
       "overseas",
-      "journeyman",
-      "deathBowler",
-      "ipl-icon",
-      "journeyman-player",
-      "overseas-player",
-      "retired-player"
+      "journeyman"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 75,
     "rarity": "common",
     "fullName": "Nathan Coulter-Nile",
@@ -36927,10 +36284,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "pacer",
-      "overseas",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -37190,11 +36544,7 @@
     "dnaTags": [
       "pacer",
       "death-bowler",
-      "domestic",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "indian-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -37482,13 +36832,7 @@
     "dnaTags": [
       "power-hitter",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -37763,12 +37107,7 @@
       "left-hander",
       "aggressive",
       "fan-favorite",
-      "overseas",
-      "active-player",
-      "aggressor",
-      "lowerOrder",
-      "middleOrder",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 45,
@@ -38059,12 +37398,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -38341,13 +37675,7 @@
       "iconic",
       "fan-favorite",
       "domestic",
-      "journeyman",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player",
-      "middleOrder"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 75,
@@ -38645,11 +37973,7 @@
       "spinner",
       "left-hander",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -38925,11 +38249,7 @@
     "dnaTags": [
       "pacer",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -39190,10 +38510,7 @@
     "dnaTags": [
       "pacer",
       "left-hander",
-      "overseas",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -39449,10 +38766,7 @@
     "archetype": "batting-allrounder",
     "dnaTags": [
       "pacer",
-      "overseas",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -39712,16 +39026,11 @@
       "captain",
       "pacer",
       "aggressive",
-      "overseas",
-      "active-player",
-      "aggressor",
-      "ipl-icon",
-      "lowerOrder",
-      "middleOrder",
-      "overseas-player"
+      "iconic",
+      "overseas"
     ],
     "iconicMoments": [],
-    "popularityScore": 35,
+    "popularityScore": 65,
     "rarity": "rare",
     "fullName": "Pat Cummins",
     "shortName": "Cummins",
@@ -40009,12 +39318,7 @@
     "dnaTags": [
       "opener",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -40280,13 +39584,7 @@
       "wicketkeeper",
       "aggressive",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -40561,13 +39859,9 @@
     "dnaTags": [
       "opener",
       "wicketkeeper",
+      "aggressive",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "one-franchise-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -40836,10 +40130,7 @@
     "dnaTags": [
       "pacer",
       "left-hander",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -41096,10 +40387,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "spinner",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -41354,11 +40642,7 @@
     "dnaTags": [
       "spinner",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -41627,14 +40911,9 @@
       "death-bowler",
       "fan-favorite",
       "playoffs-hero",
-      "domestic",
-      "active-player",
-      "deathBowler",
-      "indian-player"
+      "domestic"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 50,
     "rarity": "rare",
     "fullName": "Prasidh Krishna",
@@ -41911,10 +41190,7 @@
     "dnaTags": [
       "spinner",
       "left-hander",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -42177,16 +41453,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "one-franchise-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 50,
     "rarity": "rare",
     "fullName": "Prithvi Shaw",
@@ -42468,12 +41737,7 @@
     "dnaTags": [
       "anchor",
       "pacer",
-      "domestic",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -42747,11 +42011,7 @@
       "wicketkeeper",
       "left-hander",
       "fan-favorite",
-      "overseas",
-      "accumulator",
-      "active-player",
-      "overseas-player",
-      "topOrder"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 45,
@@ -43034,12 +42294,7 @@
       "opener",
       "left-hander",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -43304,10 +42559,7 @@
     "dnaTags": [
       "spinner",
       "fan-favorite",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 40,
@@ -43578,11 +42830,7 @@
       "left-hander",
       "fan-favorite",
       "domestic",
-      "journeyman",
-      "active-player",
-      "indian-player",
-      "journeyman-player",
-      "lowerOrder"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 45,
@@ -43873,12 +43121,7 @@
       "spinner",
       "aggressive",
       "fan-favorite",
-      "domestic",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 40,
@@ -44150,11 +43393,7 @@
     "dnaTags": [
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -44414,10 +43653,7 @@
     "dnaTags": [
       "pacer",
       "left-hander",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -44678,12 +43914,7 @@
       "spinner",
       "aggressive",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 35,
@@ -44961,11 +44192,7 @@
     "dnaTags": [
       "wicketkeeper",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -45229,11 +44456,7 @@
     "archetype": "batting-allrounder",
     "dnaTags": [
       "pacer",
-      "domestic",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "post-2020-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -45521,28 +44744,11 @@
       "Afghan-sensation",
       "economy-king",
       "match-winner",
-      "overseas-spinner",
-      "active-player",
-      "afghan-superstar",
-      "aggressor",
-      "economy-strangler",
-      "elite-wicket-taker",
-      "fan-favorite",
-      "finisher",
-      "ipl-icon",
-      "lower-order-hitter",
-      "lowerOrder",
-      "modern-t20-specialist",
-      "overseas-player",
-      "spinner"
+      "overseas-spinner"
     ],
     "iconicMoments": [
-      "150-plus-ipl-wickets",
-      "GT-2022-title",
       "SRH-dominance",
-      "gt-title-core",
-      "playoff-impact",
-      "srh-spin-impact",
+      "GT-2022-title",
       "youngest-IPL-star"
     ],
     "popularityScore": 85,
@@ -45882,11 +45088,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "journeyman-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -46172,10 +45374,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "pacer",
-      "overseas",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -46433,9 +45632,7 @@
     "archetype": "classical-spinner",
     "dnaTags": [
       "spinner",
-      "domestic",
-      "active-player",
-      "indian-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -46733,16 +45930,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "journeyman",
-      "active-player",
-      "early-ipl-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player"
+      "journeyman"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 90,
     "rarity": "common",
     "fullName": "Ravichandran Ashwin",
@@ -47049,22 +46239,12 @@
       "fielding-genius",
       "spin-allrounder",
       "left-arm-spin",
-      "lower-order-hitter",
-      "active-player",
-      "early-ipl-player",
-      "fan-favorite",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player",
-      "lowerOrder",
-      "middleOrder",
-      "spinner"
+      "lower-order-hitter"
     ],
     "iconicMoments": [
+      "sword-celebration",
       "CSK-allround-dominance",
-      "best-fielder",
-      "playoff-impact",
-      "sword-celebration"
+      "best-fielder"
     ],
     "popularityScore": 82,
     "rarity": "common",
@@ -47366,11 +46546,7 @@
     "dnaTags": [
       "spinner",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -47630,10 +46806,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "pacer",
-      "overseas",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -47883,24 +47056,18 @@
       "name": 1
     },
     "era": "modern-era",
-    "archetype": "sheet-anchor",
+    "archetype": "clutch-finisher",
     "dnaTags": [
+      "finisher",
       "anchor",
       "left-hander",
-      "domestic",
-      "one-team-loyalist",
-      "accumulator",
-      "active-player",
       "fan-favorite",
-      "finisher",
-      "indian-player",
-      "lowerOrder",
-      "middleOrder",
-      "one-franchise-player"
+      "domestic",
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
-    "popularityScore": 25,
-    "rarity": "epic",
+    "popularityScore": 45,
+    "rarity": "rare",
     "fullName": "Rinku Singh",
     "shortName": "Singh",
     "nickname": "",
@@ -48179,10 +47346,7 @@
     "archetype": "batting-allrounder",
     "dnaTags": [
       "spinner",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -48446,16 +47610,9 @@
       "iconic",
       "fan-favorite",
       "playoffs-hero",
-      "domestic",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "ipl-icon",
-      "middleOrder"
+      "domestic"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 90,
     "rarity": "common",
     "fullName": "Rishabh Pant",
@@ -48745,11 +47902,7 @@
     "dnaTags": [
       "pacer",
       "defensive",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -49012,12 +48165,7 @@
       "captain",
       "spinner",
       "domestic",
-      "one-team-loyalist",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 35,
@@ -49297,11 +48445,7 @@
     "dnaTags": [
       "wicketkeeper",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -49571,24 +48715,12 @@
       "pull-shot-king",
       "big-match-player",
       "5-IPL-titles",
-      "IPL-icon",
-      "accumulator",
-      "active-player",
-      "anchor",
-      "early-ipl-player",
-      "fan-favorite",
-      "indian-player",
-      "ipl-icon",
-      "middleOrder",
-      "opener",
-      "spinner",
-      "topOrder"
+      "IPL-icon"
     ],
     "iconicMoments": [
-      "2015-century",
       "MI-5-titles-captain",
-      "most-sixes",
-      "playoff-impact"
+      "2015-century",
+      "most-sixes"
     ],
     "popularityScore": 98,
     "rarity": "common",
@@ -49902,12 +49034,7 @@
       "pacer",
       "overseas",
       "journeyman",
-      "title-winner",
-      "active-player",
-      "journeyman-player",
-      "lowerOrder",
-      "overseas-player",
-      "post-2020-player"
+      "title-winner"
     ],
     "iconicMoments": [],
     "popularityScore": 28,
@@ -50193,13 +49320,7 @@
       "power-hitter",
       "pacer",
       "aggressive",
-      "overseas",
-      "active-player",
-      "aggressor",
-      "lowerOrder",
-      "middleOrder",
-      "overseas-player",
-      "post-2020-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -50489,13 +49610,7 @@
       "captain",
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 35,
@@ -50782,12 +49897,7 @@
       "opener",
       "left-hander",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -51054,15 +50164,9 @@
       "left-hander",
       "playoffs-hero",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 30,
     "rarity": "rare",
     "fullName": "Sai Kishore",
@@ -51338,17 +50442,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "one-team-loyalist",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 50,
     "rarity": "rare",
     "fullName": "Sai Sudharsan",
@@ -51638,12 +50734,7 @@
     "dnaTags": [
       "anchor",
       "wicketkeeper",
-      "overseas",
-      "accumulator",
-      "active-player",
-      "middleOrder",
-      "one-franchise-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -51914,9 +51005,7 @@
     "dnaTags": [
       "pacer",
       "left-hander",
-      "overseas",
-      "active-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -52179,12 +51268,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -52463,17 +51547,9 @@
       "iconic",
       "fan-favorite",
       "playoffs-hero",
-      "domestic",
-      "active-player",
-      "deathBowler",
-      "elite-wicket-taker",
-      "indian-player",
-      "ipl-icon"
+      "domestic"
     ],
-    "iconicMoments": [
-      "150-plus-ipl-wickets",
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 80,
     "rarity": "common",
     "fullName": "Sandeep Sharma",
@@ -52797,20 +51873,13 @@
       "opener",
       "wicketkeeper",
       "captain",
+      "aggressive",
       "iconic",
       "fan-favorite",
       "playoffs-hero",
-      "domestic",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "ipl-icon",
-      "middleOrder",
-      "topOrder"
+      "domestic"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 90,
     "rarity": "common",
     "fullName": "Sanju Samson",
@@ -53102,11 +52171,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "spinner",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -53369,10 +52434,7 @@
     "dnaTags": [
       "pacer",
       "retired-legend",
-      "overseas",
-      "lowerOrder",
-      "overseas-player",
-      "retired-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -53641,12 +52703,7 @@
     "dnaTags": [
       "spinner",
       "left-hander",
-      "domestic",
-      "journeyman",
-      "active-player",
-      "indian-player",
-      "lowerOrder",
-      "middleOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -53937,18 +52994,13 @@
       "name": 1
     },
     "era": "modern-era",
-    "archetype": "sheet-anchor",
+    "archetype": "explosive-finisher",
     "dnaTags": [
+      "finisher",
+      "power-hitter",
       "anchor",
       "pacer",
-      "domestic",
-      "accumulator",
-      "active-player",
-      "aggressor",
-      "finisher",
-      "indian-player",
-      "lowerOrder",
-      "middleOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -54248,15 +53300,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "journeyman-player"
+      "journeyman"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 50,
     "rarity": "rare",
     "fullName": "Shardul Thakur",
@@ -54549,16 +53595,11 @@
       "name": 1
     },
     "era": "modern-era",
-    "archetype": "batting-allrounder",
+    "archetype": "allrounder-finisher",
     "dnaTags": [
-      "pacer",
-      "domestic",
-      "active-player",
       "finisher",
-      "indian-player",
-      "lowerOrder",
-      "middleOrder",
-      "post-2020-player"
+      "pacer",
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -54848,10 +53889,7 @@
     "archetype": "gloveman",
     "dnaTags": [
       "wicketkeeper",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -55101,20 +54139,15 @@
       "name": 1
     },
     "era": "modern-era",
-    "archetype": "middle-order-bat",
+    "archetype": "explosive-finisher",
     "dnaTags": [
+      "finisher",
+      "power-hitter",
       "pacer",
       "left-hander",
       "defensive",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "finisher",
-      "lowerOrder",
-      "middleOrder",
-      "one-franchise-player",
-      "overseas-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -55412,18 +54445,9 @@
       "playoffs-hero",
       "domestic",
       "journeyman",
-      "title-winner",
-      "accumulator",
-      "active-player",
-      "early-ipl-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player",
-      "topOrder"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 83,
     "rarity": "common",
     "fullName": "Shikhar Dhawan",
@@ -55743,16 +54767,9 @@
       "aggressive",
       "fan-favorite",
       "playoffs-hero",
-      "overseas",
-      "active-player",
-      "aggressor",
-      "lowerOrder",
-      "middleOrder",
-      "overseas-player"
+      "overseas"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 50,
     "rarity": "rare",
     "fullName": "Shimron Hetmyer",
@@ -56047,12 +55064,7 @@
       "pacer",
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "lowerOrder",
-      "middleOrder",
-      "one-franchise-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -56332,11 +55344,7 @@
       "pacer",
       "death-bowler",
       "retired-legend",
-      "domestic",
-      "deathBowler",
-      "indian-player",
-      "one-franchise-player",
-      "retired-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -56621,10 +55629,7 @@
     "dnaTags": [
       "spinner",
       "defensive",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "middleOrder"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -56899,16 +55904,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "title-winner",
-      "accumulator",
-      "active-player",
-      "indian-player",
-      "ipl-icon",
-      "middleOrder"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 93,
     "rarity": "common",
     "fullName": "Shreyas Iyer",
@@ -57211,18 +56209,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "title-winner",
-      "accumulator",
-      "active-player",
-      "elite-run-scorer",
-      "indian-player",
-      "ipl-icon",
-      "match-winner",
-      "topOrder"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 93,
     "rarity": "common",
     "fullName": "Shubman Gill",
@@ -57548,10 +56537,7 @@
     "archetype": "middle-order-bat",
     "dnaTags": [
       "pacer",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "post-2020-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -57829,12 +56815,7 @@
       "anchor",
       "wicketkeeper",
       "retired-legend",
-      "domestic",
-      "accumulator",
-      "indian-player",
-      "middleOrder",
-      "post-2020-player",
-      "retired-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -58115,28 +57096,12 @@
       "dual-threat",
       "carrom-ball",
       "overseas-icon",
-      "reinvented-opener",
-      "active-player",
-      "aggressor",
-      "dual-role-reinvention",
-      "fan-favorite",
-      "ipl-icon",
-      "kkr-icon",
-      "mysterySpinner",
-      "one-franchise-player",
-      "opener",
-      "overseas-player",
-      "powerplay-disruptor",
-      "spinner",
-      "topOrder"
+      "reinvented-opener"
     ],
     "iconicMoments": [
-      "2024-opener-transformation",
-      "KKR-loyalty",
       "mystery-bowling-debut",
-      "mystery-spin-breakout",
-      "opener-reinvention",
-      "playoff-impact"
+      "2024-opener-transformation",
+      "KKR-loyalty"
     ],
     "popularityScore": 80,
     "rarity": "rare",
@@ -58435,23 +57400,18 @@
       "name": 1
     },
     "era": "golden-era",
-    "archetype": "middle-order-bat",
+    "archetype": "power-hitter",
     "dnaTags": [
+      "power-hitter",
       "pacer",
+      "aggressive",
       "iconic",
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "serial-winner",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "ipl-icon",
-      "middleOrder"
+      "serial-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 89,
     "rarity": "common",
     "fullName": "Suryakumar Yadav",
@@ -58730,12 +57690,7 @@
     "archetype": "batting-allrounder",
     "dnaTags": [
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player",
-      "short-career-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -59002,12 +57957,7 @@
     "dnaTags": [
       "spinner",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "lowerOrder",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -59276,11 +58226,7 @@
       "spinner",
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -59556,16 +58502,13 @@
       "name": 1
     },
     "era": "expansion-era",
-    "archetype": "death-overs-pacer",
+    "archetype": "yorker-specialist",
     "dnaTags": [
       "pacer",
       "death-bowler",
+      "yorker-specialist",
       "left-hander",
-      "domestic",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "yorkerSpecialist"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -59863,23 +58806,14 @@
     "archetype": "clutch-finisher",
     "dnaTags": [
       "finisher",
+      "anchor",
       "spinner",
       "left-hander",
       "playoffs-hero",
       "domestic",
-      "one-team-loyalist",
-      "accumulator",
-      "active-player",
-      "anchor",
-      "indian-player",
-      "lowerOrder",
-      "middleOrder",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 30,
     "rarity": "rare",
     "fullName": "Tilak Varma",
@@ -60190,12 +59124,7 @@
       "power-hitter",
       "spinner",
       "aggressive",
-      "overseas",
-      "active-player",
-      "aggressor",
-      "lowerOrder",
-      "middleOrder",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -60478,10 +59407,7 @@
     "dnaTags": [
       "wicketkeeper",
       "retired-legend",
-      "overseas",
-      "overseas-player",
-      "post-2020-player",
-      "retired-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -60757,11 +59683,7 @@
       "fan-favorite",
       "early-era-player",
       "overseas",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "journeyman-player",
-      "overseas-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 40,
@@ -61051,13 +59973,7 @@
       "left-hander",
       "aggressive",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -61333,9 +60249,7 @@
       "pacer",
       "left-hander",
       "fan-favorite",
-      "overseas",
-      "active-player",
-      "overseas-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 45,
@@ -61600,16 +60514,12 @@
       "name": 1
     },
     "era": "modern-era",
-    "archetype": "middle-order-bat",
+    "archetype": "power-hitter",
     "dnaTags": [
+      "power-hitter",
       "spinner",
-      "overseas",
-      "active-player",
-      "aggressor",
-      "lowerOrder",
-      "middleOrder",
-      "overseas-player",
-      "post-2020-player"
+      "aggressive",
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -61884,9 +60794,7 @@
     "archetype": "pace-spearhead",
     "dnaTags": [
       "pacer",
-      "domestic",
-      "active-player",
-      "indian-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -62150,10 +61058,7 @@
       "pacer",
       "death-bowler",
       "retired-legend",
-      "overseas",
-      "deathBowler",
-      "overseas-player",
-      "retired-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 20,
@@ -62433,17 +61338,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "journeyman",
-      "active-player",
-      "deathBowler",
-      "early-ipl-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player"
+      "journeyman"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 80,
     "rarity": "common",
     "fullName": "Umesh Yadav",
@@ -62739,10 +61636,7 @@
     "archetype": "pace-spearhead",
     "dnaTags": [
       "pacer",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "post-2020-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -63020,13 +61914,7 @@
       "wicketkeeper",
       "aggressive",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player",
-      "short-career-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -63308,9 +62196,7 @@
     "archetype": "pace-spearhead",
     "dnaTags": [
       "pacer",
-      "domestic",
-      "active-player",
-      "indian-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -63570,12 +62456,7 @@
       "opener",
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -63854,10 +62735,7 @@
       "retired-legend",
       "early-era-player",
       "domestic",
-      "journeyman",
-      "indian-player",
-      "journeyman-player",
-      "retired-player"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 40,
@@ -64145,15 +63023,9 @@
       "iconic",
       "fan-favorite",
       "playoffs-hero",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "ipl-icon",
-      "mysterySpinner"
+      "domestic"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 80,
     "rarity": "common",
     "fullName": "Varun Chakaravarthy",
@@ -64431,12 +63303,7 @@
       "pacer",
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -64710,11 +63577,7 @@
     "dnaTags": [
       "pacer",
       "fan-favorite",
-      "domestic",
-      "active-player",
-      "indian-player",
-      "middleOrder",
-      "one-franchise-player"
+      "domestic"
     ],
     "iconicMoments": [],
     "popularityScore": 40,
@@ -64979,11 +63842,7 @@
     "dnaTags": [
       "pacer",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -65257,11 +64116,7 @@
       "spinner",
       "left-hander",
       "domestic",
-      "one-team-loyalist",
-      "active-player",
-      "indian-player",
-      "one-franchise-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -65532,29 +64387,12 @@
       "orange-cap-winner",
       "consistency-king",
       "IPL-icon",
-      "all-format-legend",
-      "accumulator",
-      "active-player",
-      "early-ipl-player",
-      "fan-favorite",
-      "indian-player",
-      "intensity-leader",
-      "ipl-icon",
-      "loyal-franchise-icon",
-      "middleOrder",
-      "one-franchise-player",
-      "opener",
-      "pacer",
-      "rcb-icon",
-      "topOrder"
+      "all-format-legend"
     ],
     "iconicMoments": [
-      "2016-973-run-season",
       "2016-run-fest-973",
-      "4-orange-caps",
       "RCB-loyalty",
-      "multiple-orange-cap-seasons",
-      "playoff-impact"
+      "4-orange-caps"
     ],
     "popularityScore": 100,
     "rarity": "common",
@@ -65869,10 +64707,7 @@
     "archetype": "batting-allrounder",
     "dnaTags": [
       "spinner",
-      "overseas",
-      "active-player",
-      "overseas-player",
-      "post-2020-player"
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -66147,12 +64982,7 @@
       "left-hander",
       "fan-favorite",
       "domestic",
-      "journeyman",
-      "active-player",
-      "indian-player",
-      "journeyman-player",
-      "lowerOrder",
-      "middleOrder"
+      "journeyman"
     ],
     "iconicMoments": [],
     "popularityScore": 45,
@@ -66465,12 +65295,7 @@
       "spinner",
       "aggressive",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "aggressor",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -66754,18 +65579,9 @@
       "playoffs-hero",
       "domestic",
       "journeyman",
-      "title-winner",
-      "accumulator",
-      "active-player",
-      "early-ipl-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player",
-      "topOrder"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 83,
     "rarity": "common",
     "fullName": "Wriddhiman Saha",
@@ -67071,11 +65887,7 @@
     "dnaTags": [
       "pacer",
       "overseas",
-      "one-team-loyalist",
-      "active-player",
-      "one-franchise-player",
-      "overseas-player",
-      "post-2020-player"
+      "one-team-loyalist"
     ],
     "iconicMoments": [],
     "popularityScore": 25,
@@ -67343,15 +66155,9 @@
       "left-hander",
       "playoffs-hero",
       "domestic",
-      "title-winner",
-      "active-player",
-      "deathBowler",
-      "indian-player",
-      "post-2020-player"
+      "title-winner"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 33,
     "rarity": "rare",
     "fullName": "Yash Dayal",
@@ -67639,28 +66445,21 @@
       "name": 1
     },
     "era": "mega-auction-era",
-    "archetype": "anchor-opener",
+    "archetype": "aggressive-opener",
     "dnaTags": [
       "opener",
+      "power-hitter",
       "anchor",
       "spinner",
       "left-hander",
+      "aggressive",
       "iconic",
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "one-team-loyalist",
-      "accumulator",
-      "active-player",
-      "aggressor",
-      "indian-player",
-      "ipl-icon",
-      "one-franchise-player",
-      "topOrder"
+      "one-team-loyalist"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 80,
     "rarity": "common",
     "fullName": "Yashasvi Jaiswal",
@@ -67963,15 +66762,9 @@
       "fan-favorite",
       "playoffs-hero",
       "domestic",
-      "journeyman",
-      "active-player",
-      "indian-player",
-      "ipl-icon",
-      "journeyman-player"
+      "journeyman"
     ],
-    "iconicMoments": [
-      "playoff-impact"
-    ],
+    "iconicMoments": [],
     "popularityScore": 80,
     "rarity": "common",
     "fullName": "Yuzvendra Chahal",

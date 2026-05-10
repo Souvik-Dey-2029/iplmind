@@ -138,16 +138,21 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
 
   const activeTopCandidates = useMemo(() => {
     if (phase === "guessing" && guess) {
-      // Ensure the guessed player is ALWAYS #1 in the panel
-      const guessedName = guess.player?.name;
-      if (topCandidates.length > 0 && topCandidates[0]?.name !== guessedName) {
+      // Identity Consistency Enforcement
+      const guessedId = guess.canonicalPlayerId || guess.player?.canonicalPlayerId || guess.player?.id || guess.player?.name;
+      if (topCandidates.length > 0 && (topCandidates[0]?.id || topCandidates[0]?.player?.name) !== guessedId) {
         const reordered = [...topCandidates];
-        const idx = reordered.findIndex(c => (c.player?.name || c.name) === guessedName);
+        const idx = reordered.findIndex(c => (c.id || c.player?.canonicalPlayerId || c.player?.id || c.player?.name) === guessedId);
         if (idx > 0) {
           const [entry] = reordered.splice(idx, 1);
           reordered.unshift(entry);
-        } else if (idx === -1 && guessedName) {
-          reordered.unshift({ name: guessedName, probability: guess.probability || 1, player: guess.player });
+        } else if (idx === -1 && guess.player) {
+          reordered.unshift({ 
+            id: guessedId,
+            name: guess.player.name, 
+            probability: guess.probability || 1, 
+            player: guess.player 
+          });
           reordered.splice(5);
         }
         return reordered;
@@ -155,6 +160,25 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
     }
     return topCandidates;
   }, [phase, guess, topCandidates]);
+
+  // STRICT IDENTITY VALIDATION
+  const isRenderValid = useMemo(() => {
+    if (phase !== "guessing" || !guess) return true;
+    const backendCandidateId = guess.canonicalPlayerId || guess.player?.canonicalPlayerId;
+    const renderedPlayerId = guess.player?.canonicalPlayerId;
+    const topCandidateId = activeTopCandidates[0]?.id || activeTopCandidates[0]?.player?.canonicalPlayerId;
+    
+    // If mismatch detected, block render visually (or log error)
+    if (backendCandidateId !== renderedPlayerId || renderedPlayerId !== topCandidateId) {
+      console.error("🔥 CRITICAL IDENTITY MISMATCH 🔥", {
+        backendCandidateId,
+        renderedPlayerId,
+        topCandidateId,
+      });
+      return false; // Could be used to trigger an error boundary or fallback
+    }
+    return true;
+  }, [phase, guess, activeTopCandidates]);
 
   const mascot = getMascotState(phase, activeConfidence, questionNumber, lastAnswer, loading, finishedMessage);
 
@@ -690,6 +714,40 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
             <div className="ipl-bottom-item" style={{ borderLeft: "1px solid rgba(100,80,255,0.15)", paddingLeft: 32 }}>
               <div className="ipl-bottom-icon" style={{ background: "rgba(255,140,0,0.15)", color: "#ff8c00" }}>🛡️</div>
               <div><strong>Unlock Achievements</strong><br />Show off your skills</div>
+            </div>
+          </div>
+        )}
+
+        {/* DEBUG TRACE OVERLAY - Visible only when guessing and URL has ?debug=true */}
+        {typeof window !== "undefined" && window.location.search.includes("debug=true") && phase === "guessing" && guess && (
+          <div style={{ position: "fixed", bottom: 20, right: 20, background: "rgba(0,0,0,0.9)", border: "1px solid #ff0055", padding: 16, borderRadius: 8, zIndex: 9999, fontSize: 11, color: "#fff", fontFamily: "monospace", maxWidth: 300 }}>
+            <h4 style={{ color: "#ff0055", margin: "0 0 8px 0", fontSize: 13 }}>🔥 INFERENCE TRACE</h4>
+            <div style={{ display: "grid", gridTemplateColumns: "120px 1fr", gap: 4 }}>
+              <span style={{ color: "rgba(255,255,255,0.5)" }}>Transaction ID:</span>
+              <span style={{ color: "#00ffcc" }}>{inferenceIdRef.current}</span>
+              
+              <span style={{ color: "rgba(255,255,255,0.5)" }}>Canonical ID:</span>
+              <span style={{ color: "#00ffcc" }}>{guess.canonicalPlayerId || guess.player?.canonicalPlayerId || "MISSING"}</span>
+              
+              <span style={{ color: "rgba(255,255,255,0.5)" }}>Rendered Player:</span>
+              <span style={{ color: guess.player?.canonicalPlayerId === (guess.canonicalPlayerId || guess.player?.canonicalPlayerId) ? "#00ffcc" : "#ff0055" }}>
+                {guess.player?.name}
+              </span>
+              
+              <span style={{ color: "rgba(255,255,255,0.5)" }}>Top Candidate [0]:</span>
+              <span style={{ color: activeTopCandidates[0]?.id === (guess.canonicalPlayerId || guess.player?.canonicalPlayerId) ? "#00ffcc" : "#ff0055" }}>
+                {activeTopCandidates[0]?.name}
+              </span>
+              
+              <span style={{ color: "rgba(255,255,255,0.5)" }}>Reasoning Match:</span>
+              <span style={{ color: guess.explanation.includes(guess.player?.name.split(" ")[0]) || guess.explanation.includes(guess.player?.name) ? "#00ffcc" : "#ffaa00" }}>
+                {guess.explanation.includes(guess.player?.name.split(" ")[0]) ? "VALID" : "UNVERIFIED"}
+              </span>
+              
+              <span style={{ color: "rgba(255,255,255,0.5)" }}>Identity Status:</span>
+              <span style={{ color: isRenderValid ? "#00ffcc" : "#ff0055", fontWeight: "bold" }}>
+                {isRenderValid ? "SYNCED ✅" : "DESYNC ❌"}
+              </span>
             </div>
           </div>
         )}

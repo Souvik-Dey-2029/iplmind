@@ -409,6 +409,7 @@ async function makeGuess(session) {
 
   // 4. BUILD ATOMIC GUESS OBJECT — all fields reference the same candidate
   session.guess = {
+    canonicalPlayerId: playerData.canonicalPlayerId || playerData.id,
     player: playerData,
     confidence: frozenConfidence,
     probability: topCandidate.probability,
