@@ -409,8 +409,9 @@ function handleFailure(session) {
  * Generate the next question for the session.
  */
 async function generateNextQuestion(session) {
-  // AI Adaptive Questioning for small candidate pools (where static templates fail to differentiate obscure players)
-  if (session.candidates.length <= 10 && session.candidates.length > 1) {
+  // AI Adaptive Questioning: triggers for small pools OR when reasoning stagnates
+  const shouldUseAI = (session.candidates.length <= 15 && session.candidates.length > 1) || session.isStagnating;
+  if (shouldUseAI) {
       try {
           const aiQuestion = await generateAdaptiveQuestion(session.candidates, session.questionHistory);
           if (aiQuestion && validateQuestion(aiQuestion)) {

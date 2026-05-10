@@ -281,7 +281,7 @@ Write a brief, confident 1-2 sentence explanation of why this player matches all
 
 /**
  * Generate an adaptive, highly contextual question based on remaining candidates.
- * Maximizes information gain by splitting the candidate pool logically.
+ * V3: Now includes candidate trait profiles so Gemini can make truly differentiating questions.
  */
 export async function generateAdaptiveQuestion(candidates, previousQA) {
     if (!candidates || candidates.length === 0) return null;
@@ -290,33 +290,55 @@ export async function generateAdaptiveQuestion(candidates, previousQA) {
         .map((qa, i) => `Q${i + 1}: ${qa.question} → ${qa.answer}`)
         .join("\n");
 
-    const candidateNames = candidates.map(c => c.name).slice(0, 15).join(", ");
+    // Build trait profiles for each candidate so Gemini can find differentiators
+    const candidateProfiles = candidates.slice(0, 12).map(c => {
+        const traits = [];
+        if (c.role) traits.push(c.role);
+        if (c.country) traits.push(c.country);
+        if (c.currentTeam) traits.push(c.currentTeam);
+        if (c.opener) traits.push("opener");
+        if (c.finisher) traits.push("finisher");
+        if (c.wicketKeeper) traits.push("wicketkeeper");
+        if (c.captain) traits.push("captain");
+        if (c.spinner) traits.push("spinner");
+        if (c.pacer) traits.push("pacer");
+        if (c.leftHanded) traits.push("left-handed");
+        if (c.overseas) traits.push("overseas");
+        if (c.active) traits.push("active");
+        if (!c.active) traits.push("retired/inactive");
+        if (c.iconic) traits.push("iconic");
+        if (c.orangeCap) traits.push("orange-cap");
+        if (c.purpleCap) traits.push("purple-cap");
+        return `• ${c.name}: ${traits.join(", ")}`;
+    }).join("\n");
 
-    const prompt = `You are the AI engine of an Akinator-style IPL player guessing game.
-The game is stuck trying to differentiate between these remaining players:
-${candidateNames}
+    const prompt = `You are the AI engine of an IPL cricket Akinator game. You must generate ONE question that BEST splits these ${candidates.length} remaining candidates into roughly equal groups.
 
-PREVIOUS QUESTIONS AND ANSWERS:
+REMAINING CANDIDATES WITH TRAITS:
+${candidateProfiles}
+
+PREVIOUS Q&A (do NOT repeat or contradict these):
 ${qaContext}
 
-CORE DESIGN RULES:
-1. Generate EXACTLY ONE simple yes/no question to split the remaining candidates.
-2. The question must be answerable within 1 second.
-3. Contain ONE simple idea only.
-4. Avoid historical/contextual complexity, long sentences, and controversy.
-5. MAXIMUM 16 words. Preferred 10-12 words.
-6. MUST NOT logically contradict any previous answers. If a player is a spinner, don't ask if they are a fast bowler.
+RULES:
+1. Return EXACTLY ONE simple yes/no question
+2. The question MUST split candidates roughly 50/50 based on their traits above
+3. Max 14 words. Preferred 8-12 words
+4. Do NOT ask about traits already confirmed/denied in previous Q&A
+5. Focus on DIFFERENTIATING traits — find what splits the group best
+6. Avoid controversy, drama, or overly specific season references
+7. If candidates differ by team, ask about team. If by role, ask about role. If by era, ask about era
 
-GOOD EXAMPLES:
-- Is this player mainly a bowler?
-- Has this player captained an IPL team?
-- Is this player a left-handed batter?
+GOOD SPLITTING QUESTIONS:
+- "Has this player played for Mumbai Indians?" (splits by team)
+- "Is this player currently active in IPL?" (splits by era)
+- "Is this player known for explosive batting?" (splits by play style)
 
-Return ONLY the text of the question. Nothing else.`;
+Return ONLY the question text. Nothing else.`;
 
     try {
         const responseText = await withFallback("generateAdaptiveQuestion", prompt);
-        return responseText.trim();
+        return responseText.replace(/^["']|["']$/g, "").trim();
     } catch (error) {
         console.error("Generate adaptive question error:", error);
         logError("aiProvider", "generateAdaptiveQuestion failed", error);

@@ -1,51 +1,71 @@
-import fs from "fs";
-import path from "path";
+/**
+ * Learning Memory — Persistent Global Intelligence System
+ * 
+ * V3: Hybrid local + Firebase Firestore persistence.
+ * - Local in-memory cache for fast reads during gameplay
+ * - Async Firestore sync for global persistence across deployments
+ * - Falls back gracefully to local-only if Firebase is unavailable
+ */
 
-const MEMORY_FILE = path.join(process.cwd(), "data", "learning_memory.json");
+import { adminDb } from "./firebaseAdmin";
 
+// In-memory cache (fast reads during gameplay)
 let memoryState = {
   playerPopularity: {},        // playerName -> count of times picked
   playerDifficulty: {},        // playerName -> count of times AI missed
-  questionEffectiveness: {},   // questionId -> { successes, total, avgEntropyDrop }
+  questionEffectiveness: {},   // questionId -> { successes, total }
   confusionClusters: {},       // "playerA|playerB" -> count of confusions
-  failedSessions: [],          // Last 50 failed sessions for analysis
   totalGames: 0,
   totalSuccesses: 0,
   totalFailures: 0,
+  lastSyncedAt: null,
 };
 
-const MAX_FAILED_SESSIONS = 50;
+const FIRESTORE_COLLECTION = "learning_memory";
+const FIRESTORE_DOC_ID = "global_state";
+let initialized = false;
 
-// Initialize memory on load
+/**
+ * Initialize memory — load from Firestore if available, else start fresh.
+ */
 export async function initLearningMemory() {
-  try {
-    if (!fs.existsSync(path.dirname(MEMORY_FILE))) {
-      fs.mkdirSync(path.dirname(MEMORY_FILE), { recursive: true });
-    }
+  if (initialized) return;
+  initialized = true;
 
-    if (fs.existsSync(MEMORY_FILE)) {
-      const data = fs.readFileSync(MEMORY_FILE, "utf-8");
-      memoryState = { ...memoryState, ...JSON.parse(data) };
+  try {
+    if (adminDb) {
+      const doc = await adminDb.collection(FIRESTORE_COLLECTION).doc(FIRESTORE_DOC_ID).get();
+      if (doc.exists) {
+        const data = doc.data();
+        memoryState = { ...memoryState, ...data };
+        console.log("[learningMemory] Loaded global state from Firestore");
+      } else {
+        await syncToFirestore();
+        console.log("[learningMemory] Created new Firestore document");
+      }
     } else {
-      saveMemory();
+      console.log("[learningMemory] Firebase unavailable — using in-memory only");
     }
   } catch (error) {
-    console.error("[learningMemory] Failed to init memory", error);
+    console.warn("[learningMemory] Firestore init failed, using in-memory:", error.message);
   }
 }
 
-/** Save memory state to disk */
-function saveMemory() {
+/**
+ * Async sync to Firestore (fire-and-forget, non-blocking).
+ */
+async function syncToFirestore() {
+  if (!adminDb) return;
   try {
-    fs.writeFileSync(MEMORY_FILE, JSON.stringify(memoryState, null, 2));
+    memoryState.lastSyncedAt = new Date().toISOString();
+    await adminDb.collection(FIRESTORE_COLLECTION).doc(FIRESTORE_DOC_ID).set(memoryState, { merge: true });
   } catch (error) {
-    console.error("[learningMemory] Failed to save memory", error);
+    console.warn("[learningMemory] Firestore sync failed:", error.message);
   }
 }
 
 /**
  * Record a successful game — player was guessed correctly.
- * Stores which questions led to convergence for boosting.
  */
 export function recordSuccess(playerName, questions) {
   memoryState.totalGames++;
@@ -57,24 +77,26 @@ export function recordSuccess(playerName, questions) {
   }
 
   // Track which questions contributed to a successful guess
-  questions.forEach((q) => {
-    if (q.questionId) {
-      const entry = memoryState.questionEffectiveness[q.questionId] || {
-        successes: 0,
-        total: 0,
-      };
-      entry.successes++;
-      entry.total++;
-      memoryState.questionEffectiveness[q.questionId] = entry;
-    }
-  });
+  if (questions) {
+    questions.forEach((q) => {
+      if (q.questionId) {
+        const entry = memoryState.questionEffectiveness[q.questionId] || {
+          successes: 0,
+          total: 0,
+        };
+        entry.successes++;
+        entry.total++;
+        memoryState.questionEffectiveness[q.questionId] = entry;
+      }
+    });
+  }
 
-  saveMemory();
+  // Non-blocking persist
+  syncToFirestore();
 }
 
 /**
  * Record a failed game — AI guessed wrong or gave up.
- * Stores the full session for learning analysis.
  */
 export function recordFailure(correctPlayerName, questionHistory = [], guessedPlayerName = null) {
   memoryState.totalGames++;
@@ -86,49 +108,44 @@ export function recordFailure(correctPlayerName, questionHistory = [], guessedPl
       (memoryState.playerDifficulty[key] || 0) + 1;
   }
 
-  // Track confusion clusters — which players does the AI confuse?
+  // Track confusion clusters
   if (guessedPlayerName && correctPlayerName && guessedPlayerName !== correctPlayerName) {
     const clusterKey = [guessedPlayerName, correctPlayerName].sort().join("|");
     memoryState.confusionClusters[clusterKey] =
       (memoryState.confusionClusters[clusterKey] || 0) + 1;
   }
 
-  // Store failed session for future training (capped at 50)
-  memoryState.failedSessions.push({
-    correctPlayer: correctPlayerName,
-    guessedPlayer: guessedPlayerName,
-    questions: questionHistory.map((q) => ({
-      questionId: q.questionId,
-      category: q.category,
-      answer: q.answer,
-    })),
-    timestamp: new Date().toISOString(),
-  });
-
-  // Keep only the most recent failed sessions
-  if (memoryState.failedSessions.length > MAX_FAILED_SESSIONS) {
-    memoryState.failedSessions = memoryState.failedSessions.slice(-MAX_FAILED_SESSIONS);
+  // Penalize questions that were used in failed sessions
+  if (questionHistory) {
+    questionHistory.forEach((q) => {
+      if (q.questionId) {
+        const entry = memoryState.questionEffectiveness[q.questionId] || {
+          successes: 0,
+          total: 0,
+        };
+        entry.total++;
+        memoryState.questionEffectiveness[q.questionId] = entry;
+      }
+    });
   }
 
-  // Penalize questions that were used in failed sessions
-  questionHistory.forEach((q) => {
-    if (q.questionId) {
-      const entry = memoryState.questionEffectiveness[q.questionId] || {
-        successes: 0,
-        total: 0,
-      };
-      entry.total++;
-      memoryState.questionEffectiveness[q.questionId] = entry;
-    }
-  });
+  // Store failure in Firestore for auto-enrichment pipeline
+  if (adminDb && correctPlayerName) {
+    adminDb.collection("failed_guesses").add({
+      correctPlayer: correctPlayerName,
+      guessedPlayer: guessedPlayerName || null,
+      questionCount: questionHistory?.length || 0,
+      timestamp: new Date().toISOString(),
+    }).catch(() => {}); // fire-and-forget
+  }
 
-  saveMemory();
+  // Non-blocking persist
+  syncToFirestore();
 }
 
 /**
  * Get prior probability boosts for players based on gameplay history.
- * Popular players get a slight boost. Difficult/missed players get an exposure boost
- * so the AI tries harder to identify them.
+ * Popular players get a slight boost. Difficult/missed players get an exposure boost.
  */
 export function getPlayerPriors(players) {
   const priors = {};
@@ -145,7 +162,6 @@ export function getPlayerPriors(players) {
     const activeBoost = p.active ? 0.3 : 0;
 
     // Base prior is 1.0. Popularity adds up to 0.5. Difficulty adds up to 1.0.
-    // Active players get +0.3 to prioritize current squad members.
     priors[name] = 1.0 + (popularityScore * 0.5) + (difficultyScore * 1.0) + activeBoost;
   });
 
@@ -154,48 +170,41 @@ export function getPlayerPriors(players) {
 
 /**
  * Get dynamic boosts for questions that are proven effective.
- * A question is "effective" if it appears more in successful games.
  */
 export function getQuestionBoost(questionId) {
   const entry = memoryState.questionEffectiveness[questionId];
   if (!entry || entry.total === 0) return 1.0;
 
-  // Success rate: what fraction of games using this question ended in success?
   const successRate = entry.successes / entry.total;
-
-  // Boost effective questions by up to 25%, penalize ineffective ones down to 0.8
+  // Boost effective questions by up to 25%, penalize ineffective ones to 0.8
   return 0.8 + (successRate * 0.45);
 }
 
 /**
  * Detect stagnation: returns true if the reasoning engine is stuck.
- * Checks if entropy has plateaued or top candidates haven't changed.
  */
 export function detectStagnation(entropyHistory, confidenceHistory) {
   if (entropyHistory.length < 3) return false;
 
-  // Check last 3 entropy values — if they're all very close, we're stagnating
   const recent = entropyHistory.slice(-3);
   const maxDelta = Math.max(
     Math.abs(recent[0] - recent[1]),
     Math.abs(recent[1] - recent[2])
   );
 
-  // If entropy is barely moving (< 0.1 bits change across 3 answers), flag stagnation
   if (maxDelta < 0.1) return true;
 
-  // Check confidence — if it hasn't grown in 3 questions, flag stagnation
   if (confidenceHistory.length >= 3) {
     const recentConf = confidenceHistory.slice(-3);
     const confGrowth = recentConf[2] - recentConf[0];
-    if (confGrowth < 1.0) return true; // Less than 1% confidence growth over 3 questions
+    if (confGrowth < 1.0) return true;
   }
 
   return false;
 }
 
 /**
- * Get session analytics summary for debugging and learning.
+ * Get session analytics summary.
  */
 export function getAnalytics() {
   return {
@@ -211,7 +220,7 @@ export function getAnalytics() {
     topConfusionClusters: Object.entries(memoryState.confusionClusters)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 10),
-    recentFailures: memoryState.failedSessions.slice(-5),
+    lastSyncedAt: memoryState.lastSyncedAt,
   };
 }
 
@@ -219,4 +228,3 @@ export function getAnalytics() {
 if (typeof window === "undefined") {
   initLearningMemory();
 }
-
