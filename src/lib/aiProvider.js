@@ -281,17 +281,17 @@ Write a brief, confident 1-2 sentence explanation of why this player matches all
 
 /**
  * Generate an adaptive, highly contextual question based on remaining candidates.
- * V3: Now includes candidate trait profiles so Gemini can make truly differentiating questions.
+ * V4: FULL SEMANTIC DISAMBIGUATION ENGINE
+ * Automatically switches modes based on candidate pool size to avoid generic questions late-game.
  */
-export async function generateAdaptiveQuestion(candidates, previousQA) {
+export async function generateAdaptiveQuestion(candidates, previousQA, mode = "entropy") {
     if (!candidates || candidates.length === 0) return null;
 
     const qaContext = previousQA
         .map((qa, i) => `Q${i + 1}: ${qa.question} → ${qa.answer}`)
         .join("\n");
 
-    // Build trait profiles for each candidate so Gemini can find differentiators
-    const candidateProfiles = candidates.slice(0, 12).map(c => {
+    const candidateProfiles = candidates.slice(0, Math.min(candidates.length, 12)).map(c => {
         const traits = [];
         if (c.role) traits.push(c.role);
         if (c.country) traits.push(c.country);
@@ -300,8 +300,7 @@ export async function generateAdaptiveQuestion(candidates, previousQA) {
         if (c.playerDNA?.tacticalIdentity) traits.push(c.playerDNA.tacticalIdentity);
         if (c.era) traits.push(c.era);
         if (c.dominantEra) traits.push(`dominant-era:${c.dominantEra}`);
-        if (c.strongestFranchiseAssociation) traits.push(c.strongestFranchiseAssociation);
-        if (c.franchiseLoyalty) traits.push(c.franchiseLoyalty);
+        if (c.strongestFranchiseAssociation) traits.push(`franchise-icon:${c.strongestFranchiseAssociation}`);
         if (c.obscurityProfile?.rarity) traits.push(`rarity:${c.obscurityProfile.rarity}`);
         if (c.opener) traits.push("opener");
         if (c.finisher) traits.push("finisher");
@@ -311,19 +310,53 @@ export async function generateAdaptiveQuestion(candidates, previousQA) {
         if (c.pacer) traits.push("pacer");
         if (c.leftHanded) traits.push("left-handed");
         if (c.overseas) traits.push("overseas");
-        if (c.active) traits.push("active");
-        if (!c.active) traits.push("retired/inactive");
+        if (!c.active) traits.push("retired");
         if (c.iconic) traits.push("iconic");
-        if (c.orangeCap) traits.push("orange-cap");
-        if (c.purpleCap) traits.push("purple-cap");
-        // Add top DNA tags for semantic differentiation
-        if (c.dnaTags?.length > 0) traits.push(...c.dnaTags.slice(0, 6));
-        if (c.playerDNA?.pressureTraits?.length > 0) traits.push(...c.playerDNA.pressureTraits.slice(0, 3));
-        if (c.obscurityProfile?.nicheIdentifiers?.length > 0) traits.push(...c.obscurityProfile.nicheIdentifiers.slice(0, 3));
-        return `• ${c.name}: ${traits.join(", ")}`;
+        if (c.dnaTags?.length > 0) traits.push(...c.dnaTags.slice(0, 4));
+        if (c.playerDNA?.pressureTraits?.length > 0) traits.push(...c.playerDNA.pressureTraits.slice(0, 2));
+        if (c.obscurityProfile?.nicheIdentifiers?.length > 0) traits.push(...c.obscurityProfile.nicheIdentifiers.slice(0, 2));
+        return `• ${c.name}: ${[...new Set(traits)].join(", ")}`;
     }).join("\n");
 
-    const prompt = `You are the AI engine of an IPL cricket Akinator game. You must generate ONE question that BEST splits these ${candidates.length} remaining candidates into roughly equal groups.
+    let prompt = "";
+
+    if (mode === "disambiguation") {
+        prompt = `You are the deep reasoning engine of an IPL Akinator game. The candidate pool is extremely small (${candidates.length} players).
+These players are highly semantically similar. You must find the SINGLE BIGGEST DIFFERENCE between them.
+
+REMAINING CANDIDATES WITH DEEP TRAITS:
+${candidateProfiles}
+
+PREVIOUS Q&A (DO NOT ASK THESE AGAIN):
+${qaContext}
+
+RULES:
+1. Return EXACTLY ONE simple yes/no question.
+2. The question MUST perfectly split the top 2-3 candidates based on a specific, undeniable historical or statistical fact.
+3. Focus on: Era differences, Franchise loyalty, Specific playstyles, Captaincy, or Cult status.
+4. DO NOT ask generic questions. Ask deep differentiator questions.
+5. Keep it under 15 words.
+
+Example for Dhoni vs Pant: "Did this player captain a franchise to multiple IPL titles?"
+
+Return ONLY the question text. Nothing else.`;
+
+    } else if (mode === "verification") {
+        const topCandidate = candidates[0];
+        prompt = `You are the final verification engine of an IPL Akinator game. We are 95% sure the user is thinking of: ${topCandidate.name}.
+
+TRAITS:
+${candidateProfiles.split('\n')[0]}
+
+PREVIOUS Q&A:
+${qaContext}
+
+Generate ONE high-certainty "silver bullet" verification question to confirm this is ${topCandidate.name}.
+It should be about their most famous iconic trait, defining IPL moment, or unique identity.
+Keep it under 15 words. Return ONLY the question text.`;
+
+    } else {
+        prompt = `You are the AI engine of an IPL cricket Akinator game. You must generate ONE question that BEST splits these ${candidates.length} remaining candidates into roughly equal groups.
 
 REMAINING CANDIDATES WITH TRAITS:
 ${candidateProfiles}
@@ -337,18 +370,10 @@ RULES:
 3. Max 14 words. Preferred 8-12 words
 4. Do NOT ask about traits already confirmed/denied in previous Q&A
 5. Focus on DIFFERENTIATING traits — find what splits the group best
-6. Avoid controversy, drama, or overly specific season references
-7. Prefer semantic differentiators: era, franchise identity, IPL specialist, cult hero, finisher, pressure role, rarity
-8. Use Gemini/OpenRouter only for phrasing; deterministic scoring will evaluate the answer
-
-GOOD SPLITTING QUESTIONS:
-- "Has this player played for Mumbai Indians?" (splits by team)
-- "Is this player currently active in IPL?" (splits by era)
-- "Is this player known for explosive batting?" (splits by play style)
-- "Is this player remembered more for IPL than internationals?" (splits by IPL identity)
-- "Was this player strongly tied to one franchise?" (splits by franchise identity)
+6. Prefer semantic differentiators: era, franchise identity, IPL specialist, cult hero, finisher, pressure role, rarity
 
 Return ONLY the question text. Nothing else.`;
+    }
 
     try {
         const responseText = await withFallback("generateAdaptiveQuestion", prompt);

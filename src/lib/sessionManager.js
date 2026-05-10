@@ -324,6 +324,38 @@ async function makeGuess(session) {
     session.questionNumber
   );
 
+  // FINAL VERIFICATION MODE
+  if (finalValidation.valid && !session.verificationAsked && session.candidates.length > 1) {
+    try {
+      const verifQuestion = await generateAdaptiveQuestion([rawPlayerData], session.questionHistory, "verification");
+      if (verifQuestion && validateQuestion(verifQuestion)) {
+        session.verificationAsked = true;
+        session.status = "playing";
+        session.currentQuestion = verifQuestion;
+        session.currentQuestionMeta = null;
+        
+        return {
+          status: "playing",
+          question: verifQuestion,
+          questionNumber: session.questionNumber,
+          candidatesRemaining: session.candidates.length,
+          topCandidates: getDisplayCandidates(session).slice(0, 5),
+          entropy: session.entropyHistory.at(-1) || 0,
+          confidence: session.confidenceHistory.at(-1) || 0,
+          adaptiveQuestionLimit: session.adaptiveQuestionLimit,
+          wrongGuessCount: session.wrongGuessCount,
+          canUndo: (session.historyStack?.length || 0) > 0,
+          debugReasoningPanel: buildDebugReasoningPanel(session),
+          commentary: "I think I know who it is... just one final check! 🎯",
+          analysisHints: generateAnalysisHints(session),
+          suspectedTeam: detectSuspectedTeam(session),
+        };
+      }
+    } catch (e) {
+      console.warn("Verification question failed, proceeding to guess", e);
+    }
+  }
+
   if (!finalValidation.valid && session.questionNumber < session.maxTotalQuestions - 2 && (session.semanticGuessDeferrals || 0) < 2) {
     session.status = "playing";
     session.semanticGuessDeferrals = (session.semanticGuessDeferrals || 0) + 1;
@@ -457,7 +489,10 @@ async function generateNextQuestion(session) {
   const shouldUseAI = (session.candidates.length <= 15 && session.candidates.length > 1) || session.isStagnating;
   if (shouldUseAI) {
       try {
-          const aiQuestion = await generateAdaptiveQuestion(session.candidates, session.questionHistory);
+          let mode = "entropy";
+          if (session.candidates.length <= 4) mode = "disambiguation";
+          
+          const aiQuestion = await generateAdaptiveQuestion(session.candidates, session.questionHistory, mode);
           if (aiQuestion && validateQuestion(aiQuestion)) {
              session.currentQuestion = aiQuestion;
              session.currentQuestionMeta = null; // Mark as dynamic AI question (evaluated via evaluateCandidates)

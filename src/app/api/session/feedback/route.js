@@ -76,6 +76,11 @@ export async function POST(request) {
   } catch (error) {
     logError("session/feedback", "Failed to process feedback", error);
     return Response.json(
+
+    return Response.json({ status: "finished", feedback });
+  } catch (error) {
+    logError("session/feedback", "Failed to process feedback", error);
+    return Response.json(
       { error: error.message || "Internal server error" },
       { status: 500 }
     );
@@ -83,30 +88,36 @@ export async function POST(request) {
 }
 
 /**
- * Persist feedback to Firebase asynchronously.
- * Non-blocking — doesn't hold up the response.
+ * Persist feedback to Firebase asynchronously with retry-safe logic.
+ * Ensures the leaderboard never freezes due to dropped connections.
  */
 async function persistFeedback(feedback, sessionId) {
-  try {
-    if (!db) {
-      logWarn("session/feedback", "Firestore unavailable, skipping persistence", { sessionId });
-      return;
-    }
-    await Promise.race([
-      addDoc(collection(db, "game_sessions"), feedback),
-      new Promise((_, reject) =>
-        setTimeout(
-          () => reject(new Error("Firestore write timed out")),
-          FEEDBACK_TIMEOUT_MS
+  if (!db) {
+    logWarn("session/feedback", "Firestore unavailable, skipping persistence", { sessionId });
+    return;
+  }
+
+  let attempt = 0;
+  const maxRetries = 3;
+
+  while (attempt < maxRetries) {
+    try {
+      await Promise.race([
+        addDoc(collection(db, "game_sessions"), feedback),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error("Firestore write timed out")), FEEDBACK_TIMEOUT_MS)
         )
-      ),
-    ]);
-    logInfo("session/feedback", "Feedback persisted to Firestore", { sessionId });
-  } catch (firebaseError) {
-    logWarn("session/feedback", "Failed to persist to Firestore", {
-      error: firebaseError?.message || "Unknown error",
-      sessionId,
-    });
-    // Continue despite Firebase failure - don't block user experience
+      ]);
+      logInfo("session/feedback", "Successfully persisted session data", { sessionId, attempt: attempt + 1 });
+      return; // Success, exit loop
+    } catch (error) {
+      attempt++;
+      logWarn("session/feedback", `Firestore persistence failed (Attempt ${attempt}/${maxRetries})`, { sessionId, error: error.message });
+      if (attempt >= maxRetries) {
+        logError("session/feedback", "Failed to persist feedback after max retries", error, { sessionId });
+      } else {
+        await new Promise(r => setTimeout(r, 500 * attempt)); // Exponential-ish backoff
+      }
+    }
   }
 }
