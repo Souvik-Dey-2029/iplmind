@@ -334,6 +334,13 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
     setLoading(true);
     setError("");
 
+    setPhase("finished");
+    setFinishedMessage(
+      wasCorrect
+        ? "🎯 Nailed it! The cricket brain stays undefeated."
+        : `📝 Noted! I'll remember ${correctPlayer || "that player"} for next time.`
+    );
+
     try {
       const response = await fetch(getApiUrl("/api/session/feedback"), {
         method: "POST",
@@ -342,13 +349,6 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Could not save feedback");
-
-      setPhase("finished");
-      setFinishedMessage(
-        wasCorrect
-          ? "🎯 Nailed it! The cricket brain stays undefeated."
-          : `📝 Noted! I'll remember ${correctPlayer || "that player"} for next time.`
-      );
     } catch (err) {
       setError(err.message);
     } finally {
@@ -362,14 +362,15 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
     inFlightRef.current = true;
     setLoading(true);
 
+    setPhase("finished");
+    setFinishedMessage(`📝 ${correctPlayer || "Unknown player"} — I'll learn from this!`);
+
     try {
       await fetch(getApiUrl("/api/session/feedback"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ sessionId, action: "reveal", correctPlayerName: correctPlayer }),
       });
-      setPhase("finished");
-      setFinishedMessage(`📝 ${correctPlayer || "Unknown player"} — I'll learn from this!`);
     } catch (err) {
       setError(err.message);
     } finally {
