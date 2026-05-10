@@ -120,6 +120,11 @@ const staticQuestions = [
   question("iconic", "profile", "Is this player considered a well-known / iconic IPL name?", (p) => p.iconic),
   question("active", "era", "Is this player currently active in recent IPL seasons?", (p) => p.active),
 
+  // Stage 2b: Historical era questions (NEW — helps differentiate old/obscure players)
+  question("founding-era", "era", "Did this player debut in the first 3 seasons of IPL (2008-2010)?", (p) => p.era === "founding-era"),
+  question("veteran", "era", "Has this player been part of IPL for more than 10 years?", (p) => p.debutYear > 0 && p.debutYear <= 2015),
+  question("recent-debut", "era", "Did this player debut in IPL after 2020?", (p) => p.debutYear >= 2021),
+
   // Stage 3: Tactical attributes
   question("opener", "batting-role", "Does this player usually open the batting?", (p) => p.opener),
   question("middle-order", "batting-role", "Does this player bat in the middle order?", (p) => p.middleOrder),
@@ -135,6 +140,12 @@ const staticQuestions = [
   question("purple-cap", "achievement", "Has this player won an IPL Purple Cap?", (p) => p.purpleCap),
   question("playoffs-hero", "achievement", "Is this player known for clutch playoff performances?", (p) => p.playoffsHero),
   question("fan-favorite", "profile", "Is this player a fan favorite?", (p) => p.fanFavorite),
+
+  // Stage 3b: DNA-powered questions (NEW — semantic reasoning)
+  question("one-team-player", "profile", "Has this player been loyal to one IPL franchise?", (p) => p.dnaTags?.includes("one-team-loyalist") || (p.teams?.length === 1)),
+  question("title-winner", "achievement", "Has this player won an IPL title?", (p) => p.titlesWon > 0 || p.dnaTags?.includes("title-winner") || p.dnaTags?.includes("serial-winner")),
+  question("mystery-spin", "bowling-style", "Is this player known as a mystery spinner?", (p) => p.mysterySpinner || p.dnaTags?.includes("mystery-spinner")),
+  question("uncapped-domestic", "profile", "Is this player an uncapped / lesser-known domestic player?", (p) => !p.iconic && !p.fanFavorite && !p.captain && !p.overseas && p.rarity !== "common"),
 ];
 
 export function selectBestQuestion(candidates, probabilities, history = []) {

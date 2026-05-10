@@ -26,10 +26,10 @@ export function determinePhase(candidatesLength, questionNumber) {
 export function getAllowedCategories(phase) {
   switch (phase) {
     case "broad":
-      return ["role", "origin-class", "bowling-style", "batting-style"];
+      return ["role", "origin-class", "bowling-style", "batting-style", "era"];
     case "refinement":
       // Includes broad as fallback
-      return ["role", "origin-class", "bowling-style", "batting-style", "leadership", "batting-role", "bowling-role", "achievement"];
+      return ["role", "origin-class", "bowling-style", "batting-style", "era", "leadership", "batting-role", "bowling-role", "achievement", "profile"];
     case "precision":
       // All categories allowed
       return ["role", "origin-class", "bowling-style", "batting-style", "leadership", "batting-role", "bowling-role", "achievement", "origin", "current-team", "franchise-history", "profile"];

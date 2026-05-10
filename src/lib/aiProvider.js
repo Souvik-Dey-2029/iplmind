@@ -296,6 +296,8 @@ export async function generateAdaptiveQuestion(candidates, previousQA) {
         if (c.role) traits.push(c.role);
         if (c.country) traits.push(c.country);
         if (c.currentTeam) traits.push(c.currentTeam);
+        if (c.archetype) traits.push(c.archetype);
+        if (c.era) traits.push(c.era);
         if (c.opener) traits.push("opener");
         if (c.finisher) traits.push("finisher");
         if (c.wicketKeeper) traits.push("wicketkeeper");
@@ -309,6 +311,8 @@ export async function generateAdaptiveQuestion(candidates, previousQA) {
         if (c.iconic) traits.push("iconic");
         if (c.orangeCap) traits.push("orange-cap");
         if (c.purpleCap) traits.push("purple-cap");
+        // Add top DNA tags for semantic differentiation
+        if (c.dnaTags?.length > 0) traits.push(...c.dnaTags.slice(0, 3));
         return `• ${c.name}: ${traits.join(", ")}`;
     }).join("\n");
 
