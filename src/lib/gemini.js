@@ -1,4 +1,4 @@
-// OpenRouter AI client - handles AI-powered question generation and explanations
+h my uploadBytes// OpenRouter AI client - handles AI-powered question generation and explanations
 import { sanitizePlayerForRender } from "./playerNormalizer";
 
 // Initialize Gemini with server-side API key

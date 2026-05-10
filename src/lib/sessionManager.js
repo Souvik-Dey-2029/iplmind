@@ -108,6 +108,7 @@ export function createSession() {
     currentQuestion: null,
     currentQuestionMeta: null,
     createdAt: Date.now(),
+    historyStack: [],           // V3: Immutable snapshots for undo (max 20 deep)
   };
 
   sessions.set(sessionId, session);
@@ -119,6 +120,57 @@ export function createSession() {
  */
 export function getSession(sessionId) {
   return sessions.get(sessionId) || null;
+}
+
+/**
+ * V3: Undo the last answer — restore exact previous engine snapshot.
+ * Pops from historyStack and replaces current state entirely.
+ * No recalculation, no regeneration — pure snapshot restoration.
+ */
+export function undoLastAnswer(sessionId) {
+  const session = sessions.get(sessionId);
+  if (!session) throw new Error("Session not found");
+
+  if (!session.historyStack || session.historyStack.length === 0) {
+    return { canUndo: false, error: "No history to undo" };
+  }
+
+  // Pop the latest snapshot
+  const snapshot = session.historyStack.pop();
+
+  // Restore EXACT previous state
+  session.candidates = snapshot.candidates;
+  session.probabilities = snapshot.probabilities;
+  session.questionHistory = snapshot.questionHistory;
+  session.entropyHistory = snapshot.entropyHistory;
+  session.confidenceHistory = snapshot.confidenceHistory;
+  session.questionNumber = snapshot.questionNumber;
+  session.currentQuestion = snapshot.currentQuestion;
+  session.currentQuestionMeta = snapshot.currentQuestionMeta;
+  session.status = snapshot.status;
+  session.guess = snapshot.guess;
+  session.wrongGuessCount = snapshot.wrongGuessCount;
+  session.excludedPlayers = snapshot.excludedPlayers;
+  session.isStagnating = snapshot.isStagnating;
+
+  // Get display data from restored state
+  const ranked = getDisplayCandidates(session).slice(0, 5);
+
+  return {
+    canUndo: true,
+    status: "playing",
+    question: session.currentQuestion,
+    questionNumber: session.questionNumber,
+    candidatesRemaining: session.candidates.length,
+    topCandidates: ranked,
+    entropy: session.entropyHistory.at(-1) || 0,
+    confidence: session.confidenceHistory.at(-1) || 0,
+    adaptiveQuestionLimit: session.adaptiveQuestionLimit,
+    wrongGuessCount: session.wrongGuessCount,
+    canUndoMore: session.historyStack.length > 0,
+    debugReasoningPanel: buildDebugReasoningPanel(session),
+    commentary: "⏪ Rewound! Let's try that again...",
+  };
 }
 
 /**
@@ -135,6 +187,28 @@ export async function processAnswer(sessionId, answer) {
 
   const currentQuestion = session.currentQuestion;
   if (!currentQuestion) throw new Error("No current question to answer");
+
+  // V3: Capture exact snapshot BEFORE applying any mutations
+  const snapshot = {
+    candidates: [...session.candidates],
+    probabilities: { ...session.probabilities },
+    questionHistory: [...session.questionHistory],
+    entropyHistory: [...session.entropyHistory],
+    confidenceHistory: [...session.confidenceHistory],
+    questionNumber: session.questionNumber,
+    currentQuestion: session.currentQuestion,
+    currentQuestionMeta: session.currentQuestionMeta ? { ...session.currentQuestionMeta } : null,
+    status: session.status,
+    guess: session.guess,
+    wrongGuessCount: session.wrongGuessCount,
+    excludedPlayers: new Set(session.excludedPlayers),
+    isStagnating: session.isStagnating || false,
+  };
+  session.historyStack.push(snapshot);
+  // Cap at 20 snapshots to prevent memory bloat
+  if (session.historyStack.length > 20) {
+    session.historyStack.shift();
+  }
 
   // Record the Q&A
   session.questionHistory.push({
@@ -353,6 +427,7 @@ async function generateNextQuestion(session) {
                 confidence: session.confidenceHistory.at(-1) || 0,
                 adaptiveQuestionLimit: session.adaptiveQuestionLimit,
                 wrongGuessCount: session.wrongGuessCount,
+                canUndo: (session.historyStack?.length || 0) > 0,
                 debugReasoningPanel: buildDebugReasoningPanel(session),
                 commentary: generateCommentary(session),
                 analysisHints: generateAnalysisHints(session),
@@ -397,6 +472,7 @@ async function generateNextQuestion(session) {
     confidence: session.confidenceHistory.at(-1) || 0,
     adaptiveQuestionLimit: session.adaptiveQuestionLimit,
     wrongGuessCount: session.wrongGuessCount,
+    canUndo: (session.historyStack?.length || 0) > 0,
     debugReasoningPanel: buildDebugReasoningPanel(session),
     commentary: generateCommentary(session),
     analysisHints: generateAnalysisHints(session),

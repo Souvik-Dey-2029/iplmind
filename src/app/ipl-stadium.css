@@ -316,6 +316,36 @@
 }
 .ipl-back-btn:hover { background: rgba(100,80,255,0.15); color: #fff; }
 
+/* ── Undo Button ── */
+.ipl-undo-btn {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 6px 14px; border-radius: 8px;
+  background: rgba(192,132,252,0.08);
+  border: 1px solid rgba(192,132,252,0.25);
+  color: rgba(192,132,252,0.8);
+  font-size: 12px; font-weight: 700;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer; transition: all 0.25s;
+  letter-spacing: 0.02em;
+}
+.ipl-undo-btn:hover {
+  background: rgba(192,132,252,0.15);
+  border-color: rgba(192,132,252,0.5);
+  color: #c084fc;
+  box-shadow: 0 0 16px rgba(192,132,252,0.2), 0 0 4px rgba(192,132,252,0.15);
+}
+.ipl-undo-btn:hover span {
+  display: inline-block;
+  animation: iplUndoSpin 0.4s ease-in-out;
+}
+.ipl-undo-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.ipl-undo-btn:disabled:hover { box-shadow: none; background: rgba(192,132,252,0.08); }
+@keyframes iplUndoSpin {
+  0% { transform: rotate(0deg); }
+  50% { transform: rotate(-30deg) scale(1.2); }
+  100% { transform: rotate(0deg); }
+}
+
 
 /* ═══════════════════════════════════════════════
    MOBILE RESPONSIVE

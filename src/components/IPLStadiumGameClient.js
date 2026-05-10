@@ -1,11 +1,67 @@
 "use client";
 
-import { useMemo, useRef, useState, useEffect } from "react";
+import { useMemo, useRef, useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const answerOptions = ["Yes", "No", "Maybe", "Don't Know"];
 const answerIcons = { Yes: "🏏", No: "🚫", Maybe: "🤔", "Don't Know": "🤷‍♂️" };
+
+// Team atmosphere colors for dynamic stadium adaptation
+const TEAM_COLORS = {
+  "Chennai Super Kings": { glow: "rgba(255,210,0,0.12)", accent: "#ffd700", label: "CSK" },
+  "Mumbai Indians": { glow: "rgba(0,100,255,0.12)", accent: "#004ba0", label: "MI" },
+  "Royal Challengers Bengaluru": { glow: "rgba(255,30,30,0.12)", accent: "#d4111e", label: "RCB" },
+  "Kolkata Knight Riders": { glow: "rgba(100,50,200,0.12)", accent: "#3a225d", label: "KKR" },
+  "Rajasthan Royals": { glow: "rgba(255,80,150,0.12)", accent: "#ea1a85", label: "RR" },
+  "Delhi Capitals": { glow: "rgba(0,80,200,0.12)", accent: "#004c93", label: "DC" },
+  "Sunrisers Hyderabad": { glow: "rgba(255,100,0,0.12)", accent: "#ff6600", label: "SRH" },
+  "Punjab Kings": { glow: "rgba(220,0,0,0.12)", accent: "#dc0032", label: "PBKS" },
+  "Gujarat Titans": { glow: "rgba(30,60,120,0.12)", accent: "#1c1c5e", label: "GT" },
+  "Lucknow Super Giants": { glow: "rgba(0,160,200,0.12)", accent: "#00a3d9", label: "LSG" },
+};
+
+// Animated number counter for candidate shrinking
+function AnimatedCounter({ value }) {
+  const [display, setDisplay] = useState(value);
+  useEffect(() => {
+    if (display === value) return;
+    const step = display > value ? -1 : 1;
+    const diff = Math.abs(display - value);
+    const speed = Math.max(8, Math.min(60, 600 / diff));
+    const timer = setTimeout(() => setDisplay(prev => {
+      const next = prev + step * Math.max(1, Math.floor(diff / 15));
+      return step > 0 ? Math.min(next, value) : Math.max(next, value);
+    }), speed);
+    return () => clearTimeout(timer);
+  }, [display, value]);
+  return <span>{display}</span>;
+}
+
+// AI Mind Scan Panel — rotating contextual analysis messages
+function MindScanPanel({ hints, candidatesRemaining }) {
+  const [activeHint, setActiveHint] = useState(0);
+  useEffect(() => {
+    if (!hints || hints.length === 0) return;
+    const timer = setInterval(() => setActiveHint(p => (p + 1) % hints.length), 2200);
+    return () => clearInterval(timer);
+  }, [hints]);
+  const currentHint = hints?.[activeHint] || "Scanning database...";
+  return (
+    <div className="ipl-ai-analysis">
+      <div className="ipl-ai-analysis-title"><span>🧠</span> AI MIND SCAN</div>
+      <AnimatePresence mode="wait">
+        <motion.div key={currentHint} className="ipl-ai-analysis-text"
+          initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }}
+          transition={{ duration: 0.25 }}>
+          {currentHint}
+        </motion.div>
+      </AnimatePresence>
+      <div className="ipl-ai-analysis-bar"><div className="ipl-ai-analysis-fill" /></div>
+      <div className="ipl-players-count"><AnimatedCounter value={candidatesRemaining || 842} /> Players remaining</div>
+    </div>
+  );
+}
 
 const MASCOT_STATES = {
   idle: { emoji: "🏏", text: "Think of any IPL player... I'll read your mind!" },
@@ -41,13 +97,22 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
   const [confidence, setConfidence] = useState(0);
   const [adaptiveQuestionLimit, setAdaptiveQuestionLimit] = useState(14);
   const [wrongGuessCount, setWrongGuessCount] = useState(0);
-  const [phase, setPhase] = useState("playing"); // Default to playing for auto-start
-  const [loading, setLoading] = useState(true); // Start loading immediately
+  const [phase, setPhase] = useState("playing");
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [correctPlayer, setCorrectPlayer] = useState("");
   const [finishedMessage, setFinishedMessage] = useState("");
   const [lastAnswer, setLastAnswer] = useState("");
   const [commentary, setCommentary] = useState("");
+  const [analysisHints, setAnalysisHints] = useState(["Initializing neural engine...", "Loading IPL archives...", "Calibrating inference model..."]);
+  const [suspectedTeam, setSuspectedTeam] = useState(null);
+  const [prevCandidates, setPrevCandidates] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth <= 768);
+  }, []);
+  const [canUndo, setCanUndo] = useState(false);
 
   const inFlightRef = useRef(false);
   const mascot = getMascotState(phase, confidence, questionNumber, lastAnswer);
@@ -71,6 +136,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
     setFinishedMessage("");
     setCorrectPlayer("");
     setWrongGuessCount(0);
+    setCanUndo(false);
 
     try {
       const response = await fetch(getApiUrl("/api/session/start"), { method: "POST" });
@@ -131,6 +197,10 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
       setQuestion(data.question);
       setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
       if (data.commentary) setCommentary(data.commentary);
+      if (data.analysisHints) setAnalysisHints(data.analysisHints);
+      if (data.suspectedTeam !== undefined) setSuspectedTeam(data.suspectedTeam);
+      setPrevCandidates(candidatesRemaining);
+      setCanUndo(data.canUndo || false);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -226,6 +296,41 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
     }
   }
 
+  async function handleUndo() {
+    if (!sessionId || inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch(getApiUrl("/api/session/undo"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not undo");
+
+      // Restore exact previous state from snapshot
+      setQuestion(data.question);
+      setQuestionNumber(data.questionNumber);
+      setCandidatesRemaining(data.candidatesRemaining);
+      setConfidence(data.confidence ?? 0);
+      setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
+      setWrongGuessCount(data.wrongGuessCount || 0);
+      setCanUndo(data.canUndoMore || false);
+      setGuess(null);
+      setPhase("playing");
+      setLastAnswer("");
+      if (data.commentary) setCommentary(data.commentary);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      inFlightRef.current = false;
+    }
+  }
+
   return (
     <div className="ipl-stadium-bg">
       {/* Header */}
@@ -235,7 +340,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
             <span style={{ fontSize: 24 }}>🏏</span>
             <span className="ipl-logo">IPL Genius</span>
           </div>
-          <div style={{ display: "flex", gap: 24, alignItems: "center", display: window?.innerWidth > 768 ? "flex" : "none" }}>
+          <div style={{ display: isMobile ? "none" : "flex", gap: 24, alignItems: "center" }}>
             <span className="ipl-nav-link active">Predict</span>
             <span className="ipl-nav-link">Leaderboard</span>
             <span className="ipl-nav-link">History</span>
@@ -248,35 +353,52 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
       </header>
 
       <main>
+        {/* Team Atmosphere Overlay */}
+        {suspectedTeam && TEAM_COLORS[suspectedTeam] && (
+          <motion.div key={suspectedTeam} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.5 }}
+            style={{ position: "fixed", inset: 0, background: `radial-gradient(ellipse at center, ${TEAM_COLORS[suspectedTeam].glow}, transparent 70%)`, pointerEvents: "none", zIndex: 0 }} />
+        )}
+
         <div className="ipl-game-layout">
           {/* Left Column: AI Assistant */}
           <div className="ipl-ai-section">
-              <div className="ipl-ai-bubble">
+              <motion.div className="ipl-ai-bubble" key={commentary || mascot.text}
+                initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
                 {commentary || mascot.text}
-              </div>
+              </motion.div>
               
               <div className="ipl-ai-avatar">
                 {mascot.emoji}
               </div>
 
-              <div className="ipl-ai-analysis">
-                <div className="ipl-ai-analysis-title">
-                  <span>🧠</span> AI ANALYSIS
-                </div>
-                <div className="ipl-ai-analysis-text">Scanning database...</div>
-                <div className="ipl-ai-analysis-bar"><div className="ipl-ai-analysis-fill" /></div>
-                <div className="ipl-players-count">{candidatesRemaining || 842} Players</div>
-              </div>
+              <MindScanPanel hints={analysisHints} candidatesRemaining={candidatesRemaining} />
+
+              {suspectedTeam && TEAM_COLORS[suspectedTeam] && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+                  style={{ padding: "8px 12px", borderRadius: 8, background: TEAM_COLORS[suspectedTeam].glow, border: `1px solid ${TEAM_COLORS[suspectedTeam].accent}33`, textAlign: "center", fontSize: 11, color: TEAM_COLORS[suspectedTeam].accent, fontWeight: 700, letterSpacing: "0.06em" }}>
+                  🏟️ {TEAM_COLORS[suspectedTeam].label} ATMOSPHERE
+                </motion.div>
+              )}
             </div>
 
             {/* Middle Column: Main Question/Action Area */}
             <div className="ipl-question-card ipl-glow">
               
               {/* Mobile & Desktop Back Button */}
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, gap: 8 }}>
                 <button className="ipl-back-btn" style={{ margin: 0, padding: "6px 12px", fontSize: "12px" }} onClick={onBackToHome}>
                   <span>←</span> Home
                 </button>
+                {canUndo && phase === "playing" && (
+                  <button
+                    className="ipl-undo-btn"
+                    disabled={loading}
+                    onClick={handleUndo}
+                    title="Undo last answer"
+                  >
+                    <span>↩</span> Undo
+                  </button>
+                )}
                 <div style={{ flex: 1, textAlign: "right" }}>
                   <span className="ipl-question-badge">
                     Q {questionNumber} / {adaptiveQuestionLimit}
@@ -320,28 +442,45 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
                 )}
 
                 {phase === "guessing" && guess && (
-                  <motion.div key="guessing" className="ipl-guess-reveal" initial={{ filter: "blur(12px)" }} animate={{ filter: "blur(0px)" }} transition={{ duration: 1.2 }}>
-                    <p style={{ color: "rgba(200,200,255,0.6)", fontSize: 13, fontWeight: 700, letterSpacing: "0.08em", marginBottom: 8 }}>
-                      MY GUESS IS
-                    </p>
+                  <motion.div key="guessing" initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 200, damping: 20 }}>
+                    <div style={{ textAlign: "center", marginBottom: 20 }}>
+                      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+                        style={{ display: "inline-block", padding: "4px 16px", borderRadius: 20, background: "rgba(255,140,0,0.15)", border: "1px solid rgba(255,140,0,0.3)", color: "#ff8c00", fontSize: 11, fontWeight: 800, letterSpacing: "0.1em", marginBottom: 12 }}>
+                        🎯 GUESS #{guess.guessNumber || 1}
+                      </motion.div>
+                    </div>
                     {guess.player?.name ? (
-                      <>
-                        <h2 className="ipl-guess-name">{guess.player.name}</h2>
-                        <p style={{ color: "rgba(200,200,255,0.5)", fontSize: 14, marginBottom: 16 }}>
-                          {(guessFacts(guess) || []).join(" • ")}
-                        </p>
-                        <p style={{ color: "#fff", fontSize: 15, lineHeight: 1.5, marginBottom: 24 }}>
+                      <div className="ipl-guess-reveal">
+                        <motion.div initial={{ filter: "blur(16px)", opacity: 0 }} animate={{ filter: "blur(0px)", opacity: 1 }} transition={{ duration: 1.2, delay: 0.2 }}>
+                          <div style={{ fontSize: 48, marginBottom: 8 }}>👀</div>
+                          <h2 className="ipl-guess-name" style={{ fontSize: "clamp(24px,5vw,36px)" }}>{guess.player.name}</h2>
+                          <p style={{ color: "rgba(200,200,255,0.5)", fontSize: 13, marginBottom: 6 }}>
+                            {(guessFacts(guess) || []).join(" • ")}
+                          </p>
+                          {guess.player.currentTeam && TEAM_COLORS[guess.player.currentTeam] && (
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
+                              style={{ display: "inline-block", padding: "4px 14px", borderRadius: 20, background: TEAM_COLORS[guess.player.currentTeam].glow, border: `1px solid ${TEAM_COLORS[guess.player.currentTeam].accent}44`, color: TEAM_COLORS[guess.player.currentTeam].accent, fontSize: 12, fontWeight: 700, marginBottom: 12 }}>
+                              {TEAM_COLORS[guess.player.currentTeam].label}
+                            </motion.div>
+                          )}
+                        </motion.div>
+                        <motion.div initial={{ width: 0 }} animate={{ width: `${Math.min(guess.confidence, 97)}%` }} transition={{ duration: 1.2, delay: 0.6 }}
+                          style={{ height: 4, borderRadius: 99, background: "linear-gradient(90deg, #818cf8, #c084fc, #ff8c00)", margin: "12px auto", maxWidth: 250 }} />
+                        <p style={{ color: "rgba(200,200,255,0.45)", fontSize: 12, marginBottom: 16 }}>{Math.round(guess.confidence)}% confidence</p>
+                        <p style={{ color: "rgba(200,200,255,0.6)", fontSize: 13, lineHeight: 1.5, marginBottom: 24, maxWidth: 400, margin: "0 auto 24px" }}>
                           {cleanText(guess.explanation || "")}
                         </p>
                         <div style={{ display: "flex", gap: 12, justifyContent: "center" }}>
-                          <button className="ipl-btn-primary" style={{ padding: "12px 24px", fontSize: 14 }} disabled={loading} onClick={() => sendFeedback(true)}>
+                          <motion.button className="ipl-btn-primary" style={{ padding: "12px 28px", fontSize: 14 }} disabled={loading} onClick={() => sendFeedback(true)}
+                            whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
                             ✅ CORRECT
-                          </button>
-                          <button className="ipl-btn-primary" style={{ background: "rgba(255,255,255,0.1)", color: "#fff", boxShadow: "none", border: "1px solid rgba(255,255,255,0.2)", padding: "12px 24px", fontSize: 14 }} disabled={loading} onClick={handleContinueGame}>
+                          </motion.button>
+                          <motion.button className="ipl-btn-primary" style={{ background: "rgba(255,255,255,0.06)", color: "#fff", boxShadow: "none", border: "1px solid rgba(255,255,255,0.15)", padding: "12px 28px", fontSize: 14 }} disabled={loading} onClick={handleContinueGame}
+                            whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
                             ❌ WRONG
-                          </button>
+                          </motion.button>
                         </div>
-                      </>
+                      </div>
                     ) : (
                       <p>Player data unavailable</p>
                     )}
@@ -349,22 +488,30 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
                 )}
 
                 {phase === "failed" && (
-                  <motion.div key="failed" style={{ textAlign: "center", padding: "40px 0" }} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                    <div style={{ fontSize: 64, marginBottom: 16 }}>🤯</div>
-                    <h2 className="ipl-question-text">You Stumped Me!</h2>
-                    <p style={{ color: "rgba(200,200,255,0.6)", marginBottom: 24 }}>
-                      I couldn&apos;t figure out your player after {questionNumber} questions.
+                  <motion.div key="failed" style={{ textAlign: "center", padding: "40px 0" }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
+                    <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, delay: 0.2 }}
+                      style={{ width: 80, height: 80, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,140,0,0.2), transparent)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 16px", fontSize: 48 }}>
+                      💥
+                    </motion.div>
+                    <h2 className="ipl-question-text">You Fooled IPLMind!</h2>
+                    <p style={{ color: "rgba(200,200,255,0.6)", marginBottom: 8, fontSize: 14 }}>
+                      I couldn&apos;t guess your player after {questionNumber} questions.
+                    </p>
+                    <p style={{ color: "#ff8c00", fontSize: 13, fontWeight: 700, marginBottom: 24 }}>
+                      🏆 +{Math.min(questionNumber * 10, 200)} Difficulty Points
                     </p>
                     <div style={{ display: "flex", flexDirection: "column", gap: 12, maxWidth: 300, margin: "0 auto" }}>
+                      <p style={{ color: "rgba(200,200,255,0.5)", fontSize: 13 }}>Who was the player?</p>
                       <input
-                        style={{ padding: "12px 16px", borderRadius: 8, background: "rgba(0,0,0,0.3)", border: "1px solid rgba(100,80,255,0.3)", color: "#fff" }}
-                        placeholder="Who was the player?"
+                        style={{ padding: "12px 16px", borderRadius: 8, background: "rgba(0,0,0,0.3)", border: "1px solid rgba(100,80,255,0.3)", color: "#fff", fontSize: 14 }}
+                        placeholder="Enter player name..."
                         value={correctPlayer}
                         onChange={(e) => setCorrectPlayer(e.target.value)}
                       />
-                      <button className="ipl-btn-primary" style={{ padding: "12px 24px", fontSize: 14 }} disabled={loading || !correctPlayer.trim()} onClick={revealPlayer}>
+                      <motion.button className="ipl-btn-primary" style={{ padding: "12px 24px", fontSize: 14 }} disabled={loading || !correctPlayer.trim()} onClick={revealPlayer}
+                        whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
                         TEACH ME
-                      </button>
+                      </motion.button>
                       <button className="ipl-back-btn" style={{ justifyContent: "center", margin: "10px 0 0" }} disabled={loading} onClick={startGame}>
                         Play Again
                       </button>
@@ -373,16 +520,22 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
                 )}
 
                 {phase === "finished" && (
-                  <motion.div key="finished" style={{ textAlign: "center", padding: "40px 0" }} initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }}>
-                    <div style={{ fontSize: 64, marginBottom: 16 }}>🏆</div>
+                  <motion.div key="finished" style={{ textAlign: "center", padding: "40px 0" }} initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 200 }}>
+                    <motion.div initial={{ rotate: -20, scale: 0 }} animate={{ rotate: 0, scale: 1 }} transition={{ type: "spring", stiffness: 400, delay: 0.3 }}
+                      style={{ fontSize: 64, marginBottom: 16 }}>🏆</motion.div>
                     <h2 className="ipl-question-text">Round Complete</h2>
-                    <p style={{ color: "#fff", fontSize: 16, marginBottom: 8 }}>{finishedMessage}</p>
-                    <p style={{ color: "rgba(200,200,255,0.5)", fontSize: 13, marginBottom: 24 }}>
-                      Questions asked: {questionNumber} • Wrong guesses: {wrongGuessCount}
+                    <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
+                      style={{ color: "#fff", fontSize: 16, marginBottom: 8 }}>{finishedMessage}</motion.p>
+                    <p style={{ color: "rgba(200,200,255,0.4)", fontSize: 12, marginBottom: 8 }}>
+                      Questions: {questionNumber} • Wrong guesses: {wrongGuessCount}
                     </p>
-                    <button className="ipl-btn-primary" disabled={loading} onClick={startGame}>
+                    <p style={{ color: "#ff8c00", fontSize: 13, fontWeight: 700, marginBottom: 24 }}>
+                      ⚡ Score: +{Math.max(10, 100 - questionNumber * 5)} points
+                    </p>
+                    <motion.button className="ipl-btn-primary" disabled={loading} onClick={startGame}
+                      whileHover={{ scale: 1.04 }} whileTap={{ scale: 0.96 }}>
                       PLAY AGAIN
-                    </button>
+                    </motion.button>
                   </motion.div>
                 )}
                 
