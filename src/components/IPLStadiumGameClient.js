@@ -65,26 +65,29 @@ function MindScanPanel({ hints, candidatesRemaining }) {
 }
 
 const MASCOT_STATES = {
-  idle: { emoji: "🏏", text: "Think of any IPL player... I'll read your mind!" },
-  thinking: { emoji: "🧠", text: "Hmm, let me think about this..." },
-  confident: { emoji: "👀", text: "I think I'm getting close now..." },
-  veryConfident: { emoji: "😏", text: "Oh, I definitely know who this is!" },
-  shocked: { emoji: "😲", text: "Wait... that changes everything!" },
-  wrong: { emoji: "😅", text: "Oops! Let me try again..." },
-  victory: { emoji: "🎉", text: "I knew it! The cricket brain never fails!" },
-  failed: { emoji: "🤯", text: "You've stumped me! Well played!" },
-  earlyGame: { emoji: "🔍", text: "Just warming up... need more clues!" },
+  idle: { id: "idle", image: "/Assets/idle.png", text: "Think of any IPL player... I'll read your mind!" },
+  thinking: { id: "thinking", image: "/Assets/thinking.png", text: "Hmm, let me think about this..." },
+  confident: { id: "confident", image: "/Assets/confident.png", text: "I think I'm getting close now..." },
+  sad: { id: "sad", image: "/Assets/sad.png", text: "Wait... that changes everything!" },
+  victory: { id: "confident", image: "/Assets/confident.png", text: "I knew it! The cricket brain never fails!" },
+  failed: { id: "sad", image: "/Assets/sad.png", text: "You've stumped me! Well played!" },
+  wrong: { id: "sad", image: "/Assets/sad.png", text: "Oops! Let me try again..." },
 };
 
-function getMascotState(phase, confidence, questionNumber, lastAnswer) {
-  if (phase === "finished") return MASCOT_STATES.victory;
+function getMascotState(phase, confidence, questionNumber, lastAnswer, loading, finishedMessage) {
+  if (phase === "finished") {
+    if (finishedMessage && finishedMessage.includes("Noted")) return MASCOT_STATES.failed;
+    return MASCOT_STATES.victory;
+  }
   if (phase === "failed") return MASCOT_STATES.failed;
-  if (phase === "guessing") return MASCOT_STATES.veryConfident;
+  if (phase === "guessing") return MASCOT_STATES.confident;
   if (phase === "idle") return MASCOT_STATES.idle;
-  if (lastAnswer === "No") return MASCOT_STATES.shocked;
-  if (questionNumber < 4) return MASCOT_STATES.earlyGame;
-  if (confidence > 60) return MASCOT_STATES.veryConfident;
-  if (confidence > 35) return MASCOT_STATES.confident;
+  
+  if (loading) return MASCOT_STATES.thinking;
+  if (lastAnswer === "No" && confidence < 20) return MASCOT_STATES.sad;
+  
+  if (confidence > 45) return MASCOT_STATES.confident;
+  
   return MASCOT_STATES.thinking;
 }
 
@@ -116,7 +119,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
   const [canUndo, setCanUndo] = useState(false);
 
   const inFlightRef = useRef(false);
-  const mascot = getMascotState(phase, confidence, questionNumber, lastAnswer);
+  const mascot = getMascotState(phase, confidence, questionNumber, lastAnswer, loading, finishedMessage);
 
   const getApiUrl = (endpoint) => {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
@@ -364,12 +367,33 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
           {/* Left Column: AI Assistant */}
           <div className="ipl-ai-section">
               <motion.div className="ipl-ai-bubble" key={commentary || mascot.text}
-                initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}>
+                initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}
+                style={{ marginBottom: 24 }}>
                 {commentary || mascot.text}
               </motion.div>
               
-              <div className="ipl-ai-avatar">
-                {mascot.emoji}
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={mascot.id}
+                    src={mascot.image}
+                    alt="IPLMind Mascot"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ 
+                      opacity: mascot.id === "sad" ? 0.7 : 1, 
+                      scale: mascot.id === "confident" ? 1.08 : 1,
+                      rotate: mascot.id === "thinking" ? [-2, 2, -2] : 0,
+                      y: mascot.id === "idle" ? [0, -5, 0] : 0
+                    }}
+                    exit={{ opacity: 0, scale: 0.9 }}
+                    transition={{ 
+                      duration: 0.25,
+                      rotate: { repeat: mascot.id === "thinking" ? Infinity : 0, duration: 1.5, ease: "easeInOut" },
+                      y: { repeat: mascot.id === "idle" ? Infinity : 0, duration: 3, ease: "easeInOut" }
+                    }}
+                    style={{ width: 180, height: "auto", objectFit: 'contain' }}
+                  />
+                </AnimatePresence>
               </div>
 
               <MindScanPanel hints={analysisHints} candidatesRemaining={candidatesRemaining} />
