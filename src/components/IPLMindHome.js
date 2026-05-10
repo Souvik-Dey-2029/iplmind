@@ -69,13 +69,13 @@ export default function IPLMindHome({ onStartGame }) {
               textDecoration: 'none',
               fontSize: 16,
             }}>Predict</a>
-            <a href="#" onClick={(e) => e.preventDefault()} style={{
+            <Link href="/leaderboard" style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 500,
               color: '#414942',
               textDecoration: 'none',
               fontSize: 16,
-            }}><Link href="/leaderboard" style={{ textDecoration: 'none', color: 'inherit' }}>Leaderboard</Link></a>
+            }}>Leaderboard</Link>
             <a href="#" onClick={(e) => e.preventDefault()} style={{
               fontFamily: "'Plus Jakarta Sans', sans-serif",
               fontWeight: 500,
