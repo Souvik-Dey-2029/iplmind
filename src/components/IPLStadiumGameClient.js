@@ -375,17 +375,25 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
                 {commentary || mascot.text}
               </motion.div>
               
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: -32, position: 'relative', zIndex: 10 }}>
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'center', 
+                marginBottom: mascot.id === 'thinking' ? -28 : -64, 
+                position: 'relative', 
+                zIndex: 10,
+                transition: 'margin-bottom 0.3s ease'
+              }}>
                 {/* Subtle glow connecting mascot and Mind Scan card */}
                 <div style={{
                   position: 'absolute',
-                  bottom: 20,
+                  bottom: mascot.id === 'thinking' ? 20 : 50,
                   width: 120,
                   height: 40,
                   background: 'rgba(129, 140, 248, 0.4)',
                   filter: 'blur(20px)',
                   borderRadius: '50%',
-                  zIndex: -1
+                  zIndex: -1,
+                  transition: 'bottom 0.3s ease'
                 }} />
                 
                 <AnimatePresence mode="wait">
