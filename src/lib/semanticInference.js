@@ -330,6 +330,21 @@ export function calculateSemanticConfidence(probabilities, players, history, que
   const evidence = Math.min(1, Math.log10(questionCount + 1) / Math.log10(18));
   const contradictionDensity = estimateContradictionDensity(players, profile);
 
+  // V5 FAIRNESS: Ambiguity dampener — if top 3 candidates have similar
+  // semantic alignment, confidence should be suppressed to prevent false spikes.
+  let ambiguityDampener = 1;
+  if (ranked.length >= 3) {
+    const top3Players = ranked.slice(0, 3).map(r => players.find(p => p.name === r.name)).filter(Boolean);
+    if (top3Players.length >= 3) {
+      const alignments = top3Players.map(p => calculateSemanticAlignment(p, profile));
+      const maxAlign = Math.max(...alignments);
+      const minAlign = Math.min(...alignments);
+      if (maxAlign > 0 && (maxAlign - minAlign) / maxAlign < 0.15) {
+        ambiguityDampener = 0.78;  // All top 3 have similar alignment = suppress
+      }
+    }
+  }
+
   const confidence = (
     entropyCertainty * 34 +
     separation * 26 +
@@ -337,19 +352,18 @@ export function calculateSemanticConfidence(probabilities, players, history, que
     topAlignment * 14 +
     spread * 8 -
     contradictionDensity * 8
-  ) * (0.45 + evidence * 0.55);
+  ) * (0.45 + evidence * 0.55) * ambiguityDampener;
 
   return {
     name: top.name,
-    // V4 FIX: Reduced from 0.35 to 0.10 per informative question.
-    // questionCount now only reflects informative answers, preventing "Don't Know" inflation.
-    confidence: clamp(confidence + questionCount * 0.10, 0, 98.7),
+    confidence: clamp(confidence + questionCount * 0.08, 0, 98.7),
     probability: top.probability,
     separation,
     entropy,
     semanticAlignment: topAlignment,
     dnaSpread: spread,
     contradictionDensity,
+    ambiguityDampener,
   };
 }
 
@@ -368,7 +382,8 @@ export function validateFinalGuess(player, probabilities, players, history, ques
   if (alignment < 0.72 && profile.density >= 3) reasons.push("weak-dna-alignment");
   if (profile.confirmed.currentTeam && player.currentTeam !== profile.confirmed.currentTeam) reasons.push("franchise-mismatch");
   if (profile.confirmed.country && player.country !== profile.confirmed.country) reasons.push("country-mismatch");
-  if ((semantic?.separation || 0) < 0.18 && questionCount < 14) reasons.push("low-top-candidate-separation");
+  // V5 FAIRNESS: Tightened low-separation threshold from 0.18 to 0.22
+  if ((semantic?.separation || 0) < 0.22 && questionCount < 14) reasons.push("low-top-candidate-separation");
 
   const valid = reasons.length === 0 || (reasons.length === 1 && reasons[0] === "weak-dna-alignment" && questionCount >= 16);
   return {
@@ -481,11 +496,17 @@ function getRarityMultiplier(player, profile) {
     profile.positiveTags.has("obscure") ||
     profile.positiveTags.has("short-career-player") ||
     profile.positiveTags.has("domestic-specialist") ||
-    profile.positiveTags.has("one-season-wonder");
+    profile.positiveTags.has("one-season-wonder") ||
+    profile.positiveTags.has("cult-player") ||
+    profile.positiveTags.has("underdog");
 
+  // V5 FAIRNESS: Always dampen common-rarity (famous) players slightly,
+  // even without explicit obscure intent. This prevents icons from
+  // accumulating unfair advantage through sheer tag density.
+  if (rarity === "common") return obscureIntent ? 0.72 : 0.92;
+  if (rarity === "uncommon") return obscureIntent ? 0.85 : 0.97;
   if (!obscureIntent) return 1;
-  if (["epic", "legendary", "legendary-obscure", "forgotten", "niche"].includes(rarity)) return 1.25;
-  if (rarity === "common") return 0.82;
+  if (["epic", "legendary", "legendary-obscure", "forgotten", "niche"].includes(rarity)) return 1.30;
   return 1.05;
 }
 
