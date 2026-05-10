@@ -237,6 +237,11 @@ export function applySemanticReranking(probabilities, allPlayers, history = []) 
   if (profile.density === 0) return probabilities;
 
   const adjusted = {};
+  const activeCandidatesCount = Object.values(probabilities).filter(p => p > 0.005).length;
+  
+  // Dynamic popularity dampening: as pool shrinks, famous player advantage disappears
+  const popularityDampener = Math.min(1, activeCandidatesCount / 10);
+
   for (const player of allPlayers) {
     const current = probabilities[player.name] || 0;
     if (!current) {
@@ -247,8 +252,16 @@ export function applySemanticReranking(probabilities, allPlayers, history = []) 
     const alignment = calculateSemanticAlignment(player, profile);
     const contradictionPenalty = calculateContradictionPenalty(player, profile);
     const rarityMultiplier = getRarityMultiplier(player, profile);
+    
+    // Instead of infinitely compounding priorWeight on every rerank,
+    // we only apply a small situational boost, which degrades as candidates narrow.
     const rankingPrior = player.candidateRankingFeatures?.priorWeight || 1;
-    const multiplier = Math.max(0.001, alignment * contradictionPenalty * rarityMultiplier * Math.sqrt(rankingPrior));
+    const popularityBoost = 1 + ((rankingPrior - 1) * popularityDampener * 0.2);
+    
+    // Semantic overlap penalty: if alignment is purely generic, penalize famous players
+    const overlapPenalty = (alignment < 1.2 && rankingPrior > 1.2) ? 0.92 : 1;
+
+    const multiplier = Math.max(0.001, alignment * contradictionPenalty * rarityMultiplier * popularityBoost * overlapPenalty);
     adjusted[player.name] = current * multiplier;
   }
 

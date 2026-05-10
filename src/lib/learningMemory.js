@@ -17,6 +17,7 @@ let memoryState = {
   questionEntropyImpact: {},   // questionId -> { totalDelta, count }
   semanticTraitEffectiveness: {}, // trait -> { totalDelta, count }
   confusionClusters: {},       // "playerA|playerB" -> count of confusions
+  overcollapseEvents: {},      // "guessed|correct" -> count of famous-over-obscure collapses
   totalGames: 0,
   totalSuccesses: 0,
   totalFailures: 0,
@@ -115,6 +116,13 @@ export function recordFailure(correctPlayerName, questionHistory = [], guessedPl
     const clusterKey = [guessedPlayerName, correctPlayerName].sort().join("|");
     memoryState.confusionClusters[clusterKey] =
       (memoryState.confusionClusters[clusterKey] || 0) + 1;
+    
+    // V5 FAIRNESS: Track overcollapse events — when AI guessed a famous player
+    // but the correct answer was someone else. This feeds back into prior dampening.
+    const overcollapseKey = `${guessedPlayerName}|${correctPlayerName}`;
+    memoryState.overcollapseEvents = memoryState.overcollapseEvents || {};
+    memoryState.overcollapseEvents[overcollapseKey] =
+      (memoryState.overcollapseEvents[overcollapseKey] || 0) + 1;
   }
 
   // Penalize questions that were used in failed sessions
@@ -153,6 +161,14 @@ export function getPlayerPriors(players) {
   const priors = {};
   const total = memoryState.totalGames || 1;
 
+  // V5 FAIRNESS: Count how many times each player was the AI's wrong guess.
+  // Players who are frequently over-guessed get their prior dampened.
+  const overguessCount = {};
+  for (const [key, count] of Object.entries(memoryState.overcollapseEvents || {})) {
+    const guessedName = key.split("|")[0];
+    overguessCount[guessedName] = (overguessCount[guessedName] || 0) + count;
+  }
+
   players.forEach((p) => {
     const name = p.name;
     const normalized = name.toLowerCase().trim();
@@ -163,8 +179,14 @@ export function getPlayerPriors(players) {
     // Active modern players get a base boost
     const activeBoost = p.active ? 0.3 : 0;
 
-    // Base prior is 1.0. Popularity adds up to 0.5. Difficulty adds up to 1.0.
-    priors[name] = 1.0 + (popularityScore * 0.5) + (difficultyScore * 1.0) + activeBoost;
+    // V5 FAIRNESS: Cap popularity contribution to prevent runaway famous-player priors.
+    // Also apply overcollapse dampening — if the AI keeps wrongly guessing this player,
+    // their prior gets penalized so the engine explores alternatives.
+    const cappedPopularity = Math.min(popularityScore * 0.3, 0.15);  // Was 0.5, capped at 0.15
+    const overguess = (overguessCount[name] || 0) / total;
+    const overguessFloor = Math.max(-0.2, -overguess * 0.5);  // Penalize up to -0.2
+
+    priors[name] = 1.0 + cappedPopularity + (difficultyScore * 1.0) + activeBoost + overguessFloor;
   });
 
   return priors;

@@ -57,16 +57,19 @@ export function initializeProbabilities(players) {
 
 function getSemanticPriorMultiplier(player) {
   const rarity = player.obscurityProfile?.rarity || player.rarity || "rare";
+  // V5 FAIRNESS: Famous players get dampened priors so they don't dominate
+  // before a single question is asked. Obscure players get lifted.
   const rarityLift = {
-    common: 0.98,
-    rare: 1.0,
-    epic: 1.06,
-    legendary: 1.1,
-    "legendary-obscure": 1.14,
-    forgotten: 1.12,
-    niche: 1.08,
+    common: 0.88,              // Famous icons — actively dampened
+    uncommon: 0.94,            // Well-known but not dominant
+    rare: 1.0,                 // Baseline
+    epic: 1.08,                // Hard to guess — slight boost
+    legendary: 1.14,           // Very hard — meaningful boost
+    "legendary-obscure": 1.18, // Extremely hard — strong boost
+    forgotten: 1.16,           // Forgotten players deserve visibility
+    niche: 1.10,               // Niche specialists
   }[rarity] || 1;
-  const weakRecallLift = player.questionAttributes?.underdog || player.questionAttributes?.domesticSpecialist ? 1.04 : 1;
+  const weakRecallLift = player.questionAttributes?.underdog || player.questionAttributes?.domesticSpecialist ? 1.06 : 1;
   return rarityLift * weakRecallLift;
 }
 
@@ -148,34 +151,38 @@ export function getTopCandidate(probabilities, questionCount = 1) {
   const rawScore = top.probability * 100;
 
   // 2. Relative Separation (How dominant is #1 vs #2?)
-  // If runnerUp is negligible, separation is 1. If neck-and-neck, it's 0.
   const separation = runnerUp ? Math.max(0, (top.probability - runnerUp.probability) / top.probability) : 1;
 
-  // 3. System Entropy (How chaotic is the whole pool?)
+  // 3. System Entropy
   const entropy = calculateEntropy(probabilities);
   const maxEntropy = Math.log2(Object.keys(probabilities).length || 1);
   const entropyRatio = maxEntropy > 0 ? entropy / maxEntropy : 0;
   const entropyFactor = 1 - entropyRatio;
 
   // 4. Evolving Evidence Curve
-  // Confidence naturally builds over time to prevent stagnation, but logarithmically caps.
-  // Question 1 = ~25% max potential, Question 15 = ~95% max potential.
-  // V4: Uses questionCount which now only reflects INFORMATIVE answers,
-  // so "Don't Know" spam doesn't inflate the evidence curve.
   const evidenceMultiplier = Math.min(1, Math.log10(questionCount + 1) / Math.log10(16));
+
+  // 5. V5 FAIRNESS: Ambiguity penalty — if top 3-5 candidates are clustered,
+  // confidence should be suppressed regardless of raw probability.
+  const top5 = ranked.slice(0, 5);
+  let ambiguityPenalty = 1;
+  if (top5.length >= 3) {
+    const topProb = top5[0].probability;
+    const clustered = top5.filter(c => c.probability > topProb * 0.4).length;
+    if (clustered >= 3) ambiguityPenalty = 0.82;  // 3+ candidates clustered = suppress confidence
+    if (clustered >= 4) ambiguityPenalty = 0.72;  // 4+ = strong suppression
+  }
 
   // Blended Confidence Formula
   let blendedConfidence = (
-    (rawScore * 0.3) +             // Core probability
-    (separation * 100 * 0.35) +    // Dominance
-    (entropyFactor * 100 * 0.35)   // Overall certainty
-  ) * evidenceMultiplier;
+    (rawScore * 0.3) +
+    (separation * 100 * 0.35) +
+    (entropyFactor * 100 * 0.35)
+  ) * evidenceMultiplier * ambiguityPenalty;
 
-  // V4 FIX: Reduced from 0.5 to 0.15 per informative question.
-  // This prevents artificial confidence inflation while still avoiding total stagnation.
-  blendedConfidence += (questionCount * 0.15);
+  // V5: Reduced per-question inflation from 0.15 to 0.10
+  blendedConfidence += (questionCount * 0.10);
 
-  // Soft cap at 98.9% until actual guess confirmation to avoid fake 100%
   const confidence = Math.max(0, Math.min(98.9, blendedConfidence));
 
   return {
@@ -184,6 +191,7 @@ export function getTopCandidate(probabilities, questionCount = 1) {
     probability: Math.max(0, Math.min(1, top.probability)),
     separation,
     entropy,
+    ambiguityPenalty,
   };
 }
 
@@ -195,18 +203,21 @@ export function shouldGuess(probabilities, threshold = 70, minimumViableCandidat
   const top = getTopCandidate(probabilities, questionCount);
   if (!top) return false;
 
-  // Also check relative confidence: top should be significantly ahead
   const ranked = getRankedPlayers(probabilities);
   if (ranked.length <= minimumViableCandidates) return true;
 
   const relativeConfidence = ranked[0].probability / ranked[1].probability;
 
-  // V2: Require BOTH high absolute confidence AND strong separation
-  // Plus check that separation is meaningful (not just rounding noise)
+  // V5 FAIRNESS: Require stronger separation before guessing.
+  // This prevents the engine from jumping to Dhoni/Kohli/Gayle on thin evidence.
+  // Also require minimum question count to prevent premature guesses.
+  const minQuestionsBeforeGuess = 6;
+  if (questionCount < minQuestionsBeforeGuess) return false;
+
   return (
     top.confidence >= threshold &&
-    relativeConfidence >= 2.5 &&
-    top.separation >= 0.3
+    relativeConfidence >= 3.0 &&    // Was 2.5 — now requires stronger dominance
+    top.separation >= 0.35           // Was 0.3 — slightly tighter
   );
 }
 
@@ -220,9 +231,15 @@ export function getViableCandidates(players, probabilities, minRatio = 0.05) {
 
   return players.filter((player) => {
     const prob = probabilities[player.name] || 0;
-    // V2: Softer elimination threshold
-    if (prob < 0.0005) return false;
-    return prob >= top.probability * minRatio;
+    if (prob < 0.0001) return false;
+
+    // V5 FAIRNESS: Long-tail survival floor.
+    // Rare/obscure players get a lower elimination threshold so they survive longer.
+    const rarity = player.obscurityProfile?.rarity || player.rarity || "rare";
+    const isLongTail = ["epic", "legendary", "legendary-obscure", "forgotten", "niche"].includes(rarity);
+    const effectiveMinRatio = isLongTail ? minRatio * 0.4 : minRatio;  // 0.02 vs 0.05
+
+    return prob >= top.probability * effectiveMinRatio;
   });
 }
 

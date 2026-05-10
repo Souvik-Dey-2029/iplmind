@@ -514,7 +514,9 @@ function countCategories(history) {
 }
 
 function isHardSuppressed(option, history, candidateCount) {
-  if (option.category === "franchise-history" && candidateCount > 5) return true;
+  // V5 FAIRNESS: Relaxed from >5 to >15 so franchise-history questions
+  // can fire in mid-game, which is critical for separating era-based players.
+  if (option.category === "franchise-history" && candidateCount > 15) return true;
 
   const recentCategories = history.slice(-FRANCHISE_HISTORY_COOLDOWN).map((entry) => entry.category);
   if (option.category === "franchise-history" && recentCategories.includes("franchise-history")) {
@@ -576,9 +578,9 @@ function selectUsefulSemanticTags(candidates) {
 
   const total = Math.max(candidates.length, 1);
   return [...counts.entries()]
-    .filter(([, count]) => count / total >= 0.12 && count / total <= 0.88)
+    .filter(([, count]) => count / total >= 0.10 && count / total <= 0.90)
     .sort((a, b) => informationBalance(b[1], total) - informationBalance(a[1], total))
-    .slice(0, 12)
+    .slice(0, 20)
     .map(([tag]) => tag);
 }
 
@@ -600,18 +602,61 @@ function hasSemanticTag(player, tag) {
 function semanticQuestionText(tag) {
   const phrase = String(tag || "").replace(/-/g, " ");
   const templates = {
+    // Franchise identity
     "csk-icon": "Is this player strongly associated with Chennai Super Kings?",
+    "csk-legend": "Is this player a CSK legend?",
     "mi-icon": "Is this player strongly associated with Mumbai Indians?",
+    "mi-legend": "Is this player a Mumbai Indians legend?",
     "rcb-icon": "Is this player strongly associated with Royal Challengers Bengaluru?",
     "kkr-icon": "Is this player strongly associated with Kolkata Knight Riders?",
+    "srh-icon": "Is this player strongly associated with Sunrisers Hyderabad?",
+    "dc-icon": "Is this player strongly associated with Delhi Capitals?",
+    "rr-icon": "Is this player strongly associated with Rajasthan Royals?",
+    // Bowling specializations
     "death-bowler": "Is this player known for bowling in death overs?",
+    "death-bowling-legend": "Is this player considered a death bowling legend?",
+    "yorker-king": "Is this player famous for yorkers?",
+    "mystery-spinner": "Is this player known as a mystery spinner?",
+    "leg-spinner": "Is this player a leg spinner?",
+    "left-arm-pacer": "Is this player a left-arm pace bowler?",
+    "swing-bowler": "Is this player known for swing bowling?",
+    // Batting specializations
     "power-hitter": "Is this player known for power hitting?",
     "anchor": "Is this player known as a steady anchor batter?",
-    "mystery-spinner": "Is this player known as a mystery spinner?",
-    "one-franchise-player": "Is this player mostly remembered as a one-franchise IPL player?",
-    "short-career-player": "Did this player have a short IPL career?",
+    "explosive-opener": "Is this player an explosive opening batsman?",
+    "finisher": "Is this player known as a finisher?",
+    "six-machine": "Is this player famous for hitting sixes?",
+    "mr-360": "Is this player known for playing 360-degree shots?",
+    "left-handed": "Is this player a left-handed batsman?",
+    // Era & historical
+    "founding-era": "Was this player part of the inaugural IPL seasons (2008-2010)?",
     "early-ipl-player": "Is this player associated with the early IPL years?",
     "post-2020-player": "Is this player from the modern post-2020 IPL generation?",
+    "inaugural-champion": "Was this player part of an inaugural IPL-winning team?",
+    "one-franchise-player": "Is this player mostly remembered as a one-franchise IPL player?",
+    // Rarity & fame differentiators
+    "short-career-player": "Did this player have a short IPL career?",
+    "one-season-wonder": "Was this player a one-season wonder?",
+    "cult-player": "Would fans consider this player a cult IPL figure?",
+    "domestic-specialist": "Is this player primarily known as a domestic cricket specialist?",
+    "underdog": "Is this player considered an underdog or surprise pick?",
+    "journeyman": "Has this player played for many different IPL teams?",
+    "ipl-specialist": "Is this player more famous in the IPL than in international cricket?",
+    "international-star": "Is this player a major international cricket star?",
+    // Captaincy & leadership
+    "captain": "Has this player captained an IPL team?",
+    "captain-cool": "Is this player known for calm captaincy under pressure?",
+    "tactical-captain": "Is this player known for tactical captaincy?",
+    // Awards
+    "orange-cap-winner": "Has this player won the Orange Cap?",
+    "purple-cap-winner": "Has this player won the Purple Cap?",
+    // Iconic moments
+    "world-cup-hero": "Is this player considered a World Cup hero?",
+    "cancer-survivor": "Is this player known for overcoming a health crisis?",
+    // Defunct franchise
+    "deccan-chargers-legend": "Was this player associated with Deccan Chargers?",
+    "pune-warriors": "Was this player associated with Pune Warriors?",
+    "kochi-tuskers": "Was this player associated with Kochi Tuskers Kerala?",
   };
 
   return templates[tag] || `Is this player associated with ${phrase}?`;
