@@ -46,8 +46,8 @@ globalThis.__IPLMIND_SESSIONS__ = sessions;
 // ═══════════════════════════════════════════════
 const CONFIDENCE_THRESHOLD = 72;        // Raised from 65 — requires stronger evidence
 const MIN_CANDIDATES_TO_GUESS = 2;
-const MIN_QUESTIONS_BEFORE_GUESS = 8;   // Raised from 3 — prevents rushing
-const INITIAL_ADAPTIVE_LIMIT = 14;      // Raised from 12
+const MIN_QUESTIONS_BEFORE_GUESS = 10;  // V4: Raised from 8 — ensures basic info (role, team, country, era) is gathered
+const INITIAL_ADAPTIVE_LIMIT = 16;      // V4: Raised from 14 — gives more room for narrowing
 const MAX_TOTAL_QUESTIONS = 30;         // Raised from 28
 const MAX_WRONG_GUESSES = 3;            // Allow up to 3 wrong guesses before giving up
 
@@ -221,12 +221,18 @@ export async function processAnswer(sessionId, answer) {
     session.historyStack.shift();
   }
 
+  // V5 FIX: For AI-generated questions (questionMeta=null), infer a questionId
+  // from the question text so the constraint system can enforce hard facts.
+  // Without this, confirming "overseas" via an AI question would never set
+  // the overseas constraint, allowing Indian players to persist.
+  const inferredQuestionId = session.currentQuestionMeta?.id || inferQuestionIdFromText(currentQuestion);
+
   // Record the Q&A
   session.questionHistory.push({
     question: currentQuestion,
     answer: answer,
-    questionId: session.currentQuestionMeta?.id,
-    category: session.currentQuestionMeta?.category,
+    questionId: inferredQuestionId,
+    category: session.currentQuestionMeta?.category || inferredQuestionId ? "inferred" : "unknown",
   });
 
   // V4: Detect whether this answer carries actual information.
@@ -268,6 +274,23 @@ export async function processAnswer(sessionId, answer) {
   // Filter out very unlikely candidates (but respect excluded players)
   session.candidates = getViableCandidates(players, session.probabilities, 0.05, session.questionNumber)
     .filter((p) => !session.excludedPlayers.has(p.name));
+
+  // V5 FIX: HARD CONSTRAINT ENFORCEMENT — after every informative answer,
+  // eliminate candidates that violate confirmed facts (overseas, country, role, era).
+  // This prevents impossible candidates (e.g., Indian player when user said "overseas=yes")
+  // from lingering and eventually being guessed.
+  if (!isNeutralAnswer) {
+    const currentFacts = buildInferredFacts(session.questionHistory);
+    session.candidates = session.candidates.filter((player) => {
+      const penalty = validateCandidateAgainstFacts(player, currentFacts);
+      if (penalty <= 0.02) {
+        // Hard contradiction — zero out probability and remove from pool
+        session.probabilities[player.name] = 0;
+        return false;
+      }
+      return true;
+    });
+  }
 
   // V4: Use informative question count for confidence so "Don't Know" answers
   // don't inflate confidence scores through the evidence multiplier
@@ -1059,4 +1082,65 @@ function buildDebugReasoningPanel(session) {
     },
     confidenceEvolution: session.confidenceHistory,
   };
+}
+
+/**
+ * V5: Infer a questionId from AI-generated question text.
+ * Maps common question patterns to known constraint IDs so the
+ * semantic constraint engine can enforce hard facts.
+ */
+function inferQuestionIdFromText(questionText) {
+  if (!questionText) return null;
+  const q = questionText.toLowerCase();
+
+  // Nationality / origin
+  if (/overseas|foreign|non.?indian|international player/.test(q)) return "overseas";
+  if (/\bfrom india\b|\bindian\b/.test(q) && !/non.?indian/.test(q)) return "indian";
+  if (/australia|australian/.test(q)) return "country:Australia";
+  if (/england|english/.test(q)) return "country:England";
+  if (/south africa|south african/.test(q)) return "country:South Africa";
+  if (/new zealand|kiwi/.test(q)) return "country:New Zealand";
+  if (/west ind|caribbean/.test(q)) return "country:West Indies";
+  if (/sri lanka|sri lankan/.test(q)) return "country:Sri Lanka";
+  if (/afghanistan|afghan/.test(q)) return "country:Afghanistan";
+
+  // Role
+  if (/\bbatsman\b|\bbatter\b|specialist bat/.test(q)) return "batsman";
+  if (/\bbowler\b|specialist bowl/.test(q)) return "bowler";
+  if (/all.?round/.test(q)) return "allrounder";
+  if (/wicket.?keep|keeper|behind the stumps/.test(q)) return "wicketkeeper";
+
+  // Bowling type
+  if (/\bspin\b|\bspinner\b/.test(q)) return "spinner";
+  if (/\bpace\b|\bpacer\b|\bfast\b|\bseam\b/.test(q)) return "pacer";
+
+  // Batting position
+  if (/\bopener\b|open.?the|opening bat|top.?of.?the.?order|open.?the innings/.test(q)) return "opener";
+  if (/middle.?order/.test(q)) return "middle-order";
+  if (/\bfinisher\b/.test(q)) return "finisher";
+
+  // Traits
+  if (/\bcaptain\b|\bskipper\b|leads the team/.test(q)) return "captain";
+  if (/\bveteran\b|\bold\b|experienced/.test(q)) return "veteran";
+  if (/debut.+after.+2020|post.?2020|recent debut/.test(q)) return "post-2020-player";
+  if (/2008.?201[0-2]|founding|first.?season/.test(q)) return "founding-era";
+
+  // Team associations
+  const teamPatterns = [
+    [/chennai|csk/i, "current-team:Chennai Super Kings"],
+    [/mumbai|mi\b/i, "current-team:Mumbai Indians"],
+    [/kolkata|kkr/i, "current-team:Kolkata Knight Riders"],
+    [/bangalore|bengaluru|rcb/i, "current-team:Royal Challengers Bengaluru"],
+    [/rajasthan|rr\b/i, "current-team:Rajasthan Royals"],
+    [/punjab|pbks|kxip/i, "current-team:Punjab Kings"],
+    [/hyderabad|srh/i, "current-team:Sunrisers Hyderabad"],
+    [/delhi|dc\b/i, "current-team:Delhi Capitals"],
+    [/gujarat.?titan|gt\b/i, "current-team:Gujarat Titans"],
+    [/lucknow|lsg/i, "current-team:Lucknow Super Giants"],
+  ];
+  for (const [pattern, id] of teamPatterns) {
+    if (pattern.test(q)) return id;
+  }
+
+  return null;
 }

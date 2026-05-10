@@ -436,8 +436,10 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
         )}
 
         <div className="ipl-game-layout">
-          {/* Left Column: AI Assistant */}
-          <div className="ipl-ai-section">
+          {/* Left Column: AI Assistant — hidden during finished/failed phases to prevent overlap */}
+          <div className="ipl-ai-section" style={
+            (phase === "finished" || phase === "failed") ? { visibility: "hidden", pointerEvents: "none" } : {}
+          }>
               <motion.div className="ipl-ai-bubble" key={commentary || mascot.text}
                 initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}
                 style={{ marginBottom: 8, zIndex: 11, position: 'relative' }}>
