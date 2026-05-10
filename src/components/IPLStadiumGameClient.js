@@ -64,14 +64,15 @@ function MindScanPanel({ hints, candidatesRemaining }) {
   );
 }
 
+// Per-state vertical offsets and scale to compensate for different PNG dimensions
 const MASCOT_STATES = {
-  idle: { id: "idle", image: "/Assets/idle.png", text: "Think of any IPL player... I'll read your mind!" },
-  thinking: { id: "thinking", image: "/Assets/thinking.png", text: "Hmm, let me think about this..." },
-  confident: { id: "confident", image: "/Assets/confident.png", text: "I think I'm getting close now..." },
-  sad: { id: "sad", image: "/Assets/sad.png", text: "Wait... that changes everything!" },
-  victory: { id: "confident", image: "/Assets/confident.png", text: "I knew it! The cricket brain never fails!" },
-  failed: { id: "sad", image: "/Assets/sad.png", text: "You've stumped me! Well played!" },
-  wrong: { id: "sad", image: "/Assets/sad.png", text: "Oops! Let me try again..." },
+  idle: { id: "idle", image: "/Assets/idle.png", text: "Think of any IPL player... I'll read your mind!", offsetY: 46, imgScale: 1.15 },
+  thinking: { id: "thinking", image: "/Assets/thinking.png", text: "Hmm, let me think about this...", offsetY: 23, imgScale: 1 },
+  confident: { id: "confident", image: "/Assets/confident.png", text: "I think I'm getting close now...", offsetY: 31, imgScale: 1.05 },
+  sad: { id: "sad", image: "/Assets/sad.png", text: "Wait... that changes everything!", offsetY: 20, imgScale: 1 },
+  victory: { id: "confident", image: "/Assets/confident.png", text: "I knew it! The cricket brain never fails!", offsetY: 42, imgScale: 1.05 },
+  failed: { id: "sad", image: "/Assets/sad.png", text: "You've stumped me! Well played!", offsetY: 20, imgScale: 1 },
+  wrong: { id: "sad", image: "/Assets/sad.png", text: "Oops! Let me try again...", offsetY: 20, imgScale: 1 },
 };
 
 function getMascotState(phase, confidence, questionNumber, lastAnswer, loading, finishedMessage) {
@@ -408,10 +409,11 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
                     key={mascot.id}
                     src={mascot.image}
                     alt="IPLMind Mascot"
-                    initial={{ opacity: 0, scale: 0.95 }}
+                    initial={{ opacity: 0, scale: mascot.imgScale * 0.95, y: mascot.offsetY }}
                     animate={{ 
                       opacity: mascot.id === "sad" ? 0.7 : 1, 
-                      scale: mascot.id === "confident" ? 1.05 : 1
+                      scale: mascot.imgScale,
+                      y: mascot.offsetY
                     }}
                     exit={{ opacity: 0, scale: 0.95 }}
                     transition={{ duration: 0.25 }}
