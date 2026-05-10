@@ -27,6 +27,7 @@ import { sanitizePlayerForRender } from "./playerNormalizer";
 import { recordSuccess, recordFailure, detectStagnation } from "./learningMemory";
 import { validateQuestion } from "./questionValidation";
 import { determinePhase } from "./reasoningPhaseManager";
+import { buildInferredFacts, validateCandidateAgainstFacts } from "./semanticConstraints";
 
 // In-memory session store shared across route module instances in the same server process.
 const sessions = globalThis.__IPLMIND_SESSIONS__ || new Map();
@@ -196,13 +197,18 @@ export async function processAnswer(sessionId, answer) {
 }
 
 /**
- * V2: Make a guess attempt. Extracted to support continue-after-wrong-guess.
+ * V3: Make a guess attempt with semantic validation.
+ * Validates the top candidate against inferred facts before committing.
  */
 async function makeGuess(session) {
   session.status = "guessing";
 
+  // Build inferred facts to validate candidate
+  const inferredFacts = buildInferredFacts(session.questionHistory);
+
   // Find top candidate, excluding previously wrong guesses
-  const topCandidate = getTopNonExcludedCandidate(session);
+  // AND validating against semantic constraints
+  const topCandidate = getTopValidatedCandidate(session, inferredFacts);
 
   if (!topCandidate) {
     return handleFailure(session);
@@ -223,9 +229,13 @@ async function makeGuess(session) {
     explanation = buildFallbackExplanation(playerData, session.questionHistory);
   }
 
+  // Confidence smoothing: cap at 97% for realism, apply uncertainty penalty
+  const rawConfidence = topCandidate.confidence;
+  const smoothedConfidence = Math.min(rawConfidence, 97);
+
   session.guess = {
     player: playerData,
-    confidence: topCandidate.confidence,
+    confidence: smoothedConfidence,
     probability: topCandidate.probability,
     explanation: explanation || "",
     guessNumber: session.wrongGuessCount + 1,
@@ -234,7 +244,7 @@ async function makeGuess(session) {
   // Track guess in history
   session.guessHistory.push({
     playerName: playerData.name,
-    confidence: topCandidate.confidence,
+    confidence: smoothedConfidence,
     questionNumber: session.questionNumber,
   });
 
@@ -243,7 +253,7 @@ async function makeGuess(session) {
     guess: session.guess,
     questionNumber: session.questionNumber,
     candidatesRemaining: session.candidates.length,
-    confidence: topCandidate.confidence,
+    confidence: smoothedConfidence,
     wrongGuessCount: session.wrongGuessCount,
     maxWrongGuesses: MAX_WRONG_GUESSES,
     debugReasoningPanel: buildDebugReasoningPanel(session),
@@ -396,23 +406,50 @@ function generateCommentary(session) {
   const prevConf = session.confidenceHistory.at(-2) || 0;
   const cands = session.candidates.length;
   const lastAnswer = session.questionHistory.at(-1)?.answer;
+  const lastQ = session.questionHistory.at(-1)?.question?.toLowerCase() || "";
 
+  // Early game warmup
   if (qNum === 1) return "Let's see if I can read your mind... 🏏";
-  if (cands === 1) return "I know exactly who this is! 🤯";
-  if (conf > 85 && conf - prevConf > 15) return "Ah! That changes everything! 🔥";
-  if (conf > 80) return "I think I'm getting close... 👀";
-  if (lastAnswer === "no" && prevConf > 70 && conf < 50) return "Wait... not them? I'm confused! 😵";
-  if (cands < 5) return "Only a few legends fit this description! 🏆";
-  if (qNum > 15 && conf < 30) return "You've picked a tricky one... 🤔";
+  if (qNum === 2) return "Good, narrowing it down... 🔍";
   
-  // Random flavor
-  const flavors = [
-    "Interesting...",
-    "Hmm...",
-    "Okay, let's dig deeper.",
-    "Good answer."
+  // Candidate-count reactions
+  if (cands === 1) return "I know exactly who this is! 🤯";
+  if (cands <= 3) return "Only a few legends fit this description! 🏆";
+  
+  // Confidence-driven reactions
+  if (conf > 85 && conf - prevConf > 15) return "That changes everything! I think I've got it 🔥";
+  if (conf > 80) return "I'm very close now... 👀";
+  if (conf > 60 && prevConf < 40) return "Wait — that's a massive clue! 💡";
+  if (conf > 60) return "Getting a clear picture now... 🧠";
+  
+  // Shock reactions
+  if (lastAnswer === "No" && prevConf > 70 && conf < 50) return "Really? That surprised me! 😵 Let me rethink...";
+  if (lastAnswer === "No" && prevConf > 50) return "Hmm, not what I expected... 🤔";
+  
+  // Contextual reactions based on question topic
+  if (lastAnswer === "Yes" && lastQ.includes("captain")) return "A captain! That narrows it significantly ⚡";
+  if (lastAnswer === "Yes" && lastQ.includes("overseas")) return "Overseas player... scanning international profiles 🌍";
+  if (lastAnswer === "Yes" && lastQ.includes("india")) return "Indian player — that's a huge pool, need more clues 🇮🇳";
+  if (lastAnswer === "Yes" && lastQ.includes("spinner")) return "A spinner! Let me check the spin wizards 🌀";
+  if (lastAnswer === "Yes" && lastQ.includes("pace")) return "A pacer! Analyzing speed demons 💨";
+  if (lastAnswer === "Yes" && lastQ.includes("wicketkeeper")) return "A keeper! That really narrows things down 🧤";
+  if (lastAnswer === "Yes" && lastQ.includes("opener")) return "An opener! Checking the top-order specialists 🏏";
+  if (lastAnswer === "Yes" && lastQ.includes("finisher")) return "A finisher! The pressure players... 🎯";
+  
+  // Stagnation detection
+  if (qNum > 15 && conf < 30) return "You've picked a really tricky one... 🤔";
+  if (qNum > 12 && conf < 20) return "This is a tough one! Let me dig deeper... 💪";
+  
+  // Mid-game flavor with variety
+  const midFlavors = [
+    "Interesting... let me think about this.",
+    "Okay, building the profile... 📋",
+    "Good answer. Narrowing down. 🎯",
+    "Noted! Let me refine my analysis... 🧠",
+    "Hmm, interesting clue... 🔍",
+    "Processing... connecting the dots. ⚡",
   ];
-  return flavors[Math.floor(Math.random() * flavors.length)];
+  return midFlavors[qNum % midFlavors.length];
 }
 
 /**
@@ -593,11 +630,18 @@ function getProgressiveThreshold(questionNumber) {
 }
 
 /**
- * V2: Get top candidate that hasn't been excluded from wrong guesses.
+ * V3: Get top candidate validated against both exclusion list AND semantic constraints.
+ * Candidates that contradict inferred facts get heavy probability penalties.
  */
-function getTopNonExcludedCandidate(session) {
+function getTopValidatedCandidate(session, inferredFacts) {
   const ranked = Object.entries(session.probabilities)
     .filter(([name]) => !session.excludedPlayers.has(name))
+    .map(([name, prob]) => {
+      // Apply semantic validation penalty
+      const player = players.find((p) => p.name === name);
+      const validationPenalty = player ? validateCandidateAgainstFacts(player, inferredFacts) : 1.0;
+      return [name, prob * validationPenalty];
+    })
     .sort((a, b) => b[1] - a[1]);
 
   if (ranked.length === 0) return null;

@@ -1,6 +1,7 @@
 import { calculateEntropy, normalizeProbabilities } from "./probabilityEngine.js";
 import { getQuestionBoost } from "./learningMemory.js";
 import { determinePhase, getAllowedCategories, applyHierarchicalPenalties } from "./reasoningPhaseManager.js";
+import { buildInferredFacts, isContradictory } from "./semanticConstraints.js";
 
 const MIN_SPLIT = 0.08;
 const FRANCHISE_HISTORY_COOLDOWN = 3;
@@ -150,6 +151,10 @@ export function selectBestQuestion(candidates, probabilities, history = []) {
   // Build suppressed concept set from semantic analysis
   const suppressedIds = buildSuppressedConceptSet(history);
 
+  // ═══ SEMANTIC CONSTRAINT ENGINE ═══
+  // Build inferred facts from Q&A history to prevent contradictions
+  const inferredFacts = buildInferredFacts(history);
+
   // Determine allowed categories based on question stage
   const questionNumber = history.length;
   const phase = determinePhase(candidates.length, questionNumber);
@@ -159,6 +164,7 @@ export function selectBestQuestion(candidates, probabilities, history = []) {
   const scored = options
     .filter((option) => !askedIds.has(option.id) && !askedTexts.has(normalize(option.text)))
     .filter((option) => !suppressedIds.has(option.id))
+    .filter((option) => !isContradictory(option, inferredFacts)) // ← Semantic contradiction check
     .filter((option) => !isHardSuppressed(option, history, candidates.length))
     .filter((option) => allowedCategories.has(option.category))
     .map((option) => scoreQuestion(option, candidates, scopedProbabilities, baseEntropy, categoryCounts, phase, history))
@@ -174,6 +180,7 @@ export function selectBestQuestion(candidates, probabilities, history = []) {
     const fallbackScored = options
       .filter((option) => !askedIds.has(option.id))
       .filter((option) => !suppressedIds.has(option.id))
+      .filter((option) => !isContradictory(option, inferredFacts)) // ← Also protect fallback
       .map((option) => scoreQuestion(option, candidates, scopedProbabilities, baseEntropy, categoryCounts, phase, history))
       .filter((option) => option.yesProbability >= 0.05 && option.noProbability >= 0.05)
       .sort((a, b) => b.score - a.score);
