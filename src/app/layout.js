@@ -2,6 +2,7 @@ import "./globals.css";
 import "./mobile.css";
 import "./ipl-stadium.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "IPLMind",
@@ -20,6 +21,7 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-full" suppressHydrationWarning>
         <ThemeProvider>{children}</ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
