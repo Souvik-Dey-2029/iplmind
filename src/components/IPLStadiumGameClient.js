@@ -41,13 +41,14 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
   const [confidence, setConfidence] = useState(0);
   const [adaptiveQuestionLimit, setAdaptiveQuestionLimit] = useState(14);
   const [wrongGuessCount, setWrongGuessCount] = useState(0);
-  const [phase, setPhase] = useState("playing"); // Default to playing for auto-start
-  const [loading, setLoading] = useState(true); // Start loading immediately
+  const [phase, setPhase] = useState("playing");
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [correctPlayer, setCorrectPlayer] = useState("");
   const [finishedMessage, setFinishedMessage] = useState("");
   const [lastAnswer, setLastAnswer] = useState("");
   const [commentary, setCommentary] = useState("");
+  const [canUndo, setCanUndo] = useState(false);
 
   const inFlightRef = useRef(false);
   const mascot = getMascotState(phase, confidence, questionNumber, lastAnswer);
@@ -71,6 +72,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
     setFinishedMessage("");
     setCorrectPlayer("");
     setWrongGuessCount(0);
+    setCanUndo(false);
 
     try {
       const response = await fetch(getApiUrl("/api/session/start"), { method: "POST" });
@@ -131,6 +133,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
       setQuestion(data.question);
       setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
       if (data.commentary) setCommentary(data.commentary);
+      setCanUndo(data.canUndo || false);
     } catch (err) {
       setError(err.message);
     } finally {
@@ -226,6 +229,41 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
     }
   }
 
+  async function handleUndo() {
+    if (!sessionId || inFlightRef.current) return;
+    inFlightRef.current = true;
+    setLoading(true);
+    setError("");
+
+    try {
+      const response = await fetch(getApiUrl("/api/session/undo"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ sessionId }),
+      });
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.error || "Could not undo");
+
+      // Restore exact previous state from snapshot
+      setQuestion(data.question);
+      setQuestionNumber(data.questionNumber);
+      setCandidatesRemaining(data.candidatesRemaining);
+      setConfidence(data.confidence ?? 0);
+      setTopCandidates(Array.isArray(data.topCandidates) ? data.topCandidates : []);
+      setWrongGuessCount(data.wrongGuessCount || 0);
+      setCanUndo(data.canUndoMore || false);
+      setGuess(null);
+      setPhase("playing");
+      setLastAnswer("");
+      if (data.commentary) setCommentary(data.commentary);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+      inFlightRef.current = false;
+    }
+  }
+
   return (
     <div className="ipl-stadium-bg">
       {/* Header */}
@@ -273,10 +311,20 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
             <div className="ipl-question-card ipl-glow">
               
               {/* Mobile & Desktop Back Button */}
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12, gap: 8 }}>
                 <button className="ipl-back-btn" style={{ margin: 0, padding: "6px 12px", fontSize: "12px" }} onClick={onBackToHome}>
                   <span>←</span> Home
                 </button>
+                {canUndo && phase === "playing" && (
+                  <button
+                    className="ipl-undo-btn"
+                    disabled={loading}
+                    onClick={handleUndo}
+                    title="Undo last answer"
+                  >
+                    <span>↩</span> Undo
+                  </button>
+                )}
                 <div style={{ flex: 1, textAlign: "right" }}>
                   <span className="ipl-question-badge">
                     Q {questionNumber} / {adaptiveQuestionLimit}
