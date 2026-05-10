@@ -67049,21 +67049,23 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "top-order-bat",
     "dnaTags": [
-      "kkr-legend",
       "opener",
       "captain",
-      "title-winner",
-      "aggressive-opener",
-      "indian-player",
-      "early-ipl-player"
+      "title-winning-captain",
+      "left-hander",
+      "aggressive",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "domestic",
+      "title-winner"
     ],
-    "iconicMoments": [
-      "2012-kkr-title",
-      "2014-kkr-title"
-    ],
-    "popularityScore": 90,
+    "iconicMoments": [],
+    "popularityScore": 100,
     "rarity": "common",
     "fullName": "Gautam Gambhir",
     "shortName": "Gambhir",
@@ -67142,19 +67144,19 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "top-order-bat",
     "dnaTags": [
-      "god-of-cricket",
-      "mi-legend",
       "opener",
       "iconic",
-      "indian-player",
-      "one-franchise"
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "domestic",
+      "title-winner"
     ],
-    "iconicMoments": [
-      "2013-mi-title"
-    ],
-    "popularityScore": 100,
+    "iconicMoments": [],
+    "popularityScore": 73,
     "rarity": "common",
     "fullName": "Sachin Tendulkar",
     "shortName": "Tendulkar",
@@ -67241,17 +67243,22 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "spin-allrounder",
     "dnaTags": [
-      "six-sixes",
-      "cancer-survivor",
       "power-hitter",
+      "spinner",
       "left-hander",
-      "journeyman",
-      "indian-player"
+      "aggressive",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "domestic",
+      "journeyman"
     ],
     "iconicMoments": [],
-    "popularityScore": 92,
+    "popularityScore": 70,
     "rarity": "common",
     "fullName": "Yuvraj Singh",
     "shortName": "Singh",
@@ -67335,16 +67342,21 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "aggressive-opener",
     "dnaTags": [
-      "explosive-opener",
-      "aggressive",
+      "opener",
       "power-hitter",
-      "dc-legend",
-      "indian-player"
+      "captain",
+      "aggressive",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "domestic"
     ],
     "iconicMoments": [],
-    "popularityScore": 88,
+    "popularityScore": 80,
     "rarity": "common",
     "fullName": "Virender Sehwag",
     "shortName": "Sehwag",
@@ -67424,20 +67436,23 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "sheet-anchor",
     "dnaTags": [
-      "csk-legend",
-      "mr-ipl",
-      "fielding-genius",
+      "Mr-IPL",
+      "CSK-legend",
       "left-hander",
-      "indian-player",
-      "one-franchise"
+      "clutch-fielder",
+      "consistent-run-scorer",
+      "first-IPL-century",
+      "IPL-veteran"
     ],
     "iconicMoments": [
-      "5000-ipl-runs-first"
+      "first-IPL-century",
+      "CSK-Mr-Consistent",
+      "5000-IPL-runs"
     ],
-    "popularityScore": 90,
-    "rarity": "common",
+    "popularityScore": 88,
+    "rarity": "rare",
     "fullName": "Suresh Raina",
     "shortName": "Raina",
     "nickname": "Chinna Thala",
@@ -67518,16 +67533,19 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "classical-spinner",
     "dnaTags": [
-      "turbanator",
       "spinner",
-      "mi-legend",
-      "indian-player",
-      "veteran"
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "domestic",
+      "title-winner"
     ],
     "iconicMoments": [],
-    "popularityScore": 80,
+    "popularityScore": 76,
     "rarity": "common",
     "fullName": "Harbhajan Singh",
     "shortName": "Singh",
@@ -67610,16 +67628,19 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "death-overs-pacer",
     "dnaTags": [
-      "swing-king",
       "pacer",
-      "left-arm-fast",
-      "indian-player",
-      "death-bowler"
+      "death-bowler",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "domestic"
     ],
     "iconicMoments": [],
-    "popularityScore": 75,
+    "popularityScore": 70,
     "rarity": "common",
     "fullName": "Zaheer Khan",
     "shortName": "Khan",
@@ -67702,18 +67723,21 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "aggressive-opener",
     "dnaTags": [
       "universe-boss",
-      "six-machine",
-      "t20-legend",
-      "rcb-legend",
-      "power-hitter",
-      "left-hander"
+      "explosive-opener",
+      "six-hitter",
+      "powerplay-destroyer",
+      "entertainer",
+      "IPL-icon",
+      "T20-legend",
+      "swagger"
     ],
     "iconicMoments": [
-      "175-vs-pwi",
-      "fastest-ipl-century"
+      "175-not-out-vs-PWI",
+      "most-IPL-sixes",
+      "RCB-PBKS-icon"
     ],
     "popularityScore": 95,
     "rarity": "common",
@@ -67796,16 +67820,22 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "gloveman",
     "dnaTags": [
-      "mr-360",
-      "rcb-legend",
-      "genius-batter",
-      "power-hitter",
-      "wicketkeeper",
-      "south-african"
+      "Mr-360",
+      "innovative",
+      "RCB-legend",
+      "match-winner",
+      "destructive-batter",
+      "overseas-icon",
+      "clutch-player",
+      "entertainer"
     ],
-    "iconicMoments": [],
+    "iconicMoments": [
+      "360-degree-shots",
+      "RCB-partnership-Kohli",
+      "fastest-IPL-50"
+    ],
     "popularityScore": 95,
     "rarity": "common",
     "fullName": "AB de Villiers",
@@ -67888,20 +67918,21 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "pace-allrounder",
     "dnaTags": [
-      "all-rounder",
-      "rr-legend",
-      "csk-hero",
-      "power-hitter",
-      "australian"
+      "batting-allrounder",
+      "explosive-opener",
+      "CSK-hero",
+      "big-match-player",
+      "pace-bowling-allrounder",
+      "versatile"
     ],
     "iconicMoments": [
-      "2008-rr-title",
-      "2018-csk-final-century"
+      "2018-IPL-final-century",
+      "RR-original-champion"
     ],
-    "popularityScore": 82,
-    "rarity": "common",
+    "popularityScore": 78,
+    "rarity": "rare",
     "fullName": "Shane Watson",
     "shortName": "Watson",
     "nickname": "Watto",
@@ -67983,17 +68014,21 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "gloveman",
     "dnaTags": [
-      "first-ipl-century",
-      "kkr-hero",
-      "explosive-opener",
-      "new-zealander"
+      "opener",
+      "power-hitter",
+      "wicketkeeper",
+      "aggressive",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "overseas"
     ],
-    "iconicMoments": [
-      "158-first-ipl-match"
-    ],
-    "popularityScore": 78,
+    "iconicMoments": [],
+    "popularityScore": 70,
     "rarity": "common",
     "fullName": "Brendon McCullum",
     "shortName": "McCullum",
@@ -68072,19 +68107,23 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "yorker-specialist",
     "dnaTags": [
       "yorker-king",
-      "mi-legend",
-      "death-bowler",
-      "one-franchise",
-      "sri-lankan"
+      "slinga",
+      "MI-legend",
+      "death-overs-master",
+      "unique-action",
+      "IPL-veteran",
+      "most-IPL-wickets-era"
     ],
     "iconicMoments": [
-      "hat-trick-specialist"
+      "MI-finals-defense",
+      "4-balls-4-wickets",
+      "death-over-dominance"
     ],
-    "popularityScore": 88,
-    "rarity": "common",
+    "popularityScore": 85,
+    "rarity": "rare",
     "fullName": "Lasith Malinga",
     "shortName": "Malinga",
     "nickname": "Slinga Malinga",
@@ -68162,18 +68201,24 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "keeper-captain",
     "dnaTags": [
-      "deccan-chargers-legend",
-      "keeper-batter",
-      "australian",
+      "opener",
+      "wicketkeeper",
       "captain",
+      "title-winning-captain",
+      "left-hander",
+      "aggressive",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "overseas",
       "title-winner"
     ],
-    "iconicMoments": [
-      "2009-dc-title"
-    ],
-    "popularityScore": 78,
+    "iconicMoments": [],
+    "popularityScore": 98,
     "rarity": "common",
     "fullName": "Adam Gilchrist",
     "shortName": "Gilchrist",
@@ -68253,12 +68298,16 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "batting-allrounder",
     "dnaTags": [
-      "greatest-all-rounder",
-      "south-african",
       "anchor",
-      "veteran"
+      "pacer",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "overseas"
     ],
     "iconicMoments": [],
     "popularityScore": 70,
@@ -68343,15 +68392,19 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "pace-spearhead",
     "dnaTags": [
-      "fastest-bowler",
-      "south-african",
       "pacer",
-      "swing-master"
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "overseas",
+      "title-winner"
     ],
     "iconicMoments": [],
-    "popularityScore": 75,
+    "popularityScore": 73,
     "rarity": "common",
     "fullName": "Dale Steyn",
     "shortName": "Steyn",
@@ -68430,13 +68483,18 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "allrounder-finisher",
     "dnaTags": [
-      "mi-legend",
       "finisher",
       "power-hitter",
-      "one-franchise",
-      "west-indian"
+      "aggressive",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "overseas",
+      "serial-winner"
     ],
     "iconicMoments": [],
     "popularityScore": 85,
@@ -68516,15 +68574,19 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "spin-allrounder",
     "dnaTags": [
-      "leg-spinner",
-      "rcb-captain",
-      "indian-legend",
-      "one-franchise"
+      "captain",
+      "spinner",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "domestic"
     ],
     "iconicMoments": [],
-    "popularityScore": 72,
+    "popularityScore": 80,
     "rarity": "common",
     "fullName": "Anil Kumble",
     "shortName": "Kumble",
@@ -68603,16 +68665,20 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "middle-order-bat",
     "dnaTags": [
-      "dada",
-      "kkr-captain",
-      "indian-legend",
+      "captain",
       "left-hander",
-      "aggressive"
+      "aggressive",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "domestic"
     ],
     "iconicMoments": [],
-    "popularityScore": 82,
+    "popularityScore": 80,
     "rarity": "common",
     "fullName": "Sourav Ganguly",
     "shortName": "Ganguly",
@@ -68694,14 +68760,19 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "power-hitter",
     "dnaTags": [
-      "switch-hit",
-      "english",
-      "aggressive-batter"
+      "power-hitter",
+      "aggressive",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "overseas"
     ],
     "iconicMoments": [],
-    "popularityScore": 72,
+    "popularityScore": 70,
     "rarity": "common",
     "fullName": "Kevin Pietersen",
     "shortName": "Pietersen",
@@ -68782,16 +68853,20 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "sheet-anchor",
     "dnaTags": [
-      "mr-cricket",
-      "csk-legend",
       "anchor",
-      "australian",
-      "calm-finisher"
+      "left-hander",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "overseas",
+      "title-winner"
     ],
     "iconicMoments": [],
-    "popularityScore": 72,
+    "popularityScore": 76,
     "rarity": "common",
     "fullName": "Michael Hussey",
     "shortName": "Hussey",
@@ -68869,19 +68944,21 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "spin-allrounder",
     "dnaTags": [
-      "leg-spin-king",
-      "rr-legend",
       "captain",
-      "title-winner",
-      "australian",
-      "one-franchise"
+      "title-winning-captain",
+      "spinner",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "overseas",
+      "title-winner"
     ],
-    "iconicMoments": [
-      "2008-rr-title-captain"
-    ],
-    "popularityScore": 88,
+    "iconicMoments": [],
+    "popularityScore": 98,
     "rarity": "common",
     "fullName": "Shane Warne",
     "shortName": "Warne",
@@ -68958,15 +69035,18 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "pace-spearhead",
     "dnaTags": [
-      "express-pace",
-      "australian",
-      "kkr-pacer",
-      "one-franchise"
+      "pacer",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "overseas"
     ],
     "iconicMoments": [],
-    "popularityScore": 72,
+    "popularityScore": 70,
     "rarity": "common",
     "fullName": "Brett Lee",
     "shortName": "Lee",
@@ -69051,15 +69131,20 @@
       "name": 1
     },
     "era": "founding-era",
-    "archetype": "legend",
+    "archetype": "death-overs-pacer",
     "dnaTags": [
-      "left-arm-pacer",
-      "journeyman",
-      "indian-player",
-      "veteran-pacer"
+      "pacer",
+      "death-bowler",
+      "iconic",
+      "fan-favorite",
+      "IPL-veteran",
+      "retired-legend",
+      "early-era-player",
+      "domestic",
+      "journeyman"
     ],
     "iconicMoments": [],
-    "popularityScore": 65,
+    "popularityScore": 70,
     "rarity": "common",
     "fullName": "Ashish Nehra",
     "shortName": "Nehra",
