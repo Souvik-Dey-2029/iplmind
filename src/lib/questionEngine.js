@@ -284,10 +284,13 @@ export function evaluateQuestionAnswer(candidates, questionMeta, answer) {
     return neutralScores(candidates, 0.5);
   }
 
-  // Guard: if no question metadata, return neutral
+  // V4 FIX: If no question metadata (AI-generated adaptive question),
+  // return null so the fallback chain can proceed to evaluateSemanticAnswer
+  // and evaluateDeterministicAnswer, which parse the actual question TEXT.
+  // Previously this returned neutralScores(0.5) — a truthy object that
+  // blocked ALL fallback evaluators, making AI questions have ZERO Bayesian impact.
   if (!questionMeta) {
-    console.warn("[questionEngine] Missing questionMeta in evaluateQuestionAnswer - cannot evaluate answer");
-    return neutralScores(candidates, 0.5);
+    return null;
   }
 
   // "Maybe" — soft probabilistic nudge (leans toward "yes" but weakly)

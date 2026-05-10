@@ -153,11 +153,22 @@ function evaluateTeamQuestion(candidates, question, answerKind) {
   if (!team) return null;
 
   // Check if asking about current team specifically
+  // V4: Added 'associated', 'linked', 'connected' to capture AI-generated phrasing
   const isCurrent = question.includes("current") || question.includes("plays for") || question.includes("playing for");
+  const isAssociation = question.includes("associated") || question.includes("linked") || question.includes("connected") || question.includes("strong");
 
   return scoreCandidates(candidates, answerKind, (player) => {
     if (isCurrent) return player.currentTeam === team;
-    return (player.teams || []).includes(team);
+    // For association/strong-connection questions, check currentTeam + teams + latestSeasonTeam
+    if (isAssociation) {
+      return player.currentTeam === team || 
+             player.latestSeasonTeam === team ||
+             (player.strongestFranchiseAssociation || "").toLowerCase().includes(team.toLowerCase().split(" ")[0].toLowerCase());
+    }
+    // Default: check if ever played for this team
+    return (player.teams || []).includes(team) || 
+           (player.allTeamsPlayedFor || []).includes(team) ||
+           player.currentTeam === team;
   });
 }
 
@@ -309,6 +320,8 @@ function normalizeAnswer(answer) {
   const normalized = normalize(answer);
   if (normalized === "yes") return "yes";
   if (normalized === "no") return "no";
+  // V4: 'Maybe' should still produce scores (soft nudge), not be treated as neutral
+  if (normalized === "maybe" || normalized === "probably") return "yes";
   return "neutral";
 }
 
