@@ -1,8 +1,15 @@
-h my uploadBytes// OpenRouter AI client - handles AI-powered question generation and explanations
+/**
+ * Gemini AI client - handles question evaluation and explanations.
+ * NOTE: Production code uses aiProvider.js (two-layer Gemini + OpenRouter fallback).
+ * This module is used by testing scripts.
+ */
+
+import { GoogleGenerativeAI } from "@google/generative-ai";
 import { sanitizePlayerForRender } from "./playerNormalizer";
 
 // Initialize Gemini with server-side API key
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
 /**
  * Generates the next best question to ask the user.
@@ -48,6 +55,8 @@ Return ONLY a JSON object mapping player names to scores. Example:
 Important: Use exact player names as given. Return valid JSON only.`;
 
     try {
+      if (!model) throw new Error("Gemini model not initialized");
+
       const result = await model.generateContent(prompt);
       let responseText = result.response.text().trim();
 
@@ -57,7 +66,7 @@ Important: Use exact player names as given. Return valid JSON only.`;
       const scores = JSON.parse(responseText);
       Object.assign(allScores, scores);
     } catch (error) {
-      console.error("Evaluation error for batch:", error);
+      console.error("Evaluation error for batch:", error?.message);
       // Assign neutral scores on failure
       batch.forEach((p) => {
         allScores[p.name] = 0.5;
@@ -88,9 +97,14 @@ I'm guessing the player is: ${cleanPlayer.name}
 Write a brief, confident 1-2 sentence explanation of why this player matches all the clues. Do not mention unknown, missing, null, or unavailable metadata. Don't start with "Based on".`;
 
   try {
+    if (!model) throw new Error("Gemini model not initialized");
+
     const result = await model.generateContent(prompt);
     return result.response.text().trim();
   } catch (error) {
+    console.warn("Failed to generate explanation from Gemini:", error?.message);
+
+    // Fallback explanation based on player metadata
     const team = cleanPlayer.latestSeasonTeam || cleanPlayer.currentTeam || cleanPlayer.teams?.[cleanPlayer.teams.length - 1] || null;
     const parts = [cleanPlayer.role, cleanPlayer.country ? `from ${cleanPlayer.country}` : "", team ? `who played for ${team}` : ""];
     return `${cleanPlayer.name} - ${parts.filter(Boolean).join(" ")}.`;
