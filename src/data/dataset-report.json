@@ -1,7 +1,14 @@
 {
-  "source": "IPL dataset final.csv (primary) + IPL.csv (enrichment)",
-  "generatedAt": "2026-05-07T09:41:33.004Z",
-  "playerCount": 184,
+  "source": "players.json + playerMetadata + player-metrics + ipl2026squads + optional master/AI cache",
+  "generatedAt": "2026-05-10T07:24:04.536Z",
+  "playerCount": 236,
+  "lineCountEstimate": 68208,
+  "sourceCounts": {
+    "playersJson": 236,
+    "squads2026": 152,
+    "masterSeed": 0,
+    "aiCache": 0
+  },
   "countriesRepresented": [
     "Afghanistan",
     "Australia",
@@ -31,16 +38,31 @@
     "Sunrisers Hyderabad"
   ],
   "rolesBreakdown": {
-    "batsman": 64,
-    "bowler": 58,
-    "all-rounder": 61
+    "batsman": 113,
+    "all-rounder": 71,
+    "bowler": 52
+  },
+  "rarityBreakdown": {
+    "epic": 65,
+    "common": 47,
+    "rare": 112,
+    "legendary": 12
   },
   "metadataCoverage": {
-    "withCountry": 184,
-    "withBattingStyle": 184,
-    "withBowlingStyle": 163,
-    "withWicketKeeper": 21
+    "withCountry": 236,
+    "withBattingStyle": 236,
+    "withBowlingStyle": 236,
+    "withDna": 231,
+    "withSemanticVector": 236,
+    "withSeasons": 52
   },
+  "hiddenMetadataGaps": {
+    "missingCountry": 0,
+    "missingSeasonHistory": 184,
+    "missingAuctionHistory": 236,
+    "weakSemanticDNA": 5
+  },
+  "targetAssessment": "Mostly Expanded - needs all-era master seed data to guarantee every IPL player",
   "validation": {
     "valid": true,
     "errors": [],
