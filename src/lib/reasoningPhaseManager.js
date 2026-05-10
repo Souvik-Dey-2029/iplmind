@@ -29,10 +29,10 @@ export function getAllowedCategories(phase) {
       return ["role", "origin-class", "bowling-style", "batting-style", "era"];
     case "refinement":
       // Includes broad as fallback
-      return ["role", "origin-class", "bowling-style", "batting-style", "era", "leadership", "batting-role", "bowling-role", "achievement", "profile"];
+      return ["role", "origin-class", "bowling-style", "batting-style", "era", "leadership", "batting-role", "bowling-role", "achievement", "profile", "semantic-dna"];
     case "precision":
       // All categories allowed
-      return ["role", "origin-class", "bowling-style", "batting-style", "leadership", "batting-role", "bowling-role", "achievement", "origin", "current-team", "franchise-history", "profile"];
+      return ["role", "origin-class", "bowling-style", "batting-style", "era", "leadership", "batting-role", "bowling-role", "achievement", "origin", "current-team", "franchise-history", "profile", "semantic-dna"];
     default:
       return ["role", "origin-class"];
   }
@@ -70,6 +70,12 @@ export function applyHierarchicalPenalties(option, phase, candidatesLength, hist
   const categoryCount = history.filter(h => h.category === option.category).length;
   if (categoryCount >= 2 && option.category !== "franchise-history" && option.category !== "origin") {
     penalty *= 0.5;
+  }
+
+  if (option.category === "semantic-dna") {
+    if (phase === "broad") penalty *= 0.05;
+    const recentSemanticQuestions = history.slice(-3).filter(h => h.category === "semantic-dna").length;
+    if (recentSemanticQuestions > 0) penalty *= 0.45;
   }
 
   return penalty;

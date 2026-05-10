@@ -146,6 +146,11 @@ const staticQuestions = [
   question("title-winner", "achievement", "Has this player won an IPL title?", (p) => p.titlesWon > 0 || p.dnaTags?.includes("title-winner") || p.dnaTags?.includes("serial-winner")),
   question("mystery-spin", "bowling-style", "Is this player known as a mystery spinner?", (p) => p.mysterySpinner || p.dnaTags?.includes("mystery-spinner")),
   question("uncapped-domestic", "profile", "Is this player an uncapped / lesser-known domestic player?", (p) => !p.iconic && !p.fanFavorite && !p.captain && !p.overseas && p.rarity !== "common"),
+  question("ipl-specialist", "semantic-dna", "Is this player remembered more for IPL impact than international cricket?", (p) => p.questionAttributes?.IPLSpecialist && !p.questionAttributes?.internationalStar),
+  question("dominated-2011-2015", "era", "Did this player mainly belong to the 2011-2015 IPL period?", (p) => p.dominantEra === "2011-2015" || p.historicalIPLLayer?.goldenEraPlayer),
+  question("post-2020-player", "era", "Did this player emerge in IPL after 2020?", (p) => p.historicalIPLLayer?.post2020Player || p.IPLDebutYear >= 2021),
+  question("journeyman-player", "profile", "Has this player moved across several IPL franchises?", (p) => p.franchiseLoyalty === "journeyman" || p.dnaTags?.includes("journeyman-player")),
+  question("obscure-short-career", "profile", "Is this a lesser-known short-career IPL player?", (p) => ["legendary-obscure", "forgotten", "niche"].includes(p.obscurityProfile?.rarity) && !p.iconic),
 ];
 
 export function selectBestQuestion(candidates, probabilities, history = []) {
@@ -320,6 +325,7 @@ export function buildQuestionOptions(candidates) {
   const teams = unique(candidates.flatMap((player) => player.teams || []));
   const currentTeams = unique(candidates.map((player) => player.currentTeam).filter(Boolean));
   const countries = unique(candidates.map((player) => player.country).filter(Boolean));
+  const semanticTags = selectUsefulSemanticTags(candidates);
 
   currentTeams.forEach((team) => {
     options.push(
@@ -358,6 +364,18 @@ export function buildQuestionOptions(candidates) {
         )
       );
     });
+
+  semanticTags.forEach((tag) => {
+    options.push(
+      question(
+        `semantic:${tag}`,
+        "semantic-dna",
+        semanticQuestionText(tag),
+        (player) => hasSemanticTag(player, tag),
+        { value: tag }
+      )
+    );
+  });
 
   return options;
 }
@@ -440,6 +458,12 @@ function hydrateDynamicQuestion(meta) {
     });
   }
 
+  if (meta.category === "semantic-dna") {
+    return question(meta.id, meta.category, meta.text, (player) => hasSemanticTag(player, meta.value), {
+      value: meta.value,
+    });
+  }
+
   return null;
 }
 
@@ -500,4 +524,69 @@ function normalize(value) {
 
 function unique(values) {
   return [...new Set(values.filter(Boolean))].sort();
+}
+
+function selectUsefulSemanticTags(candidates) {
+  const counts = new Map();
+
+  candidates.forEach((player) => {
+    const tags = [
+      ...(player.dnaTags || []),
+      ...(player.tacticalTags || []),
+      ...(player.playerDNA?.historicalTags || []),
+      ...(player.playerDNA?.pressureTraits || []),
+      ...(player.semanticVector || []),
+    ];
+
+    unique(tags.map(normalizeTag)).forEach((tag) => {
+      if (!tag || tag.length < 4) return;
+      counts.set(tag, (counts.get(tag) || 0) + 1);
+    });
+  });
+
+  const total = Math.max(candidates.length, 1);
+  return [...counts.entries()]
+    .filter(([, count]) => count / total >= 0.12 && count / total <= 0.88)
+    .sort((a, b) => informationBalance(b[1], total) - informationBalance(a[1], total))
+    .slice(0, 12)
+    .map(([tag]) => tag);
+}
+
+function informationBalance(count, total) {
+  return 1 - Math.abs(0.5 - count / total) * 2;
+}
+
+function hasSemanticTag(player, tag) {
+  const normalizedTag = normalizeTag(tag);
+  return [
+    ...(player.dnaTags || []),
+    ...(player.tacticalTags || []),
+    ...(player.playerDNA?.historicalTags || []),
+    ...(player.playerDNA?.pressureTraits || []),
+    ...(player.semanticVector || []),
+  ].some((candidate) => normalizeTag(candidate) === normalizedTag);
+}
+
+function semanticQuestionText(tag) {
+  const phrase = String(tag || "").replace(/-/g, " ");
+  const templates = {
+    "csk-icon": "Is this player strongly associated with Chennai Super Kings?",
+    "mi-icon": "Is this player strongly associated with Mumbai Indians?",
+    "rcb-icon": "Is this player strongly associated with Royal Challengers Bengaluru?",
+    "kkr-icon": "Is this player strongly associated with Kolkata Knight Riders?",
+    "death-bowler": "Is this player known for bowling in death overs?",
+    "power-hitter": "Is this player known for power hitting?",
+    "anchor": "Is this player known as a steady anchor batter?",
+    "mystery-spinner": "Is this player known as a mystery spinner?",
+    "one-franchise-player": "Is this player mostly remembered as a one-franchise IPL player?",
+    "short-career-player": "Did this player have a short IPL career?",
+    "early-ipl-player": "Is this player associated with the early IPL years?",
+    "post-2020-player": "Is this player from the modern post-2020 IPL generation?",
+  };
+
+  return templates[tag] || `Is this player associated with ${phrase}?`;
+}
+
+function normalizeTag(value) {
+  return normalize(value).replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
