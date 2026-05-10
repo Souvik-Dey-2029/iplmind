@@ -81,14 +81,17 @@ function getMascotState(phase, confidence, questionNumber, lastAnswer, loading, 
   }
   if (phase === "failed") return MASCOT_STATES.failed;
   if (phase === "guessing") return MASCOT_STATES.confident;
-  if (phase === "idle") return MASCOT_STATES.idle;
+  if (phase === "idle" || questionNumber === 0) return MASCOT_STATES.idle;
   
   if (loading) return MASCOT_STATES.thinking;
-  if (lastAnswer === "No" && confidence < 20) return MASCOT_STATES.sad;
   
-  if (confidence > 45) return MASCOT_STATES.confident;
+  if (confidence > 55) return MASCOT_STATES.confident;
   
-  return MASCOT_STATES.thinking;
+  // Natural rotation system: expression changes every 2 questions to feel alive
+  const rotationIndex = Math.floor(questionNumber / 2) % 3;
+  if (rotationIndex === 0) return MASCOT_STATES.idle;
+  if (rotationIndex === 1) return MASCOT_STATES.thinking;
+  return MASCOT_STATES.confident;
 }
 
 export default function IPLStadiumGameClient({ onBackToHome }) {
@@ -368,29 +371,23 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
           <div className="ipl-ai-section">
               <motion.div className="ipl-ai-bubble" key={commentary || mascot.text}
                 initial={{ opacity: 0, y: -6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.3 }}
-                style={{ marginBottom: 24 }}>
+                style={{ marginBottom: 16 }}>
                 {commentary || mascot.text}
               </motion.div>
               
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 24 }}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 4 }}>
                 <AnimatePresence mode="wait">
                   <motion.img 
                     key={mascot.id}
                     src={mascot.image}
                     alt="IPLMind Mascot"
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ 
                       opacity: mascot.id === "sad" ? 0.7 : 1, 
-                      scale: mascot.id === "confident" ? 1.08 : 1,
-                      rotate: mascot.id === "thinking" ? [-2, 2, -2] : 0,
-                      y: mascot.id === "idle" ? [0, -5, 0] : 0
+                      scale: mascot.id === "confident" ? 1.05 : 1
                     }}
-                    exit={{ opacity: 0, scale: 0.9 }}
-                    transition={{ 
-                      duration: 0.25,
-                      rotate: { repeat: mascot.id === "thinking" ? Infinity : 0, duration: 1.5, ease: "easeInOut" },
-                      y: { repeat: mascot.id === "idle" ? Infinity : 0, duration: 3, ease: "easeInOut" }
-                    }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.25 }}
                     style={{ width: 180, height: "auto", objectFit: 'contain' }}
                   />
                 </AnimatePresence>
