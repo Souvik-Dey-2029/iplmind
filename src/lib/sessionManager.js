@@ -105,6 +105,7 @@ export function createSession() {
     entropyHistory: [calculateEntropy(probabilities)],
     confidenceHistory: [],
     questionNumber: 0,
+    informativeQuestionCount: 0, // V4: Only counts Yes/No/Maybe answers (not "Don't Know")
     adaptiveQuestionLimit: INITIAL_ADAPTIVE_LIMIT,
     maxTotalQuestions: MAX_TOTAL_QUESTIONS,
     minQuestionsBeforeGuess: MIN_QUESTIONS_BEFORE_GUESS,
@@ -153,6 +154,7 @@ export function undoLastAnswer(sessionId) {
   session.entropyHistory = snapshot.entropyHistory;
   session.confidenceHistory = snapshot.confidenceHistory;
   session.questionNumber = snapshot.questionNumber;
+  session.informativeQuestionCount = snapshot.informativeQuestionCount || 0; // V4: restore informative count
   session.currentQuestion = snapshot.currentQuestion;
   session.currentQuestionMeta = snapshot.currentQuestionMeta;
   session.status = snapshot.status;
@@ -204,6 +206,7 @@ export async function processAnswer(sessionId, answer) {
     entropyHistory: [...session.entropyHistory],
     confidenceHistory: [...session.confidenceHistory],
     questionNumber: session.questionNumber,
+    informativeQuestionCount: session.informativeQuestionCount || 0, // V4: preserve informative count
     currentQuestion: session.currentQuestion,
     currentQuestionMeta: session.currentQuestionMeta ? { ...session.currentQuestionMeta } : null,
     status: session.status,
@@ -226,6 +229,12 @@ export async function processAnswer(sessionId, answer) {
     category: session.currentQuestionMeta?.category,
   });
 
+  // V4: Detect whether this answer carries actual information.
+  // After stripping non-alpha chars, "Don't Know" becomes "dontknow".
+  // Only Yes, No, and Maybe carry real probabilistic signal.
+  const normalizedAnswer = answer?.toLowerCase?.()?.replace(/[^a-z]/g, "") || "";
+  const isNeutralAnswer = normalizedAnswer === "dontknow" || !["yes", "no", "maybe", "probably"].includes(normalizedAnswer);
+
   // Prefer the structured question predicate. Legacy/Gemini parsing remains a
   // fallback for older sessions or manually injected question text.
   let matchScores =
@@ -247,11 +256,22 @@ export async function processAnswer(sessionId, answer) {
 
   // Update probabilities using Bayesian updating
   session.probabilities = updateProbabilities(session.probabilities, matchScores);
-  session.probabilities = applySemanticReranking(session.probabilities, players, session.questionHistory);
+
+  // V4 FIX: Only apply semantic reranking when the answer carries real information.
+  // "Don't Know" answers are neutral — reranking would reshuffle probabilities
+  // based on tag alignment without any new evidence, causing false confidence drift.
+  if (!isNeutralAnswer) {
+    session.probabilities = applySemanticReranking(session.probabilities, players, session.questionHistory);
+    session.informativeQuestionCount = (session.informativeQuestionCount || 0) + 1;
+  }
 
   // Filter out very unlikely candidates (but respect excluded players)
   session.candidates = getViableCandidates(players, session.probabilities, 0.05, session.questionNumber)
     .filter((p) => !session.excludedPlayers.has(p.name));
+
+  // V4: Use informative question count for confidence so "Don't Know" answers
+  // don't inflate confidence scores through the evidence multiplier
+  const effectiveQuestionCount = session.informativeQuestionCount || 0;
 
   const previousEntropy = session.entropyHistory.at(-1) || calculateEntropy(snapshot.probabilities);
   const nextEntropy = calculateEntropy(session.probabilities);
@@ -262,8 +282,8 @@ export async function processAnswer(sessionId, answer) {
     extractSemanticTraitsFromQuestionMeta(session.currentQuestionMeta)
   );
   session.confidenceHistory.push(
-    calculateSemanticConfidence(session.probabilities, players, session.questionHistory, session.questionNumber)?.confidence ||
-    getTopCandidate(session.probabilities, session.questionNumber)?.confidence ||
+    calculateSemanticConfidence(session.probabilities, players, session.questionHistory, effectiveQuestionCount)?.confidence ||
+    getTopCandidate(session.probabilities, effectiveQuestionCount)?.confidence ||
     0
   );
 

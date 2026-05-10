@@ -328,7 +328,9 @@ export function calculateSemanticConfidence(probabilities, players, history, que
 
   return {
     name: top.name,
-    confidence: clamp(confidence + questionCount * 0.35, 0, 98.7),
+    // V4 FIX: Reduced from 0.35 to 0.10 per informative question.
+    // questionCount now only reflects informative answers, preventing "Don't Know" inflation.
+    confidence: clamp(confidence + questionCount * 0.10, 0, 98.7),
     probability: top.probability,
     separation,
     entropy,

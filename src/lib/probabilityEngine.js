@@ -160,6 +160,8 @@ export function getTopCandidate(probabilities, questionCount = 1) {
   // 4. Evolving Evidence Curve
   // Confidence naturally builds over time to prevent stagnation, but logarithmically caps.
   // Question 1 = ~25% max potential, Question 15 = ~95% max potential.
+  // V4: Uses questionCount which now only reflects INFORMATIVE answers,
+  // so "Don't Know" spam doesn't inflate the evidence curve.
   const evidenceMultiplier = Math.min(1, Math.log10(questionCount + 1) / Math.log10(16));
 
   // Blended Confidence Formula
@@ -169,8 +171,9 @@ export function getTopCandidate(probabilities, questionCount = 1) {
     (entropyFactor * 100 * 0.35)   // Overall certainty
   ) * evidenceMultiplier;
 
-  // Ensure it never freezes entirely by adding a tiny micro-progression tied to questionCount
-  blendedConfidence += (questionCount * 0.5);
+  // V4 FIX: Reduced from 0.5 to 0.15 per informative question.
+  // This prevents artificial confidence inflation while still avoiding total stagnation.
+  blendedConfidence += (questionCount * 0.15);
 
   // Soft cap at 98.9% until actual guess confirmation to avoid fake 100%
   const confidence = Math.max(0, Math.min(98.9, blendedConfidence));
