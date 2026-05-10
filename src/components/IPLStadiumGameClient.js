@@ -643,8 +643,8 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
                 {phase === "finished" && (
                   <motion.div key="finished" style={{ textAlign: "center", padding: "40px 0" }} initial={{ opacity: 0, scale: 0.85 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: "spring", stiffness: 200 }}>
                     <motion.div initial={{ rotate: -20, scale: 0 }} animate={{ rotate: 0, scale: 1 }} transition={{ type: "spring", stiffness: 400, delay: 0.3 }}
-                      style={{ marginBottom: 16 }}>
-                      <img src="/win.png" alt="Winner" style={{ width: 150, height: 150, objectFit: 'contain', margin: '0 auto' }} />
+                      style={{ marginBottom: -60 }}>
+                      <img src="/win.png" alt="Winner" style={{ width: 300, height: 300, objectFit: 'contain', margin: '0 auto' }} />
                     </motion.div>
                     <h2 className="ipl-question-text">Round Complete</h2>
                     <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}
