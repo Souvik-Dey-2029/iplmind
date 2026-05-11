@@ -3,7 +3,7 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 
 const ThemeContext = createContext({
-  theme: "light",
+  theme: "ipl",
   setTheme: () => {},
   themes: [],
 });
