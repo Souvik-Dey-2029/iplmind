@@ -421,7 +421,7 @@ export default function IPLStadiumGameClient({ onBackToHome }) {
         <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 1400, margin: "0 auto", padding: "12px 20px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ fontSize: 24 }}>🏏</span>
-            <span className="ipl-logo">IPL Genius</span>
+            <span className="ipl-logo">IPL Mind</span>
           </div>
           <div style={{ display: isMobile ? "none" : "flex", gap: 24, alignItems: "center" }}>
             <span className="ipl-nav-link active">Predict</span>

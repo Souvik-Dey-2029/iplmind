@@ -57,7 +57,7 @@ export default function IPLMindHome({ onStartGame }) {
               letterSpacing: '-0.01em',
               lineHeight: 1.2,
             }}>
-              IPL Genius
+              IPL Mind
             </div>
 
           {/* Nav Links (desktop) */}

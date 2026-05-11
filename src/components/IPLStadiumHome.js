@@ -184,7 +184,7 @@ export default function IPLStadiumHome({ onStartGame }) {
       <header className="ipl-header" style={{ position: "sticky", top: 0, zIndex: 50 }}>
         <nav style={{ display: "flex", justifyContent: "space-between", alignItems: "center", maxWidth: 1400, margin: "0 auto", padding: "12px 20px" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span className="ipl-logo" style={{ fontSize: "28px" }}>IPL Genius</span>
+            <span className="ipl-logo" style={{ fontSize: "28px" }}>IPL Mind</span>
           </div>
           {!isMobile && (
             <div style={{ display: "flex", gap: 32, alignItems: "center" }}>

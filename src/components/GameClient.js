@@ -296,7 +296,7 @@ export default function GameClient({ onBackToHome }) {
                 cursor: onBackToHome ? 'pointer' : 'default',
               }}
             >
-              IPL Genius
+              IPL Mind
             </div>
           </div>
           <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
